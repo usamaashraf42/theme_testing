@@ -1,0 +1,550 @@
+{% assign show_filters = false %}
+{% if collection.all_tags.size > 0 %}
+    {% for tag in collection.all_tags %}
+    {% assign checkArray = tag | split:"collection-filters:" %}
+    {% if checkArray[0] == blank %}
+        {% assign show_filters = true %}
+        {% break %}
+    {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+
+
+{% comment %}
+<div class="collection-template-new-top-bar-container desktop-only">
+{% for block in section.blocks %}
+    {% if block.type == 'collection' %}
+        <div class="collection-template-new-top-bar-item" {% if collection.title == block.settings.collection.title %} style="font-weight: bold; text-decoration: underline" {% endif %}>
+            <a href="{{ block.settings.collection.url }}">{{ block.settings.collection.title }}</a>
+        </div>
+    {% endif %}
+{% endfor %}
+</div>
+
+{% endcomment %}
+
+<!-- Top bar -->
+<div class="page-width desktop-only">
+  <div class="dirtea-page-menu">
+    <ul>
+        {% for c in linklists.collections-menu.links %}
+        <li {% if collection.title == c.title %}class="active"{% endif %}><a href="{{ c.url }}">{{ c.title }}</a></li>
+        {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<!-- Mobile filter bars -->
+<div class="page-width mobile-collection-top-bar mobile-only">
+    <div class="mobile-collection-top-bar-row mobile-collection-selector border-top-1px border-bottom-1px">
+        <div class="mobile-filter-title-row">
+            <p>{{ collection.title }}</p>
+            <div class="button-mobile-collection-selector"><span class="rotate-90">&rsaquo;</span></div>
+        </div>
+        <div class="mobile-filter-options-row" style="display: none;">
+            {% for c in linklists.collections-menu.links %}
+            <p {% if collection.title == c.title %}class="active"{% endif %}><a href="{{ c.url }}">{{ c.title }}</a></p>
+            {% endfor %}
+        </div>
+    </div>
+    {% if show_filters %}
+    <div class="mobile-collection-top-bar-row mobile-collection-filters border-bottom-1px">
+        <div class="mobile-filter-title-row">
+            <p>Filter by benefit</p>
+            <div class="button-mobile-collection-filters"><span>&plus;</span></div>
+        </div>
+        <div class="mobile-filter-options-row" style="display: none;">
+            <ul>
+            {% for tag in collection.all_tags %}
+            {% assign checkArray = tag | split:"collection-filters:" %}
+            {% if checkArray[0] == blank %}
+            {% if current_tags contains tag %}
+                <li class="tag-filters__item active">{{ checkArray[1] | link_to_remove_tag: tag }}</li>
+            {% else %}
+                <li class="tag-filters__item">{{ checkArray[1] | link_to_add_tag: tag }}</li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.mobile-collection-top-bar {
+    margin-bottom: 40px;
+}
+.mobile-collection-top-bar .mobile-collection-top-bar-row {
+    min-height: 40px;
+}
+.mobile-filter-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.mobile-collection-top-bar .mobile-collection-top-bar-row p, .mobile-collection-top-bar .mobile-collection-top-bar-row span {
+    line-height: 40px;
+    font-size: 12px;
+    color: var(--off-black);
+}
+.mobile-collection-top-bar .mobile-collection-top-bar-row p {
+    padding-left: 10px;
+    text-transform: uppercase;
+    margin: 0px;
+}
+.button-mobile-collection-selector, .button-mobile-collection-filters {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.mobile-collection-top-bar .mobile-collection-top-bar-row span {
+    font-size: 24px;
+}
+
+.mobile-filter-options-row {
+    margin: 8px 0 24px 0;
+    padding: 0 10px;
+    color: var(--off-black);
+}
+.mobile-collection-selector .mobile-filter-options-row {
+    padding: 0px;
+}
+.mobile-collection-selector .mobile-filter-options-row a {
+    text-decoration: none;
+    font-size: 16px;
+    color: var(--off-black);
+}
+.mobile-filter-options-row p.active {
+    font-weight: bold;
+}
+</style>
+
+<script>
+let filterButtons = document.querySelectorAll(".mobile-filter-title-row");
+
+filterButtons.forEach(function(elem) {
+    elem.addEventListener("click", function(e) {
+        filterContainerToggle = this.parentElement.querySelector(".mobile-filter-options-row")
+        if (filterContainerToggle.style.display == "none" ){
+            filterContainerToggle.style.display = "block"
+        } else {
+            filterContainerToggle.style.display = "none"
+        }
+
+    });
+});
+</script>
+
+
+<div class="page-width">
+    <div class="collection-template-new-container">
+        {% if show_filters %}
+        <div class="collection-template-new-lhs desktop-only">
+            <div class="collection-template-new-lhs-title">Benefit</div>
+            <div class="collection-filters">
+                <ul class="collection-tag-filters">
+                    {% for tag in collection.all_tags %}
+                    {% assign checkArray = tag | split:"collection-filters:" %}
+                    {% if checkArray[0] == blank %}
+                    {% if current_tags contains tag %}
+                        <li class="tag-filters__item active">{{ checkArray[1] | link_to_remove_tag: tag }}</li>
+                    {% else %}
+                        <li class="tag-filters__item">{{ checkArray[1] | link_to_add_tag: tag }}</li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="collection-template-new-rhs">
+            {% for product in collection.products %}
+                {% render '23_02__product-carousel-item' with product: product %}
+                {% if product.metafields.custom.subscription_products %}
+                    {% include '23_02__subscription-selector-modal', selected_product: product %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{% comment %}
+<script>
+
+    // Filters
+
+    let productTagLists = document.querySelectorAll('.collection-template-new-product-tags')
+    let productCards = document.querySelectorAll('.collection-product-card-container')
+
+    let collectionFilters = document.querySelectorAll('.collection-template-new-filter')
+    let collectionFiltersLabels = document.querySelectorAll('.collection-template-new-filter-label')
+    let collectionFilterCheckboxes = document.querySelectorAll('.collection-template-new-filter-checkbox')
+
+    let currentlySelectedFilters = []
+
+    for (let i = 0; i < collectionFilters.length; i++) {
+        collectionFilters[i].addEventListener('click', () => {
+
+            // Fill/Unfill checkbox + keep track of all selected filters
+            collectionFilterCheckboxes[i].classList.toggle('checked-box')
+            if (collectionFilterCheckboxes[i].classList.contains('checked-box')) {
+                currentlySelectedFilters.push(collectionFiltersLabels[i].innerHTML)
+            } else {
+                let filterIndex = currentlySelectedFilters.indexOf(`${collectionFiltersLabels[i].innerHTML}`)
+                currentlySelectedFilters.splice(filterIndex, 1)
+            }
+
+            // Hide all products by default
+            productCards.forEach((element) => {element.style.display = 'none'})
+
+            // Show products which match filters
+            for (let j = 0; j < productTagLists.length; j++) {
+
+                let tempString = productTagLists[j].innerHTML.replace(/^\s+|\s+$/g, '').replace(/\s+/g, '')
+
+                for (let k = 0; k < currentlySelectedFilters.length; k++) {
+
+                    if( tempString.split(',').indexOf(`collection_tag:${currentlySelectedFilters[k]}`) > -1 ) {
+                        productCards[j].style.display = 'flex'
+                    }
+                }
+            }
+
+            // If filter list is empty, show everything
+            if (currentlySelectedFilters.length === 0) {
+                productCards.forEach((element) => {element.style.display = 'flex'})
+            }
+
+        })
+    }
+
+    // Mobile Filters
+    let openMobileFilters = document.querySelector('.collection-template-new-mobile-filter-button')
+    let filterPanel = document.getElementById('filterPanel')
+
+    openMobileFilters.addEventListener('click', () => {
+        filterPanel.classList.toggle('show-filters')
+        openMobileFilters.classList.toggle('show-border-bottom')
+    })
+
+    // Mobile Collection panel
+    let openCollections = document.querySelector('.collection-template-new-mobile-top-bar-button')
+    let collectionPanel = document.getElementById('collectionPanel')
+
+    openCollections.addEventListener('click', () => {
+        collectionPanel.classList.toggle('show-filters')
+    })
+
+
+    // Subscription Forms
+    let collectionSubscriptionBtns = document.querySelectorAll('.collection-product-card-subscription-cta')
+    let collectionSubscriptionOptionForm = document.querySelectorAll('.collection-product-card-product-form')
+    let collectionSubscriptionCancelBtns = document.querySelectorAll('.collection-product-card-cancel-cta')
+
+    // Open/Close form using subscription CTA
+    for (let i = 0; i < collectionSubscriptionBtns.length; i++) {
+        collectionSubscriptionBtns[i].addEventListener('click', () => {
+            collectionSubscriptionOptionForm[i].classList.toggle('show-product-form')
+            collectionSubscriptionBtns[i].style.display = 'none'
+        })
+    }
+
+    // Close form using cancel CTA
+    for (let i = 0; i < collectionSubscriptionCancelBtns.length; i++) {
+        collectionSubscriptionCancelBtns[i].addEventListener('click', () => {
+            collectionSubscriptionOptionForm[i].classList.toggle('show-product-form')
+            collectionSubscriptionBtns[i].style.display = 'block'
+        })
+    }
+
+    let collectionSubscriptionOptions = document.querySelectorAll('.collection-product-card-product-form-option')
+    let collectionSubscriptionRadios = document.querySelectorAll('.collection-product-card-product-form-option-radio-button')
+    let collectionSubscriptionAddBtns = document.querySelectorAll('.collection-product-card-add-to-cart-cta')
+    
+    // Select subsription options
+    for (let i = 0; i < collectionSubscriptionOptions.length; i++) {
+        collectionSubscriptionOptions[i].addEventListener('click', () => {
+            // Fill selected radio button
+            collectionSubscriptionRadios.forEach((element) => {element.classList.add('filled-radio-button')})
+            collectionSubscriptionRadios[i].classList.toggle('filled-radio-button')
+
+            // Show relevant add to cart CTA
+            collectionSubscriptionAddBtns.forEach((element) => {element.style.display = 'none'})
+            collectionSubscriptionAddBtns[i].style.display = 'flex'
+        })
+    }
+
+</script>
+{% endcomment %}
+
+<style>
+    .collection-template-new-container {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        flex-direction: row;
+    }
+
+    .collection-template-new-top-bar-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.33px;
+        line-height: 14px;
+    }
+
+    @media (min-width: 769px) {
+        .collection-template-new-top-bar-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            border-top: 1px solid #252525;
+            border-bottom: 1px solid #252525;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            color: #252525;
+            font-family: "Manifold";
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.33px;
+            line-height: 14px;
+            margin-bottom: 80px
+        }
+    }
+
+    @media (max-width: 769px) {
+        .collection-template-new-top-bar-item {
+            margin-bottom: 5px;
+        }
+    }
+
+    .collection-template-new-top-bar-item a {
+        padding: 0px 50px;
+        text-decoration: none;
+        color: #252525;
+    }
+    .collection-template-new-top-bar-item a .active {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .collection-template-new-tags-container {
+        display: none;
+    }
+
+    .collection-template-new-mobile-top-bar-button {
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.33px;
+        line-height: 14px;
+        border-top: 1px solid #252525;
+        text-align: center;
+        padding-top: 13px;
+        cursor: pointer;
+        width: 100vw;
+        padding-bottom: 13px;
+    }
+
+    .collection-template-new-mobile-filter-button {
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.33px;
+        line-height: 14px;
+        border-top: 1px solid #252525;
+        text-align: center;
+        padding-top: 13px;
+        cursor: pointer;
+        width: 100vw;
+        padding-bottom: 13px;
+        margin-bottom: 20px;
+    }
+
+    .show-border-bottom {
+        border-bottom: 1px solid #252525;
+    }
+
+    .collection-filters {}
+    .collection-filters ul {
+        padding-left: 0px;
+        list-style: none;
+    }
+    .collection-filters ul li {
+        padding-left: 0px;
+    }
+    .collection-filters ul li::before {
+        content: '';
+        display: inline-block;
+        height: 16px;
+        width: 16px;
+        background-image: url('{{ '23_02__checkbox-empty2.svg' | asset_url }}');
+    }
+    .collection-filters ul li.active::before {
+        background-image: url('{{ '23_02__checkbox-ticked.svg' | asset_url }}');
+    }
+    .collection-filters ul li a {
+        font-size: 12px;
+        color: var(--off-black);
+        text-decoration: none;
+        margin-top: 0px;
+        position: absolute;
+        margin-left: 10px;
+    }
+
+    /*
+    #collectionPanel {
+        display: none;
+        grid-template-columns: repeat(2,1fr);
+        color: #252525;
+        font-family: "Manifold";
+        width: 100vw;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        border-bottom: 1px solid #252525; 
+    }
+    */
+
+    #filterPanel {
+        display: none;
+        grid-template-columns: repeat(2,1fr);
+        color: #252525;
+        font-family: "Manifold";
+        width: 100vw;
+        padding-left: 15vw;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        border-bottom: 1px solid #252525;
+    }
+
+    @media (min-width: 769px) {
+        #filterPanel {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            max-width: 200px;
+            border: none;
+            padding-left: 0px;
+        }
+
+        .collection-template-new-lhs {
+            min-width: 200px;
+
+        }
+    }
+
+    .show-filters {
+        display: grid !important;
+    }
+
+    .collection-template-new-lhs-title {
+        font-size: 24px;
+        letter-spacing: 0;
+        line-height: 29px;
+        color: #252525;
+        font-family: "Manifold";
+    }
+
+    .collection-template-new-filter {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .collection-template-new-filter-label {
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 14px;
+        margin-left: 10px;
+    }
+
+    .collection-template-new-filter-checkbox {
+        border: 1px solid #252525;
+        height: 16px;
+        width: 16px;
+        background-color: transparent;
+    }
+
+    .checked-box {
+        background-image: url('{{ '23_02__tick-grey.svg' | asset_url }}');
+        background-position: center;
+        background-size: 25px;
+    }
+
+    .collection-template-new-rhs {
+        display: grid;
+        flex: 1;
+        grid-template-columns: repeat(auto-fit, minmax(282px, 300px));
+        column-gap: 50px;
+        justify-content: space-between;
+        row-gap: 80px;
+        justify-items: center;
+    }
+
+    @media (min-width: 769px) {
+        /*
+        .collection-template-new-rhs {
+            grid-template-columns: repeat(3,minmax(0, 1fr));
+        }
+        */
+    }
+</style>
+
+{%  schema %} 
+{
+    "name": "Collection Template",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection"
+                }
+            ]
+        },
+        {
+            "type": "filter",
+            "name": "Filter",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "filter_name",
+                    "label": "Filter Name",
+                    "default": "Gut Health"
+                }
+            ]
+        }
+
+    ],
+    "presets": [
+        {
+            "name": "Collection Template",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

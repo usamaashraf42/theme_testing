@@ -1,0 +1,126 @@
+<div class="turkey-tremella-hero-container">
+    {% comment %}
+    <div class="turkey-tremella-image desktop-only">
+        {{ section.settings.desktop_image | image_url: width: 2880 | image_tag: sizes: '(min-width:1600px) 100vw, (min-width: 750px) 100vw, calc(100vw - 4rem)'}}
+    </div>
+    <div class="turkey-tremella-image mobile-only">
+        {{ section.settings.mobile_image | image_url: width: 350 | image_tag: sizes: '(min-width:1600px) 100vw, (min-width: 750px) 100vw, calc(100vw - 4rem)' }}
+    </div>
+    {% endcomment %}
+    <div class="turkey-tremella-text-container">
+        {{ section.settings.hero_text }}
+    </div>
+</div>
+
+{% style %}
+
+.main-content {
+    padding-top: 0px !important;
+}
+.turkey-tremella-text-container {
+    /*
+    position: absolute;
+    text-align: center;
+    font-family: "Manifold Regular";
+    letter-spacing: 1.05px;
+    line-height: 60px;
+    width: 100%;
+    margin-top: -75vh;
+    */
+    color: var(--off-black);
+    font-size: 42px;
+    text-align: center;
+}
+
+.turkey-tremella-hero-container {
+    height: 480px;
+    background-image: url('{{ section.settings.desktop_image | image_url}}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #EAE1DA;
+    display: flex;
+    justify-content: center;
+    padding-top: 131px;
+    background-position-y: -110px;
+}
+
+
+@media (max-width: 576px) {
+    .turkey-tremella-hero-container {
+        height: 490px;
+        padding-top: 115px;
+        background-position-y: 100px;
+    }
+}
+
+
+
+
+{% comment %}
+@media (min-width: 769px) {
+    .turkey-tremella-text-container {
+        position: absolute;
+        text-align: center;
+        color: #252525;
+        font-family: "Manifold Regular";
+        font-size: 42px;
+        letter-spacing: 1.05px;
+        line-height: 60px;
+        text-align: center;
+        width: 50%;
+        margin-top: -485px;
+        left: 0px;
+        right: 0px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .turkey-tremella-hero-container {
+        margin-top: -10px
+    }
+}
+{% endcomment %}
+
+@media (min-width: 1300px) {
+    .turkey-tremella-text-container {
+        margin-top: -650px;
+    }
+}
+
+.turkey-tremella-image img {
+    width: 100%;
+    height: auto;
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Pre-Order Hero Section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "hero_text",
+            "label": "Hero Text",
+            "default": "Introducing the Immunity Mushroom and the Beauty Mushroom"
+        },
+        {
+            "type": "image_picker",
+            "id": "desktop_image",
+            "label": "Desktop Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Pre-Order Hero Section",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema %}

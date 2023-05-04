@@ -1,0 +1,240 @@
+<section class='shipping'>
+
+  <div class='shipping-container'>
+
+    <div class='shipping-textcontainer'>
+      <div class='shipping-header'>{{ section.settings.shipping_header }}</div>
+      <div class='shipping-body'>{{ section.settings.shipping_body }}</div>
+      <div class='shipping-iconcontainer phone-display-checker-true'>
+        <div class='shipping-icon'>
+          <div class='shipping-svg'>{% render 'icon-box-new' %}</div>
+          {{ section.settings.shipping_icon1 }}</div>
+        <div class='shipping-icon'>
+          <div class='shipping-svg'>{% render 'icon-log-new' %}</div>
+          {{ section.settings.shipping_icon2 }}</div>
+        <div class='shipping-icon'>
+          <div class='shipping-svg'>{% render 'icon-tin-new' %}</div>
+          {{ section.settings.shipping_icon3 }}</div>
+        <div class='shipping-icon'>
+          <div class='shipping-svg'>{% render 'icon-bag-new' %}</div>
+          {{ section.settings.shipping_icon4 }}</div>
+      </div>
+    </div>
+
+    <div class='shipping-imgcontainer'><img src='{{section.settings.shipping_image | image_url: width: 2880}}' class='shipping-img'></div>
+
+    <div class='shipping-iconcontainer phone-display-checker-false'>
+      <div class='shipping-icon'>
+        <div class='shipping-svg'>{% render 'icon-box-new' %}</div>
+        {{ section.settings.shipping_icon1 }}</div>
+      <div class='shipping-icon'>
+        <div class='shipping-svg'>{% render 'icon-log-new' %}</div>
+        {{ section.settings.shipping_icon2 }}</div>
+      <div class='shipping-icon'>
+        <div class='shipping-svg'>{% render 'icon-tin-new' %}</div>
+        {{ section.settings.shipping_icon3 }}</div>
+      <div class='shipping-icon'>
+        <div class='shipping-svg'>{% render 'icon-bag-new' %}</div>
+        {{ section.settings.shipping_icon4 }}</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<style>
+
+
+
+  .shipping {
+    background-color: #E9E1DB;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .shipping {
+      padding-top: 50px;
+    }
+
+  }
+  .shipping-container {
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  @media only screen and (max-width: 800px) {
+    .shipping-container {
+      width: 90%;
+    }
+
+  }
+
+  @media only screen and (max-width: 700px) {
+    .shipping-container {
+      height: auto;
+    }
+
+  }
+
+  @media only screen and (max-width: 700px) {
+    .shipping-container {
+      flex-direction: column;
+    }
+  }
+
+  .shipping-textcontainer {
+    flex: 2;
+    padding-right: 50px;
+  }
+
+  .shipping-header {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 41px;
+  }
+
+  @media only screen and (min-width: 1800px) {
+    .shipping-header {
+      font-size: 50px;
+      margin-bottom: 50px;
+    }
+
+  }
+
+  .shipping-body {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-bottom: 30px;
+  }
+
+  @media only screen and (min-width: 1800px) {
+    .shipping-body {
+      font-size: 30px;
+      margin-bottom: 50px;
+      line-height: 40px;
+    }
+
+  }
+
+
+  .shipping-icon {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.44px;
+    line-height: 17px;
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: center;
+
+  }
+
+  @media only screen and (min-width: 1800px) {
+    .shipping-icon {
+      font-size: 30px;
+      margin-bottom: 30px;
+      line-height: 40px;
+    }
+
+  }
+
+
+  @media only screen and (max-width: 700px) {
+    .phone-display-checker-true {
+      display: none !important;
+    }
+
+  }
+
+
+  .phone-display-checker-false {
+    display: none;
+  }
+
+  @media only screen and (max-width: 700px) {
+    .phone-display-checker-false {
+      display: block;
+    }
+
+  }
+
+  .shipping-svg {
+    margin-right: 15px;
+  }
+
+  .shipping-imgcontainer {
+    flex: 2;
+    align-self: center;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .shipping-imgcontainer {
+      align-self: center;
+      flex: 2;
+    }
+  }
+
+
+
+  .shipping-img {
+    width: 100%;
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Subscription Shipping",
+    "settings": [
+      {
+        "type": "text",
+        "id": "shipping_header",
+        "label": "Shipping Header"
+      },
+      {
+        "type": "textarea",
+        "id": "shipping_body",
+        "label": "Body Text"
+      },
+      {
+        "type": "image_picker",
+        "id": "shipping_image",
+        "label": "Main Image"
+      },
+      {
+        "type": "text",
+        "id": "shipping_icon1",
+        "label": "Shipping Icon 1"
+      }, {
+        "type": "text",
+        "id": "shipping_icon2",
+        "label": "Shipping Icon 2"
+      }, {
+        "type": "text",
+        "id": "shipping_icon3",
+        "label": "Shipping Icon 3"
+      }, {
+        "type": "text",
+        "id": "shipping_icon4",
+        "label": "Shipping Icon 4"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Subscription Shipping",
+        "category": "Jan"
+      }
+    ]
+  }
+{% endschema %}

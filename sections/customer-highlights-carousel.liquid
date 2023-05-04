@@ -1,0 +1,351 @@
+<div class="highlights_container">
+    <div class="page-width">
+
+        <h2>{{ section.settings.title }}</h2>
+        <h3>{{ section.settings.subtitle }}</h3>
+
+        <button aria-label='Next slide' aria-controls="thumbnail-slider-track" class="splide__arrow highlights__next">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M0.310263 7.19621L6.60211 0.750895C6.76597 0.583035 7.03141 0.583035 7.19524 0.750895C7.3591 0.918755 7.3591 1.19067 7.19524 1.35849L1.6194 7.07032H19.9018C20.1337 7.07032 20.3213 7.26252 20.3213 7.50003C20.3213 7.73754 20.1337 7.92973 19.9018 7.92973H1.6194L7.19524 13.6415C7.3591 13.8094 7.3591 14.0813 7.19524 14.2491C7.11332 14.333 7.00597 14.375 6.89865 14.375C6.79134 14.375 6.68402 14.333 6.60207 14.2491L0.310225 7.8038C0.146401 7.63598 0.146399 7.36407 0.310263 7.19621Z">
+                </path>
+            </svg>
+        </button>
+
+        <div class="highlights_wrapper">
+            <div id="text-slider" class="splide">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        {% for block in section.blocks %}
+                        {% assign bs = block.settings %}
+                        <div class="splide__slide">
+                            <h5>{{ bs.highlight_title }}</h5>
+                            <p>{{ bs.highlight_body }}</p>
+                        </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div id="thumbnail-slider" class="splide">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        {% for block in section.blocks %}
+                        {% assign bs = block.settings %}
+                        <div class="splide__slide">
+                            <img src="{{ bs.image.src | img_url: 'master' }}">
+                        </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .highlights_container {
+        margin-bottom: 5em;
+    }
+
+    .highlights_container .page-width {
+        position: relative;
+    }
+
+    .splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide.is-active,
+    .splide--nav>.splide__track>.splide__list>.splide__slide.is-active {
+        border: unset !important;
+    }
+
+    .splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide,
+    .splide--nav>.splide__track>.splide__list>.splide__slide {
+        border: unset !important;
+        margin-right: 7px;
+    }
+
+    .highlights_container h3 {
+        margin-bottom: 1.7em !important;
+    }
+
+    .highlights_container h2 {
+        font-weight: bold;
+        margin-top: 1.5em !important;
+    }
+
+    .highlights_container h2,
+    .highlights_container h3 {
+        text-align: center;
+    }
+
+    .highlights_wrapper #text-slider .splide__pagination {
+        display: none;
+    }
+
+
+    .highlights_wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 1em;
+    }
+
+    .highlights_wrapper #text-slider {
+        max-width: 20%;
+    }
+
+    .highlights_wrapper #text-slider .splide__slide p {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    .highlights_wrapper #text-slider .splide__slide {
+        margin-right: -5px !important;
+    }
+
+    .highlights_wrapper #text-slider .splide__slide h5 {
+        font-size: 23px;
+    }
+
+    .highlights_wrapper #thumbnail-slider {
+        padding-left: 1px;
+        max-width: 80%;
+        clip-path: polygon(0 0, 92% 0, 92% 100%, 11% 100%);
+    }
+
+    #thumbnail-slider .splide__slide img {
+        height: 406px;
+        object-fit: cover;
+    }
+
+    .highlights_container .page-width button.highlights__next {
+        top: 40px !important;
+        right: 200px !important;
+        background: transparent !important;
+    }
+
+    .highlights_container .page-width button.highlights__next svg {
+        transform: scaleX(-1);
+    }
+
+    @media (max-width:1310px) {
+
+        .splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide,
+        .splide--nav>.splide__track>.splide__list>.splide__slide {
+            border: unset !important;
+            margin-right: 5px !important;
+        }
+    }
+
+
+
+    @media (max-width:1100px) {
+
+        .highlights_wrapper #thumbnail-slider {
+            clip-path: polygon(0 0, 92% 0, 92% 100%, 17% 100%);
+            max-width: 65%;
+        }
+
+        .highlights_wrapper #text-slider {
+            max-width: 35%;
+        }
+
+        .highlights_container .page-width button.highlights__next {
+        right: 100px !important;
+        }
+    }
+
+    @media (max-width:780px) {
+
+        .highlights_wrapper #thumbnail-slider {
+            max-width: 50%;
+        }
+
+        .highlights_wrapper #text-slider {
+            max-width: 50%;
+        }
+
+        .highlights_container .page-width button.highlights__next {
+        right: 50px !important;
+        }
+
+    }
+
+    @media (max-width:550px) {
+
+
+        .highlights_container h2 {
+            font-size: 22px;
+        }
+
+        .highlights_container h3 {
+            font-size: 17px;
+        }
+
+        #thumbnail-slider .splide__slide img {
+            height: auto !important;
+        }
+
+        .highlights_wrapper #thumbnail-slider .splide__arrows {
+            display: none;
+        }
+
+        .highlights_wrapper {
+            padding-left: 0px !important;
+        }
+
+        .highlights_wrapper #text-slider .splide__pagination {
+            display: flex;
+            bottom: -3em !important;
+        }
+
+        .highlights_wrapper #text-slider .splide__pagination .splide__pagination__page {
+            background: #012169;
+            opacity: 1 !important;
+        }
+
+        .highlights_wrapper #text-slider .splide__pagination .splide__pagination__page.is-active {
+            border: 1px solid #012169 !important;
+            background: #FFF !important;
+        }
+
+        .highlights_wrapper #text-slider .splide__pagination li+li {
+            margin-left: .6em;
+        }
+
+        .highlights_wrapper #thumbnail-slider {
+            max-width: 100%;
+            clip-path: polygon(0 0, 100% 0, 100% 47%, 0 66%);
+            padding-left: 0px !important;
+        }
+
+        .highlights_wrapper #thumbnail-slider .splide__slide {
+            text-align: center;
+        }
+
+        .highlights_wrapper #text-slider {
+            max-width: 100%;
+            margin-top: -140px;
+            padding: 0em 2em;
+        }
+
+        .highlights_wrapper {
+            flex-direction: column-reverse;
+        }
+
+        .highlights_container .page-width {
+            padding: 0px !important
+        }
+
+        .splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide,
+        .splide--nav>.splide__track>.splide__list>.splide__slide {
+            margin-right: 0px !important;
+        }
+
+        .highlights_wrapper #thumbnail-slider .splide--nav>.splide__slider>.splide__track>.splide__list>.splide__slide,
+        .splide--nav>.splide__track>.splide__list>.splide__slide img {
+            width: 550px;
+        }
+
+        .highlights_container .page-width button.highlights__next {
+        display: none;
+        }
+
+    }
+
+    @media (max-width:430px) {
+        .highlights_wrapper #text-slider {
+            margin-top: -100px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var main = new Splide('#text-slider', {
+            type: 'fade',
+            rewind: true,
+            pagination: true,
+            arrows: false,
+        });
+
+        var thumbnails = new Splide('#thumbnail-slider', {
+            type: 'loop',
+            rewind: true,
+            pagination: false,
+            isNavigation: true,
+            arrows: true,
+            perPage: 3,
+            breakpoints: {
+                1100: {
+                    perPage: 2,
+                },
+                780: {
+                    perPage: 1,
+
+                },
+
+            },
+        });
+
+        main.sync(thumbnails);
+        main.mount();
+        thumbnails.mount();
+
+        $('.highlights__next').on('click', function () {
+            thumbnails.go('+1');
+        })
+
+    });
+</script>
+
+
+{% schema %}
+{
+"name": "Customer Highlights",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading Text",
+"default":"Customers Talking DIRTEA"
+},
+{
+"type": "text",
+"id": "subtitle",
+"label": "Subtitle Text",
+"default":"Follow Us On @dirteaworld"
+}
+],
+"blocks" : [
+{
+"type" : "Highlight_Item",
+"name" : "Highlight Item",
+"settings" : [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+},
+{
+"type": "text",
+"id": "highlight_title",
+"label": "Highlight Title"
+},
+{
+"type": "textarea",
+"id": "highlight_body",
+"label": "Highlight Body"
+}
+]
+}
+
+],
+"presets": [
+{
+"name": "Customer Highlights",
+"category": "CTA"
+}
+]
+}
+{% endschema %}

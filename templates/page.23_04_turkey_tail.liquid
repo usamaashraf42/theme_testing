@@ -1,0 +1,1506 @@
+<div class="turkey-tail-landing">
+
+  <!-- landing page hero -->
+  <div class="turkey-tail-landing-hero">
+    <div class="page-width">
+      <div class="width-50vw hero-text-container">
+        <h1>Upgrade your immune system and gut health</h1>
+        <h3>5 stars from 6,000+ customers</h3>
+
+        <div class="hero-bullets">
+          <div>
+            <span><img src="{{ 'icon-gut-health.svg' | asset_url }}"></span>
+            Improved gut health
+          </div>
+          <div>
+            <span><img src="{{ 'icon-reduced-inflammation.svg' | asset_url }}"></span>
+            Reduced inflammation
+          </div>
+          <div>
+            <span><img src="{{ 'icon-immune-system.svg' | asset_url }}"></span>
+            Immune system support
+          </div>
+        </div>
+
+        <a
+          class="hero-buy-now-btn"
+          href="#"
+          onclick="addProductToCartOnClick(event);"
+          data-product-variant-id="{{ page.metafields.custom.attached_product.value.selected_or_first_available_variant.id  }}"
+            >Buy now</a>
+      </div>
+      <div class="width-50vw counter-container">
+        <img src="{{ 'turkey-tail-landing-tin.png' | asset_url }}">
+        {% comment %}
+        <p class="time-countdown-text">Only</p>
+        <div class="timer-flex">
+          <div class="time-box time-day-1-digit">-</div>
+          <div class="time-box time-day-2-digit">-</div>
+          <div class="time-separator time-separator-days">d</div>
+          <div class="time-box time-hour-1-digit">-</div>
+          <div class="time-box time-hour-2-digit">-</div>
+          <div class="time-separator time-separator-hours">h</div>
+          <div class="time-box time-minute-1-digit">-</div>
+          <div class="time-box time-minute-2-digit">-</div>
+          <div class="time-separator time-separator-minutes">m</div>
+          <div class="time-box time-second-1-digit">-</div>
+          <div class="time-box time-second-2-digit">-</div>
+          <div class="time-separator time-separator-seconds">s</div>
+        </div>
+        <p class="time-countdown-text">Time left of early access</p>
+        {% endcomment %}
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ticker -->
+  <!--<div class="turkey-tail-ticker"></div> -->
+  {% section 'turkey-ticker' %}
+
+
+
+  <!-- product info -->
+  <div class="turkey-tail-product-info" id="turkeyTailProductInfo">
+    <div class="page-width">
+      <div class="product-info-flex">
+        <div class="">
+          <h2>Clean, natural immunity</h2>
+          <div class="product-info-bullets">
+            <div>
+              <span><img src="{{ 'icon-tick.svg' | asset_url }}"></span>
+              2,000mg per serving
+            </div>
+            <div>
+              <span><img src="{{ 'icon-tick.svg' | asset_url }}"></span>
+              Most researched functional mushroom
+            </div>
+            <div>
+              <span><img src="{{ 'icon-tick.svg' | asset_url }}"></span>
+              Improved gut health
+            </div>
+            <div>
+              <span><img src="{{ 'icon-tick.svg' | asset_url }}"></span>
+              Rich in beta-d glucans, polysaccharides & antioxidants
+            </div>
+            <div>
+              <span><img src="{{ 'icon-tick.svg' | asset_url }}"></span>
+              Healthy gut microbiome
+            </div>
+            <div>
+              <span><img src="{{ 'icon-tick.svg' | asset_url }}"></span>
+              Reduced inflammation
+            </div>
+            <div>
+              <span><img src="{{ 'icon-tick.svg' | asset_url }}"></span>
+              Immune system support
+            </div>
+          </div>
+
+        </div>
+        <div class="">
+          <img src="{{ 'turkey-tail-products.png' | asset_url }}">
+        </div>
+      </div>
+
+      <div id="turkeyTailBuyOptions">
+        <div class="purchase-box one-time-purchase">
+          {% assign original_product_price = page.metafields.custom.attached_product.value.price | divided_by: 100.00 %}
+          <p class="purchase-option-title">One time purchase</p>
+          <p class="product-price">&pound; {{ original_product_price }}</p>
+          <a
+            href="#"
+            onclick="addProductToCartOnClick(event);"
+            data-product-variant-id="{{ page.metafields.custom.attached_product.value.selected_or_first_available_variant.id  }}"
+            class="turkey-tail-buy-now-btn">Buy now</a>
+
+        </div>
+        <div class="purchase-box subscription-purchase">
+          <p class="purchase-option-title">Subscription plan</p>
+
+          <div class="subscription-options-list-container">
+            {% for subscription_product in page.metafields.custom.attached_product.value.metafields.custom.subscription_products.value %}
+              {% assign subscription_plan_monthly_cost = subscription_product.price | divided_by: subscription_product.metafields.custom.subscription_plan_months | divided_by: 100.00 %}
+              {%- liquid
+              assign current_variant = subscription_product.selected_or_first_available_variant | default: subscription_product.variants.first
+              assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
+          
+              if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
+              assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
+              endif
+              -%}
+              <div
+                class="subscription-option {% if forloop.index == 1 %}selected-subscription{% endif  %}"
+                data-subscription-option-variant-id="{{ subscription_product.selected_or_first_available_variant.id }}"
+                data-product-selling-plan-id="{{ current_selling_plan_allocation.selling_plan.id }}"
+              >
+                <div style="display: flex; justify-content: space-between;">
+                  <p class="subscription-title">{{ subscription_product.metafields.custom.subscription_plan_months }} month</p>
+                  <p class="subscription-title">&pound;{{ subscription_plan_monthly_cost }} / MO</p>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  {% assign subscription_product_price = subscription_product.price | divided_by: 100.00 %}
+                  {% assign savings_fraction = subscription_plan_monthly_cost | divided_by: original_product_price %}
+                  {% assign savings_pct = 1 | minus: savings_fraction %}
+              <p class="subscription-payment-note">Pay &pound;{{ subscription_product_price }} every {{ subscription_product.metafields.custom.subscription_plan_months }} {% if subscription_product.metafields.custom.subscription_plan_months == 1 %}month{% else %}months{% endif %}</p>
+                  <p class="subscription-savings-pill">Save {{ savings_pct | times: 100 | round }}%</p>
+                </div>
+              </div>
+
+            {% endfor %}
+          </div>
+
+          {% for subscription_product in page.metafields.custom.attached_product.value.metafields.custom.subscription_products.value %}
+            <div class="subscription-sumary {% if forloop.index != 1 %}subsciption-summary-hidden{% endif %}" data-subscription-summary-variant-id="{{ subscription_product.selected_or_first_available_variant.id }}">
+              <div class="subscription-how-its-shipped">
+                <p>
+                  <strong>How your DIRTEA will be shipped to you</strong>
+                </p>
+                <ul>
+                  {% for shipping_note in subscription_product.metafields.custom.what_gets_shipped.value %}
+                    <li>{{ shipping_note }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div>
+                {% assign subscription_plan_monthly_cost = subscription_product.price | divided_by: subscription_product.metafields.custom.subscription_plan_months | divided_by: 100.00 %}
+                <h3>&pound;{{ subscription_plan_monthly_cost }} / MO</h3>
+              </div>
+            </div>
+          {% endfor %}
+
+          {% for subscription_product in page.metafields.custom.attached_product.value.metafields.custom.subscription_products.value %}
+            {% if forloop.index == 1 %}
+            {%- liquid
+            assign current_variant = subscription_product.selected_or_first_available_variant | default: subscription_product.variants.first
+            assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
+        
+            if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
+            assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
+            endif
+            -%}
+            <a
+              href="#"
+              class="turkey-tail-buy-now-btn subscribe-btn-add-to-cart"
+              onclick="addProductToCartOnClick(event);"
+              data-product-variant-id="{{ subscription_product.selected_or_first_available_variant.id  }}"
+              data-product-selling-plan-id="{{ current_selling_plan_allocation.selling_plan.id }}"
+            >Subscribe</a>
+          {% endif %}
+        {% endfor %}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- press -->
+  <div class="turkey-tail-press">
+    <div class="page-width">
+      <p class="section-title-mini">PRESS</p>
+      <h2>As seen in</h2>
+      <div class="press-flex">
+        <div class="press-item">
+          <p><img src="{{ 'press-icon-vogue.png' | asset_url }}"></p>
+          <p>“Make way for mushrooms - DIRTEA delivers countless benefits”</p>
+        </div>
+        <div class="press-item">
+          <p><img src="{{ 'press-icon-sheerluxe.png' | asset_url }}"></p>
+          <p>“The best new supplement to try”</p>
+        </div>
+        <div class="press-item">
+          <p><img src="{{ 'press-icon-forbes.png' | asset_url }}"></p>
+          <p>“Perfect as part of your daily wellness routine”</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- video -->
+  <div class="turkey-tail-video">
+    <div class="page-width">
+      <h2>Turkey Tail in 30 seconds</h2>
+      <div data-publish-id='ygqpdc1gk0now' class='tolstoy-carousel'></div>
+    
+    </div>
+  </div>
+
+
+
+  <!-- the science -->
+  <div class="turkey-tail-science">
+    <div class="page-width">
+      <p class="section-title-mini">immunity powerhouse</p>
+      <h2>The Science behind Turkey Tail</h2>
+
+      <div class="science-notes">
+        <p>Beta Glucans = Immune support</p>
+        <p>Polysaccharides = Repair cell damage</p>
+        <p>Antioxidants = Protect from free radicals</p>
+      </div>
+
+      <div class="science-grid">
+
+        <div class="science-grid-item">
+          <div><img width="50px" src="{{ 'icon-tick.svg' | asset_url }}"></div>
+          <div>
+            <p>
+              <strong>Antioxidants</strong>
+            </p>
+            <p>Packed with 35+ phenols and powerful flavonoid antioxidants like quercetin and baicalein, Turkey Tail may help protect our bodies from harmful free radicals.
+              <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5551541/" target="_blank">(1)</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="science-grid-item">
+          <div><img width="50px" src="{{ 'icon-tick.svg' | asset_url }}"></div>
+          <div>
+            <p>
+              <strong>Beta-glucans</strong>
+            </p>
+            <p>These compounds activate responses from your immune cells resulting in increased reactions to pathogens and infected cells needs a fullstop.
+              <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5932370/" target="_blank">(3)</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="science-grid-item">
+          <div><img width="50px" src="{{ 'icon-tick.svg' | asset_url }}"></div>
+          <div>
+            <p>
+              <strong>YZP Protein</strong>
+            </p>
+            <p>Research has shown that YZP protein in Turkey Tail activates B cells, which could be beneficial for its immune properties and ability to reduce inflammation.
+              <a href="https://pubmed.ncbi.nlm.nih.gov/24019869/" target="_blank">(2)</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="science-grid-item">
+          <div><img width="50px" src="{{ 'icon-tick.svg' | asset_url }}"></div>
+          <div>
+            <p>
+              <strong>Polysaccharides</strong>
+            </p>
+            <p>PSK (polysaccharide-k) and PSP (polysaccharide peptide) are compounds that have been shown to support the immune system.
+              <a href="https://www.tandfonline.com/doi/full/10.4161/gmic.29558" target="_blank">(4)</a>
+            </p>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- reviews -->
+  <div class=""></div>
+
+
+  <!-- counter -->
+  <div class="turkey-tail-counter">
+    <div class="page-width">
+      <h1>Take Control of Your Immunity</h1>
+      <p>improve your gut microbiome and immune response</p>
+
+      {% comment %}
+      <div class="counter-container">
+        <p class="time-countdown-text">Only</p>
+        <div class="timer-flex">
+          <div class="time-box time-day-1-digit">-</div>
+          <div class="time-box time-day-2-digit">-</div>
+          <div class="time-separator time-separator-days">d</div>
+          <div class="time-box time-hour-1-digit">-</div>
+          <div class="time-box time-hour-2-digit">-</div>
+          <div class="time-separator time-separator-hours">h</div>
+          <div class="time-box time-minute-1-digit">-</div>
+          <div class="time-box time-minute-2-digit">-</div>
+          <div class="time-separator time-separator-minutes">m</div>
+          <div class="time-box time-second-1-digit">-</div>
+          <div class="time-box time-second-2-digit">-</div>
+          <div class="time-separator time-separator-seconds">s</div>
+        </div>
+        <p class="time-countdown-text">Time left of early access</p>
+      </div>
+      {% endcomment %}
+
+      <a
+        class="hero-buy-now-btn"
+        style="margin-top: 40px;"
+        onclick="addProductToCartOnClick(event);"
+        data-product-variant-id="{{ page.metafields.custom.attached_product.value.selected_or_first_available_variant.id  }}"
+        href="#">Buy now</a>
+
+    </div>
+  </div>
+
+
+  <!-- product info -->
+  <div class="product-info">
+    <div class="page-width">
+      <div class="product-info-grid-item" style="background-image: url('{{ 'turkey-tail-tin-square.png' | asset_url }}');"></div>
+      <div class="product-info-grid-item" style="background: none; justify-content: center; padding: 0px;">
+        <p class="section-title-mini">Product Info</p>
+        <h1>Fight fatigue, strengthen immunity and support gut health</h1>
+        <a
+          class="hero-buy-now-btn"
+          style="margin-top: 40px;"
+          onclick="addProductToCartOnClick(event);"
+          data-product-variant-id="{{ page.metafields.custom.attached_product.value.selected_or_first_available_variant.id  }}"  
+          href="#">Buy now</a>
+      </div>
+      <div class="product-info-grid-item">
+        <img src="{{ 'healthy-immune-system.png' | asset_url }}">
+        <h2>Stronger and healthier immune system</h2>
+        <p class="product-info-description">Your new daily mushroom powder for a stronger and healthier immune system, reduced inflammation and improved gut health. Working at a cellular level, Turkey Tail stimulates the release of immune-supportive polysaccharide compounds and helps modulate the microbiome composition in the gut.</p>
+      </div>
+      <div class="product-info-grid-item">
+        <img src="{{ 'turkey-tail-power-house.png' | asset_url }}">
+        <h2>Turkey Tail is a beta-glucan powerhouse</h2>
+        <p class="product-info-description">Used for modulating the immune system, Turkey Tail is rich in powerful and unique compounds used for fighting fatigue, strengthening the immune system and supporting a healthy gut microbiome.</p>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ingredients -->
+  <div class="nutrition-ingredients">
+    <div class="page-width">
+      <h1>Nutrition &amp; ingredients</h1>
+      <p>100% Organic Turkey Tail Mushroom Powder.</p>
+      <p>Nothing else added.</p>
+      <div class="ingredients-flex">
+        <div class="ingredients-side-panel"></div>
+        <div class="ingredients-main-image"><img src="{{ 'turkey-tail-ingredients-tin.png' | asset_url }}"></div>
+        <div class="ingredients-side-panel">
+          <ul>
+            <li>Energy: 3KJ (1Kcal)</li>
+            <li>Fat: 0g</li>
+            <li>(of which saturated): 0g</li>
+            <li>Carbohydrates: 0g</li>
+            <li>(of which sugars): 0g</li>
+            <li>Fibre: 0g</li>
+            <li>Protein: 0g</li>
+            <li>Salt: 0g</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- how to dirtea -->
+  <div class="how-to-dirtea">
+    <div class="page-width">
+      <h2>How to DIRTEA</h2>
+      <div class="how-to-dirtea-flex">
+        <div class="how-to-dirtea-flex-item">
+          <img src="{{ 'how-to-dirtea-turkey-tail-1.png' | asset_url }}">
+          <p class="how-to-step">
+            <strong>Step 1</strong>
+          </p>
+          <p class="how-to-desc">Add 2g to a cup</p>
+        </div>
+        <div class="how-to-dirtea-flex-item">
+          <img src="{{ 'how-to-dirtea-turkey-tail-2.png' | asset_url }}">
+          <p class="how-to-step">
+            <strong>Step 2</strong>
+          </p>
+          <p class="how-to-desc">Pour in hot water</p>
+        </div>
+        <div class="how-to-dirtea-flex-item">
+          <img src="{{ 'how-to-dirtea-turkey-tail-3.png' | asset_url }}">
+          <p class="how-to-step">
+            <strong>Step 3</strong>
+          </p>
+          <p class="how-to-desc">Stir well</p>
+        </div>
+        <div class="how-to-dirtea-flex-item">
+          <img src="{{ 'how-to-dirtea-turkey-tail-4.png' | asset_url }}">
+          <p class="how-to-step">
+            <strong>Step 4</strong>
+          </p>
+          <p class="how-to-desc">Add your favourite milk, if desired</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- meet the mushroom -->
+  <div class="meet-the-mushroom">
+    <div class="page-width">
+      <div class="text-center">
+
+        <h2>Meet the mushroom</h2>
+        <img src="//cdn.shopify.com/s/files/1/0502/4782/7656/files/19-turkeytail-removebg-preview_200x.png?v=1675174791">
+
+        <h3>Turkey Tail Mushroom Powder</h3>
+
+        <p class="meet-text-small">The Immunity Mushroom</p>
+        <p class="meet-text-medium">Turkey Tail is the most researched of all functional mushrooms and is packed full of clean beta-glucan power to support your immune system and gut health.</p>
+      </div>
+
+      <div class="meet-the-mushroom-faqs">
+
+        <div class="faq-item">
+          <div class="faq-item-title-row">
+            <p class="meet-text-large">Beta-glucans</p>
+            <a href="#" class="faq-toggle-btn faq-open"></a>
+          </div>
+          <div class="faq-content">
+            <p class="meet-text-large">Beta glucans are naturally occurring soluble fibers found in fungi and other plants such as oats and barley. They can increase the activity of our immune system and act as immunomodulating agents by stimulating immune responses from innate immune cells. (<a href="https://www.webmd.com/diet/health-benefits-beta-glucan#:~:text=Beta%20glucan%20acts%20as%20an,part%20from%20where%20it%20started)." target="_blank">Reference</a>)</p>
+          </div>
+        </div>
+
+        <div class="faq-item faq-hidden">
+          <div class="faq-item-title-row">
+            <p class="meet-text-large">Polysaccharides</p>
+            <a href="#" class="faq-toggle-btn faq-closed"></a>
+          </div>
+          <div class="faq-content">
+            <p class="meet-text-large">Polysaccharides are large carbohydrate molecules that are known for the nutritional value and positive effects on our immune system. (<a href="https://journals.sagepub.com/doi/pdf/10.1177/1934578X1701200604#:~:text=Polysaccharides%20are%20abundant%20natural%20polymers,digestive%20functions%20and%20detoxification%20system." target="_blank">Reference</a>) Turkey tail contains two particularly interesting polysaccharides, PSK and PSP. PSK may help repair immune cell damage caused and strengthen the immune system (<a href="https://www.ncbi.nlm.nih.gov/books/NBK424937/" target="_blank">Reference</a>), whilst PSP acts as a prebiotic to modulate the microbiome composition in the intestine. (<a href="https://www.tandfonline.com/doi/full/10.4161/gmic.29558" target="_blank">Reference</a>)</p>
+          </div>
+        </div>
+
+        <div class="faq-item faq-hidden">
+          <div class="faq-item-title-row">
+            <p class="meet-text-large">Gut health</p>
+            <a href="#" class="faq-toggle-btn faq-closed"></a>
+          </div>
+          <div class="faq-content">
+            <p class="meet-text-large">The compounds in Turkey Tail may help balance our gut bacteria. One clinical study found that the polysaccharide PSP has prebiotic properties which can help balance the levels of healthy bacteria in the intestine and regulate the gut microbiome. (<a href="https://www.tandfonline.com/doi/full/10.4161/gmic.29558" target="_blank">Reference</a>)</p>
+          </div>
+        </div>
+
+        <div class="faq-item faq-hidden">
+          <div class="faq-item-title-row">
+            <p class="meet-text-large">Immunity</p>
+            <a href="#" class="faq-toggle-btn faq-closed"></a>
+          </div>
+          <div class="faq-content">
+            <p class="meet-text-large">Turkey Tail is packed full of active compounds, antioxidants, beta-glucans and polysaccharides that all work together to increase our immune response, regulate our immune system and balance the levels of health bacteria in our gut.</p>
+          </div>
+        </div>
+
+        <div class="faq-item faq-hidden">
+          <div class="faq-item-title-row">
+            <p class="meet-text-large">Taste</p>
+            <a href="#" class="faq-toggle-btn faq-closed"></a>
+          </div>
+          <div class="faq-content">
+            <p class="meet-text-large">Turkey Tail has a mild taste that is slightly earthy but not bitter.</p>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+  {% section 'quality-mushrooms' %}
+
+  {% comment %}
+  <div style="width: 100%; height: 40px; display: none;"></div>
+  {% section 'tolstoy-section-title' %}
+  {% section 'tolstoy-ig' %}
+  {% endcomment %}
+
+</div>
+
+
+<style>
+  .width-50vw {
+    width: 50vw;
+  }
+  @font-face {
+    font-family: Avenir;
+    src: url('{{ 'AvenirLTStd-Roman.otf' | asset_url }}');
+  }
+
+  .turkey-tail-landing h1 {
+    font-family: 'Avenir' !important;
+    color: #0D1C41;
+    font-weight: 800;
+    font-size: 56px;
+    padding-bottom: 24px;
+  }
+  .turkey-tail-landing h2 {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 64px;
+    color: #0D1C41;
+  }
+  .turkey-tail-landing h3 {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 38px;
+    color: #0D1C41;
+  }
+  .turkey-tail-landing .section-title-mini {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 24px;
+    text-transform: uppercase;
+    color: #979DAC;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+
+
+  .turkey-tail-landing-hero {
+    font-family: 'Avenir' !important;
+    background: #EBE2D9;
+    background-image: url('{{ 'turkey-tail-landing-hero.png' | asset_url }}');
+    background-position: center;
+    background-size: cover;
+    padding-top: 170px;
+    padding-bottom: 60px;
+  }
+
+  .turkey-tail-landing-hero .page-width {
+    display: flex;
+  }
+
+  .turkey-tail-landing-hero .hero-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .turkey-tail-landing-hero .hero-text-container h1 {
+    padding-bottom: 0;
+  }
+  .turkey-tail-landing-hero .hero-text-container h3 {
+    font-size: 20px;
+    padding-bottom: 15px;
+  }
+
+  .turkey-tail-landing-hero .hero-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+
+  .turkey-tail-landing-hero .hero-bullets div {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #525B74;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 14px;
+  }
+  .turkey-tail-landing-hero .hero-bullets div span {
+    display: block;
+    width: 26px;
+    height: 26px;
+    text-align: center;
+  }
+
+  .turkey-tail-landing .hero-buy-now-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px 60px;
+    gap: 10px;
+
+    width: 203px;
+    height: 64px;
+
+    background: #23DB8E;
+    border-radius: 10px;
+
+
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+
+    /* white scale / primary */
+
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+
+
+
+  .turkey-tail-landing .counter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .turkey-tail-landing .counter-container img {
+    width: 378px;
+  }
+  .turkey-tail-landing .counter-container .time-countdown-text {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #0D1C41;
+    font-weight: 800;
+    margin: 8px 0;
+  }
+
+  .turkey-tail-landing .counter-container .timer-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: 4px;
+    justify-content: center;
+  }
+  .turkey-tail-landing .counter-container .time-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    gap: 10px;
+    width: 41px;
+    height: 60px;
+    background: #B6E6F0;
+    border-radius: 8px;
+
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 64px;
+    color: #0D1C41;
+  }
+
+  .turkey-tail-landing .counter-container .time-separator {
+    width: 44px;
+    height: 28px;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 40px;
+    color: #0D1C41;
+  }
+
+
+
+  .turkey-tail-ticker {
+    width: 100%;
+    height: 45px;
+    background: #9FD0D7;
+  }
+
+
+
+  .turkey-tail-product-info {
+    padding-top: 40px;
+    background: white;
+  }
+  .turkey-tail-product-info .product-info-flex {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .turkey-tail-product-info .product-info-bullets span {
+    margin-right: 10px;
+  }
+  .turkey-tail-product-info .product-info-bullets {
+    margin-top: 20px;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #2D3957;
+  }
+  .turkey-tail-product-info .product-info-bullets div {
+    margin: 14px 0;
+  }
+
+  .turkey-tail-product-info #turkeyTailBuyOptions {
+    display: flex;
+    gap: 32px;
+  }
+  .turkey-tail-product-info #turkeyTailBuyOptions div.purchase-box {
+    background: #F7F7FC;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 40px;
+  }
+
+  .turkey-tail-product-info #turkeyTailBuyOptions div.one-time-purchase {
+    width: 40%;
+  }
+  .turkey-tail-product-info #turkeyTailBuyOptions div.subscription-purchase {
+    width: 60%;
+  }
+
+  .turkey-tail-product-info .subscription-purchase .subscription-options-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-options-list-container p {
+    font-family: 'Avenir';
+    font-style: normal;
+    line-height: 27px;
+    color: #2D3957;
+    margin: 0;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-options-list-container p.subscription-title {
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0D1C41;
+    margin-bottom: 5px;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-options-list-container p.subscription-payment-note {
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(13, 28, 65, 0.6);
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-options-list-container p.subscription-savings-pill {
+    background: #B6E6F0;
+    border-radius: 50px;
+    padding: 0 20px;
+
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0D1C41;
+
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-options-list-container .subscription-option {
+    border: 2px solid #E7E7E7;
+    border-radius: 10px;
+    padding: 16px 32px;
+    width: 100%;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-options-list-container .subscription-option.selected-subscription {
+    border: 2px solid #2F7C39;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-sumary {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding-top: 32px;
+    margin-bottom: 22px;
+    border-top: 1px solid #CFCFD4;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-sumary.subsciption-summary-hidden {
+    display: none;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-how-its-shipped {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2D3957;
+  }
+  .turkey-tail-product-info .subscription-purchase .subscription-how-its-shipped p {
+    margin-bottom: 10px;
+  }
+
+  .turkey-tail-product-info p.purchase-option-title {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 27px;
+    color: #2D3957;
+  }
+  .turkey-tail-product-info p.product-price {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 24px;
+    color: #2D3957;
+  }
+  .turkey-tail-product-info .turkey-tail-buy-now-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px 60px;
+    gap: 10px;
+    width: 203px;
+    height: 64px;
+    background: #23DB8E;
+    border-radius: 10px;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    text-decoration: none;
+  }
+
+
+
+  .turkey-tail-press {
+    background: white;
+    padding: 80px 0;
+  }
+  .turkey-tail-press .press-flex {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+  }
+  .turkey-tail-press .press-flex .press-item {
+    width: 33%;
+    background: #FBFBFB;
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .turkey-tail-press .press-flex .press-item p {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #525B74;
+  }
+
+
+  .turkey-tail-science {
+    background: #F7F7FC;
+    background-image: url('{{ 'turkey-tail-science.png' | asset_url }}');
+    background-repeat: no-repeat;
+    background-position: top right;
+    padding: 80px 0;
+  }
+  .turkey-tail-science .science-notes p {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #2D3957;
+    padding: 0;
+    margin: 0;
+  }
+  .turkey-tail-science .science-grid {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 50% 50%;
+    margin-top: 270px;
+  }
+  .turkey-tail-science .science-grid .science-grid-item p {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-size: 20px;
+    line-height: 27px;
+    color: #2D3957;
+  }
+  .turkey-tail-science .science-grid .science-grid-item a {
+    color: #2F7C39;
+    font-size: 16px;
+  }
+  .turkey-tail-science .science-grid .science-grid-item {
+    display: flex;
+    gap: 12px;
+  }
+
+
+
+  .turkey-tail-counter {
+    background: white;
+    padding: 80px 0;
+  }
+  .turkey-tail-counter .page-width {
+    background-image: url('{{ 'turkey-tail-take-control.png' | asset_url }}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 20px;
+    padding: 92px 148px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .turkey-tail-counter .page-width p {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    color: #2D3957;
+  }
+
+
+
+  .product-info {
+    background: white;
+    padding: 120px 0;
+  }
+  .product-info .page-width {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 50% 50%;
+  }
+  .product-info .page-width .product-info-grid-item {
+    background: #F7F7FC;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20px;
+    width: 100%;
+    min-height: 563px;
+    display: flex;
+    flex-direction: column;
+    padding: 66px;
+  }
+  .product-info .page-width .product-info-grid-item img {
+    width: 77px;
+    height: 77px;
+    margin-bottom: 32px;
+  }
+  .product-info .page-width .product-info-grid-item p.product-info-description {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    color: #525B74;
+  }
+
+
+
+  .nutrition-ingredients {
+    background: #EBE2D9;
+    padding: 120px 0;
+    text-align: center;
+  }
+  .nutrition-ingredients p {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    text-align: center;
+    color: #2D3957;
+    margin: 0;
+  }
+
+  .nutrition-ingredients .ingredients-flex {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nutrition-ingredients .ingredients-flex .ingredients-side-panel {
+    min-width: 150px;
+  }
+  .nutrition-ingredients .ingredients-flex .ingredients-main-image {
+    margin-left: 124px;
+  }
+
+  .nutrition-ingredients .ingredients-flex ul li {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    color: #2D3957;
+    text-align: left;
+  }
+
+
+
+  .how-to-dirtea {
+    background: white;
+    padding: 120px 0;
+  }
+  .how-to-dirtea h2 {
+    text-align: center;
+    padding-bottom: 15px;
+  }
+  .how-to-dirtea .how-to-dirtea-flex {
+    display: flex;
+    gap: 24px;
+  }
+  .how-to-dirtea .how-to-dirtea-flex .how-to-dirtea-flex-item {
+    text-align: center;
+    font-family: 'Avenir';
+    font-style: normal;
+    font-size: 20px;
+    line-height: 27px;
+    color: #2D3957;
+  }
+  .how-to-dirtea .how-to-dirtea-flex .how-to-dirtea-flex-item img {
+    margin-bottom: 10px;
+  }
+  .how-to-dirtea .how-to-dirtea-flex .how-to-dirtea-flex-item p.how-to-desc {
+    color: #525B74;
+  }
+
+
+
+  .meet-the-mushroom {
+    background: white;
+    padding: 120px 0;
+  }
+
+  .meet-the-mushroom .text-center {
+    max-width: 556px;
+    margin: 0 auto;
+  }
+  .meet-the-mushroom .text-center img {
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    background: #f7f7f7;
+    width: 160px;
+    height: 160px;
+    margin-bottom: 20px;
+  }
+  .meet-the-mushroom p {
+    font-family: 'Avenir';
+    font-style: normal;
+    font-weight: 400;
+    color: #2D3957;
+  }
+  .meet-the-mushroom p.meet-text-small {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .meet-the-mushroom p.meet-text-medium {
+    font-size: 18px;
+    line-height: 27px;
+  }
+  .meet-the-mushroom p.meet-text-large {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .meet-the-mushroom .meet-the-mushroom-faqs {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 64px auto 0;
+
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item {
+    border-top: 1px solid #D9D9D9;
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item .faq-item-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item .faq-item-title-row p {
+    margin: 0;
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item .faq-item-title-row a {
+    display: block;
+    height: 20px;
+    width: 20px;
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item .faq-item-title-row a.faq-toggle-btn {
+    background-image: url('{{ 'icon-chevron-down.svg' | asset_url }}');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item .faq-item-title-row a.faq-open {
+    transform: rotate(180deg);
+  }
+
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item .faq-content {
+    padding-bottom: 20px;
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item .faq-content a {
+    color: #2F7C39;
+    font-size: 16px;
+  }
+  .meet-the-mushroom .meet-the-mushroom-faqs .faq-item.faq-hidden .faq-content {
+    display: none;
+  }
+
+
+
+
+  @media only screen and (max-width: 576px) {
+    .turkey-tail-landing h1 {
+      font-size: 26px;
+      line-height: 36px;
+    }
+    .turkey-tail-landing h2 {
+      font-size: 26px;
+      line-height: 36px;
+    }
+    .turkey-tail-landing h3 {
+      font-size: 17px;
+      line-height: 24px;
+    }
+    .turkey-tail-landing .section-title-mini {
+      font-size: 12px;
+      line-height: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .turkey-tail-landing-hero { background-image: none; }
+    .turkey-tail-landing-hero .page-width {
+      flex-direction: column;
+    }
+    .turkey-tail-landing-hero h1 {
+      font-size: 36px;
+    }
+    .turkey-tail-landing-hero .width-50vw {
+      width: 100%;
+    }
+    .counter-container img { margin-top: 20px; }
+    .timer-flex {
+      gap: 2px !important;
+    }
+    .time-separator-seconds {
+      display: none !important;
+    }
+    .time-second-1-digit {
+      display: none !important;
+    }
+    .time-second-2-digit {
+      display: none !important;
+    }
+    .turkey-tail-landing .counter-container .time-separator {
+      font-size: 30px;
+      width: 27px;
+    }
+    .turkey-tail-landing .counter-container .time-box { 
+      font-size: 30px;
+      width: 34px;
+      height: 43px;
+    }
+    .turkey-tail-product-info .product-info-flex {
+      flex-direction: column;
+    }
+    .turkey-tail-product-info #turkeyTailBuyOptions {
+      flex-direction: column;
+    }
+    .turkey-tail-product-info #turkeyTailBuyOptions div.one-time-purchase {
+      width: 100%;
+    }
+    .turkey-tail-product-info #turkeyTailBuyOptions div.subscription-purchase {
+      width: 100%;
+    }
+    .turkey-tail-product-info #turkeyTailBuyOptions div.purchase-box {
+      padding: 45px 10px;
+    }
+    .turkey-tail-product-info .subscription-purchase .subscription-options-list-container p.subscription-payment-note {
+      max-width: 50%;
+    }
+    .turkey-tail-product-info .subscription-purchase .subscription-options-list-container p.subscription-savings-pill {
+      height: 22px;
+    }
+    .turkey-tail-product-info .subscription-purchase .subscription-sumary {
+      margin-bottom: 120px;
+    }
+    .turkey-tail-product-info .subscription-purchase .subscription-how-its-shipped {
+      max-width: 50%;
+    }
+    .turkey-tail-product-info .subscription-purchase .subscription-how-its-shipped ul {
+      position: absolute;
+      margin-right: 40px;
+    }
+    .turkey-tail-press .press-flex {
+      flex-direction: column;
+    }
+    .turkey-tail-press .press-flex .press-item {
+      width: 100%;
+    }
+    .turkey-tail-science {
+      background-position: top left;
+      padding-top: 500px;
+    }
+    .turkey-tail-science .science-grid {
+      margin-top: 64px;
+      grid-template-columns: 100%;
+    }
+    .turkey-tail-science .science-grid .science-grid-item img {
+      width: 80px;
+    }
+    .turkey-tail-counter .page-width {
+      padding: 56px 35px;
+      text-align: center;
+    }
+    .product-info .page-width {
+      grid-template-columns: 100%;
+    }
+    .product-info .page-width .product-info-grid-item {
+      aspect-ratio: 1 !important;
+      min-height: auto;
+    }
+    .product-info .page-width .product-info-grid-item {
+      padding: 30px;
+    }
+    .nutrition-ingredients .ingredients-flex {
+      flex-direction: column;
+    }
+    .nutrition-ingredients .ingredients-flex .ingredients-main-image {
+      margin-left: 17px;
+    }
+    .how-to-dirtea .how-to-dirtea-flex {
+      flex-direction: column;
+    }
+    .how-to-dirtea .how-to-dirtea-flex .how-to-dirtea-flex-item {
+      border-bottom: 1px solid #ece7ed;
+      padding-bottom: 15px;
+    }
+    .quality-mushrooms-container { display: none;}
+
+  }
+
+
+
+  .turkey-tail-video {
+    background-color: white;
+    text-align: center;
+  }
+  .turkey-tail-landing .tolstoy-carousel {
+    background-color: white !important;
+    padding-top: 20px !important;
+    padding-bottom: 64px !important;
+  }
+
+
+  html body .main-content[data-page-type=page] {
+    padding-top: 0;
+  }
+  html body.announcement-hidden .main-content[data-page-type=page] {
+    padding-top: 0;
+  }
+  .content-for-layout {
+    padding-bottom: 0 !important;
+  }
+
+  html,
+  body {
+    position: relative;
+    overflow-x: hidden;
+  }
+</style>
+
+
+<script>
+{% comment %}
+// ---------------------------------------------
+// Count down timer
+// ---------------------------------------------
+
+// Set the date we're counting down to
+  var countDownDate = new Date("Apr 16, 2023 23:59:59").getTime();
+
+// Get today's date and time
+  var now = new Date().getTime();
+
+  if (countDownDate > now) { // Update the count down every 1 second
+    var x = setInterval(function() {
+
+// Get today's date and time
+      var now = new Date().getTime();
+
+// Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+// Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var day_array = String(days)
+        .split("")
+        if (day_array.length == 1) {
+          var day_1 = "0"
+          var day_2 = String(day_array[0])
+        } else {
+          var day_1 = String(day_array[0])
+          var day_2 = String(day_array[1])
+        }
+        document
+        .querySelectorAll(".time-day-1-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = day_1
+        })
+        document
+        .querySelectorAll(".time-day-2-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = day_2
+        })
+
+
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var hours_array = String(hours)
+        .split("")
+        if (hours_array.length == 1) {
+          var hour_1 = "0"
+          var hour_2 = String(hours_array[0])
+        } else {
+          var hour_1 = String(hours_array[0])
+          var hour_2 = String(hours_array[1])
+        }
+        document
+        .querySelectorAll(".time-hour-1-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = hour_1
+        })
+        document
+        .querySelectorAll(".time-hour-2-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = hour_2
+        })
+
+
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var minutes_array = String(minutes)
+        .split("")
+        if (minutes_array.length == 1) {
+          var minute_1 = "0"
+          var minute_2 = String(minutes_array[0])
+        } else {
+          var minute_1 = String(minutes_array[0])
+          var minute_2 = String(minutes_array[1])
+        }
+        document
+        .querySelectorAll(".time-minute-1-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = minute_1
+        })
+        document
+        .querySelectorAll(".time-minute-2-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = minute_2
+        })
+
+
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      var seconds_array = String(seconds)
+        .split("")
+        if (seconds_array.length == 1) {
+          var second_1 = "0"
+          var second_2 = String(seconds_array[0])
+        } else {
+          var second_1 = String(seconds_array[0])
+          var second_2 = String(seconds_array[1])
+        }
+        document
+        .querySelectorAll(".time-second-1-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = second_1
+        })
+        document
+        .querySelectorAll(".time-second-2-digit")
+        .forEach(function(elem) {
+          elem.innerHTML = second_2
+        })
+
+    }, 1000);
+  }
+{% endcomment %}
+
+
+// ---------------------------------------------
+// FAQ toggle
+// ---------------------------------------------
+  var toggleBtns = document.querySelectorAll(".faq-toggle-btn")
+  toggleBtns.forEach(function(elem) {
+    elem.addEventListener("click", function(e) {
+      e.preventDefault();
+      if (elem.classList.contains("faq-closed")) {
+        elem
+          .classList
+          .remove("faq-closed")
+          elem
+          .classList
+          .add("faq-open")
+        elem
+        .closest(".faq-item")
+        .classList
+        .remove("faq-hidden")
+      } else {
+        elem
+          .classList
+          .add("faq-closed")
+          elem
+          .classList
+          .remove("faq-open")
+        elem
+        .closest(".faq-item")
+        .classList
+        .add("faq-hidden")
+      }
+    });
+  })
+
+
+// ---------------------------------------------
+// Subscription selector
+// ---------------------------------------------
+
+var subscriptionOptions = document.querySelectorAll(".subscription-option");
+subscriptionOptions.forEach(function(elem) {
+  elem.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    var subscriptionVariantId = elem.dataset.subscriptionOptionVariantId
+    var sellingPlanId = elem.dataset.productSellingPlanId
+  
+    // Change green highlighting
+    subscriptionOptions.forEach(function(elem) {
+        elem.classList.remove("selected-subscription")
+    })
+    elem.classList.add("selected-subscription")
+
+    // Change how dirtea will be shipped
+    document.querySelectorAll(".subscription-sumary").forEach(function(elem){
+      elem.classList.add("subsciption-summary-hidden")
+    })
+    document.querySelector(`.subscription-sumary[data-subscription-summary-variant-id="${subscriptionVariantId}"]`).classList.remove("subsciption-summary-hidden")
+
+    // Change which product the button adds to cart
+    var subscribeBtn = document.querySelector(".subscribe-btn-add-to-cart")
+    subscribeBtn.dataset.productVariantId = subscriptionVariantId
+    subscribeBtn.dataset.productSellingPlanId = sellingPlanId
+
+    })
+})
+</script>

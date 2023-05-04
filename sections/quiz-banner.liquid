@@ -1,0 +1,120 @@
+<section class="quiz-banner">
+<div class="container">
+<div class="quizbanner-outter">
+{% if section.settings.section-heading != blank %}
+<h2 class="section-heading">{{ section.settings.section-heading }}</h2>
+{% endif %}
+{% if section.settings.section-large-heading != blank %}
+<h3 class="section-large-heading">{{ section.settings.section-large-heading }}</h3>
+{% endif %}
+{% if section.settings.description != blank %}
+<p class="discription">{{ section.settings.description }}</p>
+{% endif %}
+</div>
+<div class="col-xs-12 col-md-12 text-center">
+{% if section.settings.view-btn != blank %}
+<button class="view-btn">
+<a href="{{ section.settings.view-btn-link }}">{{ section.settings.view-btn }}</a>
+</button>
+{% endif %}
+</div>
+</div>
+</section>
+
+<style>
+ @media screen and (min-width: 800px) {
+section.quiz-banner {
+   background-image: url('{{ section.settings.imagedesktop | img_url: '2000x2000' }}');
+   background-size: cover;
+ }
+   section.quiz-banner .container {
+    padding: 120px 20px;
+}
+ }
+
+  @media only screen and (max-width: 600px) {
+section.quiz-banner {
+   background-image: url('{{ section.settings.imagemobile | img_url: '2000x2000' }}');
+   background-size: cover;
+ }
+    section.quiz-banner .container {
+    padding: 45px 20px 220px;
+}
+    button.view-btn {
+    margin-top: 10px !important;
+}
+ }
+  
+  h2.section-heading {
+    color: #637281;
+    text-align: center;
+}
+  
+  @media screen and (min-width: 800px) {
+h2.section-heading {
+    width: 37%;
+    margin: auto !important;
+}
+  }
+  
+  button.view-btn a {
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 0px;
+    font-size: 16px;
+}
+  
+  button.view-btn {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+    padding: 15px 25px;
+    background: #637281;
+    border-radius: 25px;
+    margin-top: 20px;
+    border: none;
+}
+</style>
+{% schema %}
+{
+"name": "Quiz Banner", // Section name
+"settings": [
+{
+      "type": "image_picker",
+      "id": "imagedesktop",
+      "label": "Background Image (Desktop)"
+    },
+  {
+      "type": "image_picker",
+      "id": "imagemobile",
+      "label": "Background Image (Mobile)"
+    },
+  {
+"id": "section-heading",
+"type": "text",
+"label": "Heading"
+},
+{
+"id": "view-btn-link",
+"type": "url",
+"label": "Button URL"
+},
+{
+"id": "view-btn",
+"type": "text",
+"label": "Button name"
+}
+],
+"presets": [
+{
+"name": "Quiz Banner",
+"category": "ADVANCED LAYOUT"
+}
+]
+}
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+{% javascript %}
+{% endjavascript %}

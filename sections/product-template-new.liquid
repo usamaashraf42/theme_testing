@@ -1,0 +1,279 @@
+<h1>OLD OLD OLD</h1>
+{% if product.handle contains 'chaga' %}
+    {% assign mushroom_type = 'chaga' %}
+{% endif %}
+
+{% if product.handle contains 'cordyceps' %}
+    {% assign mushroom_type = 'cordyceps' %}
+{% endif %}
+
+{% if product.handle contains 'reishi' %}
+    {% assign mushroom_type = 'reishi' %}
+{% endif %}
+
+{% if product.handle contains 'mane' %}
+    {% assign mushroom_type = 'lions mane' %}
+{% endif %}
+
+{% for block in section.blocks %}
+    {% if mushroom_type == block.settings.mushroom_type %}
+        <div class="product-template-new-container">
+            <div class="product-template-new-lhs">
+                <img src="{{ block.settings.pdp_image | image_url }}"/>
+            </div>
+            <div class="product-template-new-rhs">
+                <div class="product-template-new-category">{{ block.settings.pdp_category }}</div>
+                <div class="product-template-new-title">{{ product.title }}</div>
+                <div class="product-template-new-subtitle">{{ block.settings.pdp_subtitle }}</div>
+                <div class="product-template-new-description">{{ block.settings.pdp_description }}</div>
+                <div class="product-template-new-icons-container">
+                    <div class="product-template-new-icon">
+                        <span class="icon-svg"></span>
+                        <div>{{ block.settings.first_icon }}</div>
+                    </div>
+                    <div class="product-template-new-icon">
+                        <span class="icon-svg"></span>
+                        <div>{{ block.settings.second_icon }}</div>
+                    </div>
+                    <div class="product-template-new-icon">
+                        <span class="icon-svg"></span>
+                        <div>{{ block.settings.third_icon }}</div>
+                    </div>
+                </div>
+                <div class="product-template-new-form">
+                    {% render 'new-product-form' %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<style>
+
+    body:not(.template-index) .main-content {
+        padding-top: 110px !important;
+    }
+
+    .product-template-new-container {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        font-family: 'Manifold';
+        color: #252525;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-container {
+            grid-template-columns: repeat(2,1fr);
+            height: 900px;
+        }
+    }
+
+    .product-template-new-lhs {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #efe6dc;
+        min-height: 470px;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-lhs {
+            width: 50vw;
+        }
+    }
+
+    .product-template-new-lhs img {
+        width: 100%;
+        max-width: 400px;
+        margin-left: 20px;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-lhs img {
+            margin: auto;
+        }
+    }
+
+    .product-template-new-rhs {
+        width: 100%;
+        margin-top: 40px;
+        text-align: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 80px;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-rhs {
+            width: 50vw;
+            padding: 80px;
+            padding-left: 130px;
+            margin: auto;
+            text-align: left;
+        }
+    
+    }
+
+    .product-template-new-category {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        line-height: 17px;
+        margin-bottom: 10px;
+    }
+
+    .product-template-new-title {
+        font-size: 34px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 41px;
+        margin-bottom: 10px;
+    }
+
+    .product-template-new-subtitle {
+        font-size: 24px;
+        letter-spacing: 0;
+        line-height: 26px;
+        margin-bottom: 10px;
+    }
+
+    .product-template-new-description {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 22px;
+        margin-bottom: 20px;
+    }
+
+    .product-template-new-icons-container {
+        text-align: left;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #252525;
+    }
+
+    .product-template-new-icon {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 26px;
+    }
+
+    .product-template-new-icon span.icon-svg {
+      background-image: url('{{ '23_02__tick-grey.svg' | asset_url }}');
+      background-repeat: no-repeat;
+      height: 16px;
+      aspect-ratio: 1/1;
+      margin-right: 10px;
+      margin-top: 2px;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-icon {
+            justify-content: flex-start;
+        }
+    }
+
+    .product-template-new-icon div:first-child {
+        margin-right: 10px;
+    }
+</style>
+
+{% schema %} 
+{
+    "name": "Product Template New",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "mushroom",
+            "name": "Mushroom",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "mushroom_type",
+                    "label": "Mushroom Name",
+                    "options": [
+                        {
+                        "value": "chaga",
+                        "label": "Chaga"
+                        },
+                        {
+                        "value": "cordyceps",
+                        "label": "Cordyceps"
+                        },
+                        {
+                        "value": "lions mane",
+                        "label": "Lion's Mane"
+                        },
+                        {
+                            "value": "reishi",
+                            "label": "Reishi" 
+                        },
+                        {
+                            "value": "turkey",
+                            "label": "Turkey Tail" 
+                        },
+                        {
+                            "value": "tremella",
+                            "label": "Tremella" 
+                        }
+                    ],
+                    "default": "chaga"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "pdp_image",
+                    "label": "Product Main Image (transparent bg)"
+                },
+                {
+                    "type": "text",
+                    "id": "pdp_category",
+                    "label": "Product Category",
+                    "default": "THE IMMUNITY MUSHROOM"
+                },
+                {
+                    "type": "text",
+                    "id": "pdp_subtitle",
+                    "label": "Product Subtitle",
+                    "default": "For Defence, Skin & Energy"
+                },
+                {
+                    "type": "textarea",
+                    "id": "pdp_description",
+                    "label": "Product Description",
+                    "default": "<p>Chaga can fortify your immune system, gives you a natural energy boost, whilst helping to promote healthy skin.</p>"
+                },
+                {
+                    "type": "text",
+                    "id": "first_icon",
+                    "label": "First Icon Text",
+                    "default": "2,000mg per serving"
+                },
+                {
+                    "type": "text",
+                    "id": "second_icon",
+                    "label": "Second Icon Text",
+                    "default": "Third Party Tested"
+                },
+                {
+                    "type": "text",
+                    "id": "third_icon",
+                    "label": "Third Icon Text",
+                    "default": "100% Organic Fruiting Bodies"
+                }
+
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Product Template New",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %} 

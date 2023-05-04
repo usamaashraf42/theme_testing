@@ -1,0 +1,494 @@
+
+<script>
+function reInitializeQuantityModifiers(){
+    var cartModifierBtns = document.querySelectorAll(".cart-product-item-quantity-modifier")
+
+    cartModifierBtns.forEach(function (item, idx) {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Is button in slideout or cart page
+            if(item.closest(".dirtea-cart-slideout")){
+                cart_location = "sidebar"
+            } else {
+                cart_location = "cart-page"
+            }
+
+            // Show cart loader or global loader
+            if( cart_location == "sidebar"){
+                document.querySelector(".dirtea-full-page-scrim.dirtea-cart .dirtea-cart-slideout .dirtea-loading-container").classList.remove("hide")
+            } else {
+                document.querySelector("header.dirtea-header .dirtea-loading-container").classList.remove("hide")
+            }
+
+            quantityIndicator = item.closest(".dirtea-cart-product-change-count-container").querySelector(".cart-product-item-quantity span")
+            currentQuantity = parseInt(quantityIndicator.innerHTML)
+            if(item.dataset.itemModifier == "increment"){
+                newQuantity = currentQuantity + 1
+            } else {
+                newQuantity = currentQuantity - 1
+            }
+
+            // Update cart using ajax call
+            productKey = item.dataset.productKey
+            axios.post(`/cart/update.js?updates[${productKey}]=${newQuantity}`)
+            .then(function (response) {
+                reRenderCart("n/a", cart_location)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        });
+    });
+    return true
+}
+</script>
+
+<script>
+function reRenderCart(cart_state, cart_location="sidebar"){
+    // Show cart loader or global loader
+    if( cart_location == "sidebar" ){
+        document.querySelector(".dirtea-full-page-scrim.dirtea-cart .dirtea-cart-slideout .dirtea-loading-container").classList.remove("hide")
+    } else {
+        document.querySelector("header.dirtea-header .dirtea-loading-container").classList.remove("hide")
+    }
+
+    navProductCounter = document.querySelector(".navigation-container .cart-counter-container .cart-count")
+    if( cart_location == "cart-page" ){
+        cartContainer = document.querySelector(".dirtea-cart-page-container")
+    } else {
+        cartScrimWrapper = document.querySelector(".dirtea-full-page-scrim.dirtea-cart")
+        cartContainer = document.querySelector(".dirtea-cart-slideout")
+    }
+    productsContainer = cartContainer.querySelector(".dirtea-cart-added-products")
+    totalsContainer = cartContainer.querySelector(".dirtea-cart-total")
+
+
+    axios(window.Shopify.routes.root + 'cart?view=dirtea-cart.json')
+        .then(function (response) {
+            // Clear current cart product list
+            productsContainer.innerHTML = ""
+
+            // Total item count
+            cartContainer.dataset.cartSize = response.data.item_count
+            navProductCounter.innerHTML = response.data.item_count
+            
+            // Cart items
+            response.data.items.forEach(function (item, idx) {
+                if( item.product_selling_plan_id ){
+                    subscriptionMessageContainerClass = ""
+                    subscriptionUpsellClass = "hide"
+                    if( item.subscription_plan_months == 1 ){
+                        subscriptionMessage = "Paid every " + item.subscription_plan_months + " month"
+                    } else {
+                        subscriptionMessage = "Paid every " + item.subscription_plan_months + " months"
+                    }
+
+                    switch(String(item.subscription_plan_months)) {
+                        case "1":
+                            subscriptionSavingPct = "10"
+                            break;
+                        case "3":
+                            subscriptionSavingPct = "20"
+                            break;
+                        case "6":
+                            subscriptionSavingPct = "30"
+                            break;
+                        case "12":
+                            subscriptionSavingPct = "40"
+                            break;
+                        default:
+                            subscriptionSavingPct = "50"
+                    }
+
+                } else if( item.subscription_product_option_variant_id == "" ) {
+                    subscriptionMessageContainerClass = "hide"
+                    subscriptionUpsellClass = "hide"
+                    subscriptionMessage = ""
+                    subscriptionSaving = ""
+                    subscriptionSavingPct = "10"
+                } else {
+                    subscriptionMessageContainerClass = "hide"
+                    subscriptionUpsellClass = ""
+                    subscriptionMessage = ""
+                    subscriptionSaving = ""
+                    subscriptionSavingPct = "10"
+                }
+                if ( item.short_name ){
+                    item_title = item.short_name
+                } else {
+                    item_title = item.title
+                }
+                item_price = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(item.price / 100)
+
+                productItemHTML = `
+
+
+                <div class="dirtea-cart-added-products-item" data-product-key="${ item.key }" data-product-price="${ item.price }">
+                    <div class="dirtea-cart-product-item-row">
+                        <div class="dirtea-cart-product-item-image-container">
+                            <a
+                                href="#"
+                                class="remove-product-from-cart"
+                                onclick="setQuantityToZeroOnClick(event)"
+                                data-product-variant-id="${ item.product_variant_id }"
+    
+                            >{% render 'icon-close' %}</a>
+                            <div class="dirtea-cart-product-item-image" style="background-image: url('${ item.image }');"></div>
+                        </div>
+                        <div class="dirtea-cart-item-details">
+                            <div class="dirtea-cart-title-container">
+                                <p class="dirtea-cart-product-title text-uppercase color-off-black">${ item_title }</p>
+                            </div>
+                            <div class="dirtea-cart-subscription-message-container ${ subscriptionMessageContainerClass }">
+                                <p>${ subscriptionMessage }</p>
+                                <p>Saved ${ subscriptionSavingPct }%!</p>
+                            </div>
+                            <div class="dirtea-cart-price-and-modifier-container">
+                                <p class="dirtea-cart-product-price text-center" data-product-price="${ item.price }">${ item_price }</p>
+                                <div class="dirtea-cart-product-change-count-container">
+                                    <input class="hidden-product-item-quantity" type="hidden" type="text" name="updates[]" value="${ item.quantity }">
+                                    <div class="cart-product-item-quantity-modifier cart-product-item-quantity-decrement text-center" data-item-modifier="decrement" data-product-key="${ item.key }"><a href="#">-</a></div>
+                                    <div class="cart-product-item-quantity"><span>${ item.quantity }</span></div>
+                                    <div class="cart-product-item-quantity-modifier cart-product-item-quantity-increment text-center" data-item-modifier="increment" data-product-key="${ item.key }"><a href="#">+</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dirtea-cart-item-subscription-upsell ${ subscriptionUpsellClass }">
+                        <a
+                            href="#"
+                            class="btn btn-dirtea-secondary"
+                            onclick="swapProductForSubscriptionOnClick(event)"
+                            data-this-product-variant-id="${ item.product_variant_id }"
+                            data-subscription-product-variant-id="${ item.subscription_product_option_variant_id }"
+                            data-subscription-product-selling-plan-id="${ item.subscription_product_option_selling_plan_id }"
+                            
+                        >Subscribe and save ${ subscriptionSavingPct }%</a>
+                    </div>
+                </div>
+
+
+
+                <!--
+                <div class="dirtea-cart-added-products-item" data-product-key="${ item.key }" data-product-price="${ item.price }">
+                    <div class="dirtea-cart-product-item-row">
+                        <div class="dirtea-cart-product-item-image-container">
+                            <a href="${ item.url }" class="dirtea-cart-product-item-image" style="background-image: url('${ item.image }');"></a>
+                        </div>
+                        <div class="dirtea-cart-product-item-details-container">
+                            <div class="dirtea-cart-title-price-container">
+                                <p class="dirtea-cart-product-title text-uppercase"><a href="${ item.url }" class="text-decoration-none color-off-black">${ item.title }</a></p>
+                                <p class="dirtea-cart-product-price" data-product-price="${ item.price }">&pound;${ item.price/100 }</p>
+                            </div>
+                            <div class="dirtea-cart-product-change-count-container">
+                                <input class="hidden-product-item-quantity" type="hidden" type="text" name="updates[]" value="${ item.quantity }">
+                                <div class="cart-product-item-quantity-modifier cart-product-item-quantity-decrement text-center" data-item-modifier="decrement" data-product-key="${ item.key }"><a href="#">-</a></div>
+                                <div class="cart-product-item-quantity"><span>${ item.quantity }</span></div>
+                                <div class="cart-product-item-quantity-modifier cart-product-item-quantity-increment text-center" data-item-modifier="increment" data-product-key="${ item.key }"><a href="#">+</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                -->
+                `
+                productsContainer.innerHTML += productItemHTML
+            })
+
+            // Estimated total
+            cartContainer.querySelector("#cartPriceTotal").dataset.totalPrice = response.data.original_total_price
+
+            cartTotalVisiblePrice = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(response.data.original_total_price / 100)
+            cartContainer.querySelector("#cartPriceTotal .money").innerHTML = cartTotalVisiblePrice
+            //cartContainer.querySelector("#cartPriceTotal .money").innerHTML = `&pound;${response.data.original_total_price/100}`
+
+            //cartContainer.querySelector("#cartPriceTotal .money").setAttribute("doubly-currency-gbp", response.data.original_total_price)
+
+            // Re-initialize modifier buttons
+            reInitializeQuantityModifiers()
+
+            // Check "cart_state"
+            if(cart_state == "open"){
+                cartScrimWrapper.classList.remove("hide")
+            } else if (cart_state == "close") {
+                cartScrimWrapper.classList.add("hide")
+            }
+
+            // Hide cart loader
+            document.querySelector(".dirtea-cart-slideout .dirtea-loading-container").classList.add("hide")
+            // Hide global loader
+            document.querySelector("header.dirtea-header .dirtea-loading-container").classList.add("hide")
+
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    return true
+
+}
+
+</script>
+
+
+
+<script>
+cartCloseBtn = document.querySelector(".dirtea-cart-slideout .panel-top-bar button");
+continueShoppingBtns = document.querySelectorAll(".dirtea-cart-slideout .dirtea-cart-continue-shopping")
+cartOpenBtn = document.querySelector(".dirtea-cart-btn-container a");
+dirteaCart = document.querySelector(".dirtea-full-page-scrim.dirtea-cart");
+
+cartCloseBtn.addEventListener("click", function(e){
+    e.preventDefault()
+    dirteaCart.classList.add("hide")
+})
+cartOpenBtn.addEventListener("click", function(e){
+    e.preventDefault()
+    reRenderCart()
+    dirteaCart.classList.remove("hide")
+})
+continueShoppingBtns.forEach(function (item, idx) {
+    item.addEventListener("click", function(e){
+        e.preventDefault()
+        dirteaCart.classList.add("hide")
+    })
+})
+</script>
+
+
+{% assign request_page_handle = request.page_type | handle %}
+{% if request_page_handle == "cart" %}
+<script>
+    // If on the cart page, render the card
+    reRenderCart("n/a", "cart-page")
+</script>
+{% endif %}
+
+
+
+<script>
+// Set quantity to zero
+function setQuantityToZeroOnClick(e, additional_settings = null){
+    e.preventDefault();
+
+    // Show cart loader
+    document.querySelector(".dirtea-full-page-scrim.dirtea-cart .dirtea-cart-slideout .dirtea-loading-container").classList.remove("hide")
+
+    productVariantId = parseInt(e.currentTarget.dataset.productVariantId)
+    productSellingPlanId = e.currentTarget.dataset.productSellingPlanId
+
+    updateData = {}
+    updateData[productVariantId] = 0
+
+    // Remove from cart
+    axios.post('/cart/update.js', {
+            updates: updateData
+        })
+        .then(function (response) {
+            reRenderCart("open")
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+
+// Add to cart
+function addProductToCartOnClick(e, additional_settings = null){
+    e.preventDefault();
+
+    // Show global loader
+    document.querySelector("header.dirtea-header .dirtea-loading-container").classList.remove("hide")
+
+    productVariantId = parseInt(e.currentTarget.dataset.productVariantId)
+    productSellingPlanId = e.currentTarget.dataset.productSellingPlanId
+
+    if (additional_settings == "closeSubscriptionModal"){
+        // Hide the modal
+        e.currentTarget.closest(".dirtea-full-page-scrim").classList.add("hide")
+    }
+
+    if (additional_settings == "scrollToTopOfCart"){
+        // Scroll to the top of the cart
+        document.querySelector("header.dirtea-header .dirtea-loading-container").classList.add("hide")
+        document.querySelector(".dirtea-full-page-scrim.dirtea-cart .dirtea-cart-slideout .dirtea-loading-container").classList.remove("hide")
+        console.log("MOVE IT")
+    }
+
+    if (productSellingPlanId) {
+        itemData = [{id: productVariantId, quantity: 1, selling_plan: productSellingPlanId}]
+    } else {
+        itemData = [{id: productVariantId, quantity: 1}]
+    }
+
+    // Add to cart
+    axios.post('/cart/add.js', {
+            items: itemData
+        })
+        .then(function (response) {
+            reRenderCart("open")
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+// Upgrade to subscription product
+function swapProductForSubscriptionOnClick(e){
+    e.preventDefault();
+
+    // Show cart loader
+    document.querySelector(".dirtea-full-page-scrim.dirtea-cart .dirtea-cart-slideout .dirtea-loading-container").classList.remove("hide")
+
+
+    productVariantId = parseInt(e.currentTarget.dataset.thisProductVariantId)
+    subscriptionProductVariantId = parseInt(e.currentTarget.dataset.subscriptionProductVariantId)
+    subscriptionProductSellingPlanId = parseInt(e.currentTarget.dataset.subscriptionProductSellingPlanId)
+
+    updateData = {}
+    updateData[productVariantId] = 0
+
+    // Remove old product from cart
+    axios.post('/cart/update.js', {
+            updates: updateData
+        })
+        .then(function (response) {
+
+            itemData = [{id: subscriptionProductVariantId, quantity: 1, selling_plan: subscriptionProductSellingPlanId}]
+
+            // Add sunscription upsell to cart
+            axios.post('/cart/add.js', {
+                    items: itemData
+                })
+                .then(function (response) {
+                    reRenderCart("open")
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+
+function openSubscriptionOptionsModal(e){
+    e.preventDefault();
+
+    productVariantId = parseInt(e.currentTarget.dataset.productVariantId)
+
+    document.querySelector(".dirtea-full-page-scrim[data-product-variant-id='" + productVariantId + "']").classList.remove("hide")
+}
+
+
+function closeSubscriptionOptionsModal(e){
+    e.preventDefault();
+    e.currentTarget.closest(".dirtea-full-page-scrim").classList.add("hide")
+}
+
+
+
+
+
+
+
+
+
+
+
+// Product options form
+productOptionSelectors = document.querySelectorAll(".pdp-product-form-option")
+
+productOptionSelectors.forEach(function(elem) {
+    elem.addEventListener("click", function(e) {
+
+        // Add .filled-radio-button to all options
+        elem.closest(".pdp-product-form").querySelectorAll(".pdp-product-form-option .pdp-product-form-option-radio-button").forEach(function(radioBtn){
+            radioBtn.classList.add("filled-radio-button")
+        })
+
+        // Mark clicked item as selected (by removing .filled-radio-button)
+        elem.querySelector(".pdp-product-form-option-radio-button").classList.remove("filled-radio-button")
+
+        // Only on product pages
+        if( document.querySelector("body").classList.contains("template-product") ){
+            selectedPlanMonths = elem.dataset.subscriptionMonths
+
+            // Swap product image
+            productHeroImageElem = document.querySelector(".product-hero-image")
+            newImageUrl = productHeroImageElem.getAttribute("data-product-image-months-"+selectedPlanMonths)
+            productHeroImageElem.style.backgroundImage = `url('${newImageUrl}')`
+
+            // Swap "how it gets shipped" text
+            // Hide all versions
+            document.querySelectorAll(".pdp-what-gets-shipped-container").forEach(function(elem){ elem.classList.add("hide") })
+            // Show selected option version of the text
+            try {
+                document.querySelector(".pdp-what-gets-shipped-container.what-gets-shipped-months-"+selectedPlanMonths).classList.remove("hide")
+            } catch(err) {console.log(err)}
+
+
+            //document.querySelectorAll(".dirtea-product-page .product-image").forEach(function(elem){elem.classList.add("hide")})
+            //document.querySelector(".dirtea-product-page .product-image.product-image-variant-months-"+selectedPlanMonths).classList.remove("hide")
+
+            // If subscription, show strikethrough price and replace product price
+            if (elem.dataset.productType == "subscription" ){
+                // Show strikethrough price
+                document.querySelector(".pdp-cta-form-price-container").classList.add("product-subscription-discount-applied")
+                // Replace strikethrough price
+                originalPrice = document.querySelector(".pdp-product-form-option[data-subscription-months='0']").dataset.productPrice
+                originalPriceMultipliedByMonths = parseFloat(originalPrice) * parseFloat(selectedPlanMonths)
+                document.querySelector(".pdp-cta-form-price-container .subscription-saving").innerHTML = `&pound;${originalPriceMultipliedByMonths}`
+                // Replace price
+                //document.querySelector(".pdp-cta-form-price-container .pdp-cta-form-price").innerHTML = `&pound;${elem.dataset.productPriceMonthly} /mo`
+                document.querySelector(".pdp-cta-form-price-container .pdp-cta-form-price").innerHTML = `&pound;${elem.dataset.productPrice}`
+            } else {
+                // Hide strikethrough price
+                document.querySelector(".pdp-cta-form-price-container").classList.remove("product-subscription-discount-applied")
+                // Replace price
+                document.querySelector(".pdp-cta-form-price-container .pdp-cta-form-price").innerHTML = `&pound;${elem.dataset.productPrice}`
+            }
+
+            // Change product-variant-id for add to cart button
+            document.querySelector(".pdp-cta-form a").dataset.productVariantId = elem.dataset.productVariantId
+
+            // Change product-selling-plan-id for add to cart button
+            productSellingPlanId = elem.dataset.productSellingPlanId
+            if (productSellingPlanId) {
+                document.querySelector(".pdp-cta-form a").dataset.productSellingPlanId = productSellingPlanId
+            } else {
+                document.querySelector(".pdp-cta-form a").dataset.productSellingPlanId = ""
+            }
+
+
+
+        } else {
+            addToCartBtn = elem.closest(".dirtea-product-subscription-modal-container").querySelector(".subscription-modal-add-btn-container a")
+            // Change product-variant-id for add to cart button
+            addToCartBtn.dataset.productVariantId = elem.dataset.productVariantId
+
+            // Change product-selling-plan-id for add to cart button
+            productSellingPlanId = elem.dataset.productSellingPlanId
+            if (productSellingPlanId) {
+                addToCartBtn.dataset.productSellingPlanId = productSellingPlanId
+            } else {
+                addToCartBtn.dataset.productSellingPlanId = ""
+            }
+
+        }
+
+
+
+    });
+});
+
+
+
+// Presidio quiz page
+// reRender cart on add to cart from quiz page and open it (as well as update counter in nav bar)
+document.addEventListener('quizKitAddToCartSuccess', function () {
+    reRenderCart("open")
+}, false);
+</script>

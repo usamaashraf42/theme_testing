@@ -1,0 +1,248 @@
+<div class="which-is-right-container">
+    <div class="which-is-right-title">{{ section.settings.section_title }}</div>
+    <div class="which-is-right-products-container">
+        <div class="which-is-right-product-card">
+            <div class="which-is-right-product-image"><img src="{{ section.settings.lhs_product_image | image_url: width: '2500x2500' }}"/></div>
+            <div class="which-is-right-product-title">{{ section.settings.lhs_product_title }}</div>
+            <div class="which-is-right-product-subtitle">{{ section.settings.lhs_product_subtitle }}</div>
+            <div class="which-is-right-product-subtitle">£49.99</div>
+            <div class="which-is-right-product-review-container" style="display: none;">
+                <div class="which-is-right-review-stars-container">
+                    {% render 'black-review-star' %}
+                    {% render 'black-review-star' %}
+                    {% render 'black-review-star' %}
+                    {% render 'black-review-star' %}
+                    {% render 'white-review-star' %}
+                </div>
+                <div><a href="#">46 Reviews</a></div>
+            </div>
+            <div class="which-is-right-product-cta tremella-cta">BUY NOW</div> {% comment %}{{ section.settings.lhs_product.title }}{% endcomment %}
+        </div>
+        <div class="which-is-right-product-card">
+            <div class="which-is-right-product-image"><img src="{{ section.settings.rhs_product_image | image_url: width: '2500x2500' }}"/></div>
+            <div class="which-is-right-product-title">{{ section.settings.rhs_product_title }}</div>
+            <div class="which-is-right-product-subtitle">{{ section.settings.rhs_product_subtitle }}</div>
+            <div class="which-is-right-product-subtitle">£49.99</div>
+            <div class="which-is-right-product-review-container" style="display: none;">
+                <div class="which-is-right-review-stars-container">
+                    {% render 'black-review-star' %}
+                    {% render 'black-review-star' %}
+                    {% render 'black-review-star' %}
+                    {% render 'black-review-star' %}
+                    {% render 'black-review-star' %}
+                </div>
+                <div><a href="#">65 Reviews</a></div>
+            </div>
+            <div class="which-is-right-product-cta turkey-cta" style="background-color: #E3B6C1;">BUY NOW</div>
+        </div>
+    </div>
+</div>
+
+<div style="display: none">
+    {% form 'product', section.settings.lhs_product, class:'product-form' %}
+    <input class="hide" type="hidden" hidden name="id" value="{{ section.settings.lhs_product.variants.first.id }}" />
+    <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+    <button type="autoship_submit" class="collsubmit btn btn--secondary btn-collection add_btn testing-cta">Subscribe & Save <span class="hide-small">15%</span></button>
+    {% endform %}
+</div>
+
+
+<div style="display: none">
+      {% form 'product', section.settings.rhs_product, class:'product-form' %}
+      <input class="hide" type="hidden" hidden name="id" value="{{ section.settings.rhs_product.variants.first.id }}" />
+      <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+      <button type="autoship_submit" class="collsubmit btn btn--secondary btn-collection add_btn add-turkey-tail">Subscribe & Save <span class="hide-small">15%</span></button>
+      {% endform %}
+</div>
+
+<script>
+    let tremellaButtons = document.querySelectorAll('.tremella-cta')
+    let turkeyButtons = document.querySelectorAll('.turkey-cta')
+
+    let addToCartBtn = document.querySelector('.testing-cta')
+    let addToCartBtnTurkey = document.querySelector('.add-turkey-tail')
+
+    for (let i = 0; i < tremellaButtons.length; i++) {
+        tremellaButtons[i].addEventListener('click', () => {
+            addToCartBtn.click()
+        })
+    }
+
+    for (let i = 0; i < turkeyButtons.length; i++) {
+        turkeyButtons[i].addEventListener('click', () => {
+            addToCartBtnTurkey.click()
+        })
+    }
+</script>
+
+{% style %}
+
+.which-is-right-container {
+    background: #EBEADE;
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    text-align: center;
+}
+
+.which-is-right-container {
+    margin-top: -10px;
+}
+
+.which-is-right-product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+@media (max-width: 769px) {
+    .which-is-right-product-card {
+        margin-bottom: 40px;
+    }
+}
+
+.which-is-right-products-container {
+    display: grid;
+    grid-template-columns: repeat(1,1fr)
+}
+
+@media (min-width: 769px) {
+    .which-is-right-products-container {
+        display: grid;
+        grid-template-columns: repeat(2,1fr)
+    }
+}
+
+.which-is-right-product-image img {
+    width: 300px;
+    height: auto;
+    margin-left: 70px;
+}
+
+.which-is-right-title {
+    margin-bottom: 45px;
+}
+
+
+.which-is-right-product-subtitle {
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+    margin-bottom: 10px;
+}
+
+.which-is-right-product-review-container {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    max-width: 200px;
+    margin: auto;
+}
+
+.which-is-right-review-stars-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.which-is-right-review-stars-container svg {
+    margin-right: 2px;
+}
+
+.which-is-right-product-review-container a {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 16px;
+}
+
+.which-is-right-product-cta {
+    background-color: #A9D3DD;
+    color: #ffffff;
+    padding: 17px;
+    width: 280px;
+    border-radius: 25px;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+    cursor: pointer;
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Which is right",
+    "settings": [
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Title",
+            "default": "Which DIRTEA is right for you?"
+        },
+        {
+            "type": "product",
+            "id": "lhs_product",
+            "label": "LHS Product"
+        },
+        {
+            "type": "image_picker",
+            "id": "lhs_product_image",
+            "label": "LHS Product Image"
+        },
+        {
+            "type": "text",
+            "id": "lhs_product_title",
+            "label": "LHS Product Title",
+            "default": "Turkey Tail"
+        },
+        {
+            "type": "text",
+            "id": "lhs_product_subtitle",
+            "label": "LHS Product Sub-Title",
+            "default": "For Immunity, Digestion, Anti-Viral"
+        },
+        {
+            "type": "product",
+            "id": "rhs_product",
+            "label": "RHS Product"
+        },
+        {
+            "type": "image_picker",
+            "id": "rhs_product_image",
+            "label": "RHS Product Image"
+        },
+        {
+            "type": "text",
+            "id": "rhs_product_title",
+            "label": "RHS Product Title",
+            "default": "Tremella"
+        },
+        {
+            "type": "text",
+            "id": "rhs_product_subtitle",
+            "label": "RHS Product Sub-Title",
+            "default": "For Beauty, Skin, Hydration"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Which is right",
+            "category": "Black Friday"
+        }
+    ]
+
+}
+{% endschema %}

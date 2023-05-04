@@ -1,0 +1,198 @@
+<div id="{{section.settings.da-footer}}">
+  <div class="da_footer">
+    {% for block in section.blocks %}
+    {% if block.type == "select_text" %}
+    {% if block.settings.da_footer_text_url != blank %}
+    <div class="da_footer_data">
+      <a href="{{block.settings.da_footer_text_url}}">
+        <p>{{block.settings.da_footer_text}}</p>
+      </a>
+    </div>
+    {% endif %}
+    {% else block.type == "select_icon" %}
+    {% if block.settings.da_footer_icon_url != blank %}
+    <div class="da_footer_data">
+      <a href="{{block.settings.da_footer_icon_url}}">
+        {% if block.settings.da_footer_icon_svg != blank and block.settings.da_footer_icon_img != blank %}
+        {{block.settings.da_footer_icon_svg}}
+        {% elsif block.settings.da_footer_icon_svg != blank and block.settings.da_footer_icon_img == blank %}
+        {{block.settings.da_footer_icon_svg}}
+        {% elsif block.settings.da_footer_icon_svg == blank and block.settings.da_footer_icon_img == blank %}
+        {{block.settings.da_footer_icon_svg}}
+        {% else block.settings.da_footer_icon_svg == blank and block.settings.da_footer_icon_img != blank %}
+        <img src="{{block.settings.da_footer_icon_img | img_url: "master"}}">
+        {% endif %}
+      </a>
+    </div>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .da_footer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 50px;
+  }
+
+  .da_footer_data {
+    width: 33.3%;
+    padding: 0px 20px;
+  }
+
+  .da_footer_data a {
+    text-decoration: none;
+    display: flex;
+  }
+
+  .da_footer_data a p {
+    margin: 0px;
+    color: rgb(37, 37, 37);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  .da_footer_data a svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .da_footer_data a svg path {
+    fill: rgb(37, 37, 37);
+  }
+
+  @media (max-width: 768px){
+    .da_footer {
+      padding: 50px 50px;
+    }
+
+    .da_footer_data {
+      padding: 0px;
+    }
+
+    .da_footer_data:first-child {
+      width: 50%;
+      order: 1;
+    }
+
+    .da_footer_data:first-child a p {
+      text-align: left;
+    }
+
+    .da_footer_data:nth-child(2) {
+      width: 100%;
+      order: 3;
+      border-top: 1px solid #414141;
+      margin: 12px 0px 0px;
+      padding: 12px 0px 0px;
+    }
+
+    .da_footer_data:last-child {
+      width: 50%;
+      order: 2;
+    }
+
+    .da_footer_data:last-child a p {
+      text-align: right;
+    }
+
+    .da_footer_data a {
+      justify-content: center;
+    }
+
+    .da_footer_data a p {
+      width: 100%;
+    }
+
+    .da_footer_data a svg {
+      width: 300px;
+    }
+  }
+
+  @media (max-width: 490px){
+    .da_footer {
+      padding: 50px 20px;
+    }
+
+    .da_footer_data a p {
+      font-size: 13px;
+      line-height: 17px;
+    }
+
+    .da_footer_data a svg {
+      width: 220px;
+    }
+  }
+  
+</style>
+
+{% schema %}
+  {
+    "name": "DA Footer",
+    "settings": [
+    {
+    "type": "text",
+    "id": "da-footer",
+    "label": "Section ID"
+    }
+    ],
+    "blocks": [
+    {
+    "type": "select_text",
+    "name": "Text",
+    "settings": [
+    {
+    "type": "textarea",
+    "id": "da_footer_text",
+    "label": "Text",
+    "default": "DIRTEA’s Privacy Policy"
+    },
+    {
+    "type": "url",
+    "id": "da_footer_text_url",
+    "label": "URL"
+    }
+    ]
+    },
+    {
+    "type": "select_icon",
+    "name": "Icon",
+    "settings": [
+    {
+    "type": "textarea",
+    "id": "da_footer_icon_svg",
+    "label": "Icon SVG"
+    },
+    {
+    "type": "image_picker",
+    "id": "da_footer_icon_img",
+    "label": "Icon Image"
+    },
+    {
+    "type": "url",
+    "id": "da_footer_icon_url",
+    "label": "URL"
+    }
+    ]
+    }
+    ],
+    "presets": [
+    {
+    "name": "DA Footer",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

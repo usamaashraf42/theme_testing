@@ -1,0 +1,184 @@
+{% style %}
+  .loox-rating .loox-icon {
+    color: #012169;
+  }
+
+  .loox-rating span {
+    font-size: 14px
+  }
+{% endstyle %}
+<div class="card splide__slide card-2 ccritical-clear" id="Card-{{ product.id }}" data-animate>
+
+    <div class="card__info text-center">
+      <div class="title">{{ block.settings.title }}</div>
+    </div>
+    <a href="{{ product.url }}" class="card__wrapper{% if section.settings.show_spacing %} card__wrapper--padding{% endif %} text-center no-height">
+  
+      <div class="image-outer">
+      {% if product.featured_media %}
+        {% include 'card-image-1', type: product.featured_media.preview_image, grid_style: grid_style %}
+      {% endif %}
+      </div>
+  
+      {% comment %}
+      <div class="card__info{% if grid_style == 'grid' %} card__info--aligned{% endif %}">
+        {% if section.settings.show_vendor %}
+          <div class="card__brand">{{ product.vendor }}</div>
+        {% endif %}
+  
+        <h3 class="card__name h4">{{ product.title }}</h3>
+  
+        {% if product.available %}
+          <div class="card__price">
+            {%- assign variant = product.selected_or_first_available_variant %}
+            {% if product.compare_at_price > product.price %}
+              {% comment %}
+                Product is on sale
+              {% endcomment %}
+              {% if product.price_varies %}
+                {% assign sale_price = product.price | money_without_trailing_zeros %}
+                <span class="visually-hidden"> {{ 'products.product.price' | t }} </span>
+                {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+              {% else %}
+                <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+                <span class="card__price--sale">{{ product.price | money_without_trailing_zeros }}</span>
+  
+                <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+                <span class="card__price--regular-strike">
+                  <span class="card__price--regular">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+                </span>
+                {%- if variant.available and variant.unit_price_measurement -%}
+                  {% include 'product-unit-price', variant: variant %}
+                {% endif %}
+              {% endif %}
+  
+            {% else %}
+              {% comment %}
+                Not on sale, but could still have varying prices
+              {% endcomment %}
+              {% if product.price_varies %}
+                {% assign price = product.price | money_without_trailing_zeros %}
+                {{ 'products.product.from_text_html' | t: price: price }}
+              {% else %}
+                {{ product.price | money_without_trailing_zeros }}
+                {%- if variant.available and variant.unit_price_measurement -%}
+                  {% include 'product-unit-price', variant: variant %}
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="card__availability">
+            {{ 'products.product.sold_out' | t }}
+          </div>
+        {% endif %}
+      </div>
+      {% if product.compare_at_price > product.price %}
+        {% assign sale_text_length = 'products.product.on_sale' | t | size %}
+        <span class="card__badge{% if sale_text_length > 6 %} card__badge--large{% endif %}">
+          {{ 'products.product.on_sale' | t }}
+        </span>
+      {% endif %}
+      {% endcomment %}
+  
+    </a>
+  
+    <div class="card__info text-center">
+      {% assign sub_title = block.settings.sub_title %}
+      {% assign sub_desc = block.settings.sub_desc %}
+      <div class="product-chart text-center">
+        {% if sub_title != blank %}<h4><strong>{{ sub_title }}</strong></h4>{% endif %}
+        {% if sub_desc != blank %}<h5 style="min-height: 30px;max-height: 30px;">{{ sub_desc }}</h5>{% endif %}
+        
+        {% if product.compare_at_price > product.price %}
+        <h5><span class="product_orig_price">{{ product.compare_at_price | money}} </span> <span class="product_sale_price">{{ product.price | money }}</span></h5>
+        {% endif %}
+    </div>
+      <div class="homeyotpo">
+        <div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+      </div>
+     
+  
+    </div>
+ 
+    <div class="btn-outer text-center formContainer">
+      {% form 'product', product, data-productid: product.id, class:'product-form' %}
+      <input class="hide" type="hidden" hidden name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+      
+      <!-- assign prices of both products -->
+
+{% assign oneTimePrice = product.variants[0].price | money %}
+
+{% assign prodDiscount = product.variants[0].price | divided_by: 100.0 | times: product.selling_plan_groups[0].selling_plans[0].price_adjustments[0].value  %}
+
+{% assign subSavePrice = product.variants[0].price | minus: prodDiscount  | money %}
+
+      <button type="normal_addtocart" class=" visible new-one-time-cta" {% if product.metafields.custom.pre_order %} style="background: green !important; color: white !important; border: green;" {% endif %}>
+        {% if product.metafields.custom.pre_order %}
+          Pre-Order
+        {% else %}
+          One Time Purchase
+        {% endif %} 
+        <span>{{ oneTimePrice }}</span>
+      </button>
+        {% if product.metafields.custom.hide_subscription_cta != true %}
+           <button type="openSellingPlans" class="btn btn--secondary btn-collection add_btn visible new-black-cta">Subscribe & Save 15% <span>{{ subSavePrice }}</span></button>
+        {% endif %}
+
+      <div style="margin-top: 20px">{{ product.metafields.custom.site_wide_shipping_delay_message }}</div>
+     
+      <div class='selling_plan_selectContainer hide'>
+        {% for group in product.selling_plan_groups %}
+        <!-- <input type="radio" name="selling_plan" data-plan-name="" value="onetime"> -->
+        <select class='' name="selling_plan" id="selling_plan_rc">
+        {% for selling_plan in group.selling_plans %}
+       <option name="selling_plan" data-plan-name="{{ selling_plan.name }}" value="{{ selling_plan.id }}">{{ selling_plan.name }}</option>
+        <!-- <input type="radio" name="selling_plan" data-plan-name="{{ selling_plan.name }}" value="{{ selling_plan.id }}">
+        -->
+        {% endfor %}
+    </select>
+        {% endfor %}
+      </div>
+<div class="subSaveContainer hide">
+      <div class="cart-quantity">
+        <input type='button' id="qty_minus{{ forloop.index0 }}" value='-' class='qtyminus' />
+        <input type="number" id="quantity" name="quantity" class="quantity" min="1" value="1" />
+        <input type='button' id="qty_plus{{ forloop.index0 }}"value='+' class='qtyplus' />
+    </div>
+
+      <button type="autoship_submit" class="btn btn__subSave btn--secondary add_btn visible">Add to Cart</button>
+    </div>
+      <!-- <div class="toggle">
+        <span class="align-center-label">Subscribe & save</span>
+        <label class="switch">
+          <input class="toggle-on-off" type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        <span class="align-center-label">One time purchase</span>
+      </div> -->
+    {% endform %}
+
+
+    {% form 'product', product, data-productid: product.id, class:'product-form' %}
+    <input class="hide" type="hidden" hidden name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+    <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+
+    <div>
+        <input type="radio" class='hidden hide' name="selling_plan" data-plan-name="" value="onetime">
+     
+    </div>
+    <!-- <div class="toggle">
+      <span class="align-center-label">Subscribe & save</span>
+      <label class="switch">
+        <input class="toggle-on-off" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+      <span class="align-center-label">One time purchase</span>
+    </div> -->
+  {% endform %}
+      <!--a href="{{ product.url | within: collection }}" class="btn">
+        {{ 'ADD TO CART' }}
+        {% comment %}{{ 'Shop' }} {{ block.settings.title }}{% endcomment %}
+      </a--></div>
+  </div>
+  

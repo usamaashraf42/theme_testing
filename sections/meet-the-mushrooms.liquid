@@ -1,0 +1,272 @@
+<div class="meet-mushrooms-container">
+    <div class="meet-mushrooms-title">{{ section.settings.mushroom_title }}</div>
+    <div class="meet-mushrooms-card-row">
+        <a href="{{ section.settings.first_mushroom_link }}" class="meet-mushrooms-card-container">
+            <div class="meet-mushrooms-card-image">{{ section.settings.first_mushroom_image | image_url: width: 150, height: 150 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div>
+            <div class="meet-mushrroms-card-title">{{ section.settings.first_mushroom_name}}</div>
+            <div class="meet-mushrroms-card-body">{{ section.settings.first_mushroom_description}}</div>
+        </a>
+        <a href="{{ section.settings.second_mushroom_link }}" class="meet-mushrooms-card-container">
+            <div class="meet-mushrooms-card-image">{{ section.settings.second_mushroom_image | image_url: width: 150, height: 150 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div>
+            <div class="meet-mushrroms-card-title">{{ section.settings.second_mushroom_name}}</div>
+            <div class="meet-mushrroms-card-body">{{ section.settings.second_mushroom_description}}</div>
+        </a>
+        <a href="{{ section.settings.third_mushroom_link }}" class="meet-mushrooms-card-container">
+            <div class="meet-mushrooms-card-image">{{ section.settings.third_mushroom_image | image_url: width: 150, height: 150 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div>
+            <div class="meet-mushrroms-card-title">{{ section.settings.third_mushroom_name}}</div>
+            <div class="meet-mushrroms-card-body">{{ section.settings.third_mushroom_description}}</div>
+        </a>
+        <a href="{{ section.settings.fourth_mushroom_link }}" class="meet-mushrooms-card-container">
+            <div class="meet-mushrooms-card-image">{{ section.settings.fourth_mushroom_image | image_url: width: 150, height: 150 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div>
+            <div class="meet-mushrroms-card-title">{{ section.settings.fourth_mushroom_name}}</div>
+            <div class="meet-mushrroms-card-body">{{ section.settings.fourth_mushroom_description}}</div>
+        </a>
+    </div>
+    <div class="meet-mushrooms-icons-container desktop-only">
+        <div class="meet-mushrooms-icon">
+            <span>{% render 'icon-tick' %}</span>
+            <span>Dual extract</span>
+        </div>
+        <div class="meet-mushrooms-icon">
+            <span>{% render 'icon-tick' %}</span>
+            <span>100% Organic fruiting body</span>
+        </div>
+        <div class="meet-mushrooms-icon">
+            <span>{% render 'icon-tick' %}</span>
+            <span>3rd party tested</span>
+        </div>
+    </div>
+    <div class="meet-mushrooms-icons-container mobile-only" style="justify-content: center; margin-top: 10px">
+        <div class="meet-mushrooms-icon" style="padding-left: 55px; margin-bottom: 10px;">
+            <span style="width: 15px;">{% render 'icon-tick' %}</span>
+            <span>100% Organic fruiting body</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2,1fr);">
+            <div class="meet-mushrooms-icon" style="padding-right: 0px; padding-left: 10px">
+                <span style="width: 15px;">{% render 'icon-tick' %}</span>
+                <span>Dual extract</span>
+            </div>
+            <div class="meet-mushrooms-icon" style="padding-left: 15px; padding-right: 0px;">
+                <span style="width: 15px;">{% render 'icon-tick' %}</span>
+                <span>3rd party tested</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% style %}
+
+.meet-mushrooms-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFEF2; 
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.meet-mushrooms-title {
+    color: #656666;
+    font-family: "Manifold Regular";
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.meet-mushrooms-card-row {
+    display: grid;
+    grid-template-columns: repeat(2,1fr)
+}
+
+@media (min-width: 769px) {
+    .meet-mushrooms-card-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+}
+
+.meet-mushrooms-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #012169;
+    font-family: "Manifold Regular";
+    text-align: center;
+    max-height: 250px;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 30px;
+    text-decoration: none;
+}
+
+@media (min-width: 769px) {
+    .meet-mushrooms-card-container {
+        width: 250px;
+    }
+}
+
+.meet-mushrooms-card-image img {
+    border-radius: 50%;
+}
+
+.meet-mushrroms-card-title {
+    margin-top: 15px;
+    color: #656666;
+    font-family: "Manifold Regular";
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    line-height: 35px;
+}
+
+.meet-mushrroms-card-body {
+    margin-top: 5px;
+    color: #656666;
+    font-family: "Manifold Regular";
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+}
+
+.meet-mushrooms-icons-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.meet-mushrooms-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 50px;
+
+    color: #656666;
+    font-family: "Manifold Regular";
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+}
+
+.meet-mushrooms-icon span:first-child {
+    margin-right: 8px;
+}
+
+@media (max-width: 769px) {
+    .meet-mushrooms-icon span:first-child {
+        width: 60px;
+    }
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Meet The Mushrooms",
+    "settings": [
+        {
+            "type": "text",
+            "id": "mushroom_title",
+            "label": "Meet The Mushrooms Title",
+            "default": "Meet the mushrooms"
+        },
+        {
+            "type": "url",
+            "id": "first_mushroom_link",
+            "label": "First Mushroom Link"
+        },
+        {
+            "type": "image_picker",
+            "id": "first_mushroom_image",
+            "label": "First Mushroom Image"
+        },
+        {
+            "type": "text",
+            "id": "first_mushroom_name",
+            "label": "First Mushroom Name",
+            "default": "Chaga"
+        },
+        {
+            "type": "textarea",
+            "id": "first_mushroom_description",
+            "label": "First Mushroom Description",
+            "default": "<p>For defence, <br/> skin & energy</p>"
+        },
+        {
+            "type": "url",
+            "id": "second_mushroom_link",
+            "label": "Second Mushroom Link"
+        },
+        {
+            "type": "image_picker",
+            "id": "second_mushroom_image",
+            "label": "Second Mushroom Image"
+        },
+        {
+            "type": "text",
+            "id": "second_mushroom_name",
+            "label": "Second Mushroom Name",
+            "default": "Lion's Mane"
+        },
+        {
+            "type": "textarea",
+            "id": "second_mushroom_description",
+            "label": "Second Mushroom Description",
+            "default": "<p>For focus, memory <br/> and digestion</p>"
+        },
+        {
+            "type": "url",
+            "id": "third_mushroom_link",
+            "label": "Third Mushroom Link"
+        },
+        {
+            "type": "image_picker",
+            "id": "third_mushroom_image",
+            "label": "Third Mushroom Image"
+        },
+        {
+            "type": "text",
+            "id": "third_mushroom_name",
+            "label": "Third Mushroom Name",
+            "default": "Cordyceps"
+        },
+        {
+            "type": "textarea",
+            "id": "third_mushroom_description",
+            "label": "Third Mushroom Description",
+            "default": "<p>For energy, performance <br/> & endurance</p>"
+        },
+        {
+            "type": "url",
+            "id": "fourth_mushroom_link",
+            "label": "Fourth Mushroom Link"
+        },
+        {
+            "type": "image_picker",
+            "id": "fourth_mushroom_image",
+            "label": "Fourth Mushroom Image"
+        },
+        {
+            "type": "text",
+            "id": "fourth_mushroom_name",
+            "label": "Fourth Mushroom Name",
+            "default": "Cordyceps"
+        },
+        {
+            "type": "textarea",
+            "id": "fourth_mushroom_description",
+            "label": "Fourth Mushroom Description",
+            "default": "<p>For calm, distress <br/> & immunity</p>"
+        }
+    ],
+    "presets": [
+    {
+        "name": "Meet The Mushrooms",
+        "category": "Black Friday"
+    }]
+}
+{% endschema %}
+

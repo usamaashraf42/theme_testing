@@ -1,0 +1,26 @@
+<div class="" data-animate>
+  <a href="{{ article.url }}" class="card__wrapper card--article ">
+    {% if article.image %}
+      {% assign article_image = article.image %}
+    {% else %}
+      {% assign article_image = article.products.first %}
+    {% endif %}
+
+    {% if article_image != blank %}
+      {% include 'card-image', type: article_image, grid_style: grid_style %}
+    {% endif %}
+
+    <div class="card__info">
+      {% if section.settings.blog_show_date %}
+        <span class="card__date text-small--uppercase">
+          {{ article.published_at | time_tag: format: 'date' }}
+        </span>
+      {% endif %}
+      <p class="toptp">{{ '5 minute read' }}</p>
+      <h3 class="card__name">{{ article.title }}</h3>
+    </div>
+  </a>
+<!--   {% for tag in article.tags %}
+  {{ tag | link_to_tag: tag }}
+  {% endfor %} -->
+</div>

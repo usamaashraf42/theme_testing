@@ -1,0 +1,63 @@
+<div id="da-banner">
+  {% if section.settings.da_banner != blank %}
+  <div class="da_banner">
+    <img src="{{section.settings.da_banner | img_url: "master"}}">
+  </div>
+  {% endif %}
+</div>
+
+<style>
+  .da_banner {
+    max-width: 530px;
+    margin: 0px auto;
+    padding: 50px 70px 0px;
+  }
+
+  .da_banner img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 768px){
+    .da_banner {
+      padding: 50px 50px 0px;
+    }
+
+    .da_banner img {
+      border-radius: 0px;
+    }
+  }
+
+  @media (max-width: 490px){
+    .da_banner {
+      padding: 0px;
+    }
+  }
+  
+</style>
+
+{% schema %}
+  {
+    "name": "DA Banner",
+    "settings": [
+    {
+    "type": "image_picker",
+    "id": "da_banner",
+    "label": "Image"
+    }
+    ],
+    "presets": [
+    {
+    "name": "DA Banner",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

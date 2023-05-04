@@ -1,0 +1,70 @@
+<a class="swiper-slide jan-bundles-products-card" href="{{ product.url }}">
+    <div class="jan-bundles-products-image"><img src="{{ product.featured_image | image_url: width: 400, height: 300 }}"/></div>
+    <div class="jan-bundles-products-title">{{ product.title }}</div>
+    <div class="jan-bundles-products-subtitle">{{ subtitle}}</div>
+    <div class="jan-bundles-products-reviews"></div>
+    {% form 'product', product, class:'product-form' %}
+        <input class="hide" type="hidden" hidden name="id" value="{{ product.variants.first.id }}" />
+        <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+        <button type="autoship_submit" class="collsubmit add_btn jan-bundles-products-cta">
+            ONE TIME PURCHASE {{ product.price | money }}
+        </button>
+    {% endform %}
+</a>
+
+<style>
+       .jan-bundles-products-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: center;
+        font-family: 'Manifold Regular';
+        color: #252525;
+         text-decoration: none;
+    }
+
+    .jan-bundles-products-title {
+        font-size: 24px;
+        letter-spacing: 0;
+        line-height: 29px;
+        margin-top: 20px;
+    }
+
+    .jan-bundles-products-subtitle {
+        font-family: 'Manifold';
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 22px;
+        margin-top: 5px;
+        min-height: 45px;
+        max-width: 380px;
+    }
+    .jan-bundles-products-reviews {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        line-height: 16px;
+        margin-top: 20px;
+    }
+    .jan-bundles-products-star-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        text-decoration: underline;
+    }
+    .jan-bundles-products-cta {
+        background-color: #000000;
+        font-size: 12px;
+        color: #ffffff;
+        width: 280px;
+        margin: auto;
+        border-radius: 25px;
+        padding: 15px;
+        margin-bottom: 80px;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+</style>

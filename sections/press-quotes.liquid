@@ -1,0 +1,242 @@
+{% comment %}
+<!--div class="press-quotes-container desktop-only swiper-container">
+{% for block in section.blocks%}
+<div class="press-quotes-quote-container swiper-slide">
+<div class="press-quotes-quote-text">“{{ block.settings.press_quote }}”</div>
+<div class="press-quotes-quote-image">
+{% if block.settings.svg_text %}
+{{ block.settings.svg_text }}
+{% else %}
+{{ block.settings.logo | image_url: width: 150, height: 150 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}
+{% endif %}
+</div>
+</div>
+{% endfor %}
+</div-->
+{% endcomment %}
+
+
+<div class="press-quotes-section bg-mid-grey">
+
+    <div class="press-quotes-swiper desktop-only swipe" id="pressQuotesSwipeDesktop" style="padding-top: 40px; padding-bottom: 40px;">
+    <div class="swipe-wrap">
+        {% for block in section.blocks %}
+        {% if forloop.index == 1 or forloop.index == 5 or forloop.index == 9 or forloop.index == 13 %}
+        <div class="swipe-press-quotes-group">
+        {% endif %}
+        <div class="press-quotes-quote-container">
+            <div class="press-quotes-quote-text">“{{ block.settings.press_quote }}”</div>
+            <div class="press-quotes-quote-image">
+            {% if block.settings.show_png == false %}
+                {{ block.settings.svg_text }}
+            {% else %}
+                <img src="{{ block.settings.logo | image_url}}" />
+            {% endif %}
+            </div>
+        </div>
+        {% if forloop.index == 4 or forloop.index == 8 or forloop.index == 12 or forloop.index == 15 or forloop.last %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+
+    <div class="press-quotes-swiper mobile-only swipe" id="pressQuotesSwipeMobile" style="padding-top: 40px; padding-bottom: 40px;">
+    <div class="swipe-wrap">
+        {% for block in section.blocks %}
+        <div class="press-quotes-quote-container">
+            <div class="press-quotes-quote-text">“{{ block.settings.press_quote }}”</div>
+            <div class="press-quotes-quote-image">
+            {% if block.settings.show_png == false %}
+                {{ block.settings.svg_text }}
+            {% else %}
+                <img src="{{ block.settings.logo | image_url}}" />
+            {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+
+</div>
+
+<script>
+function setPressSwiper(){
+
+    var element = document.getElementById('pressQuotesSwipeMobile');
+    window.pressQuotesSwipeMobile = new Swipe(element, {
+        startSlide: 0,
+        auto: 3000,
+        draggable: true,
+        autoRestart: false,
+        continuous: true,
+        disableScroll: true,
+        stopPropagation: true,
+        callback: function(index, element) {},
+        transitionEnd: function(index, element) {}
+    });
+
+    var element = document.getElementById('pressQuotesSwipeDesktop');
+    window.pressQuotesSwipeDesktop = new Swipe(element, {
+        startSlide: 0,
+        auto: 3000,
+        draggable: false,
+        autoRestart: false,
+        continuous: true,
+        disableScroll: true,
+        stopPropagation: true,
+        callback: function(index, element) {},
+        transitionEnd: function(index, element) {}
+    });
+
+}
+setPressSwiper()
+
+window.addEventListener('resize', function () {
+    setPressSwiper()
+})
+
+
+</script>
+
+
+{% style %}
+  .swipe-press-quotes-group {
+    display: flex;
+    justify-content: center;
+  }
+  .press-quotes-swiper.mobile-only.swiper-container {
+    display: block !important;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+  .press-quotes-container {
+    display: none;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  @media(min-width: 769px) {
+    .press-quotes-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background-color: #DFDCD7;
+      padding: 40px 80px;
+    }
+
+    .press-quotes-slider-container {
+      display: none;
+    }
+
+    .press-quotes-quote-container {
+        justify-content: space-between;
+        max-width: 20vw;
+
+    }
+
+  }
+
+  .press-quotes-quote-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding-right: 15px;
+    padding-left: 15px;
+    min-height: 140px;
+  }
+
+  .press-quotes-quote-text {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 22px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .press-quotes-quote-image {
+  }
+
+  .press-quotes-quote-image img {
+    width: auto;
+    height: auto;
+    max-width: 100px;
+  }
+
+  .press-quotes-quote-image svg {
+    width: auto;
+    height: auto;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .swiper.press-quotes-swiper.mobile-only.swiper-container {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Press Quotes",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "Quote",
+        "name": "Quote",
+        "settings": [
+          {
+            "type": "text",
+            "label": "Press Quote",
+            "id": "press_quote",
+            "default": "The best supplement for hormonal health that promises to restore balance"
+          }, {
+            "type": "checkbox",
+            "id": "show_png",
+            "label": "Show PNG?",
+            "default": false
+          }, {
+            "type": "image_picker",
+            "label": "Logo",
+            "id": "logo"
+          }, {
+            "type": "text",
+            "label": "SVG Text",
+            "id": "svg_text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Press Quotes",
+        "category": "Black Friday"
+      }
+    ]
+  }
+{% endschema %}

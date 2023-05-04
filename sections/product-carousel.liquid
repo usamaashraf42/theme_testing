@@ -1,0 +1,141 @@
+<script src="{{ 'product-carousel.js' | asset_url }}" defer="defer"></script>
+{{ 'product-carousel.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign featured_collection = collections[section.settings.collection]
+  assign featured_collection_title = section.settings.title | default: featured_collection.title
+  assign featured_collection_url = section.settings.cta_link | default: featured_collection.url
+  if section.settings.cta_link_text != blank
+    assign featured_collection_link_text = section.settings.cta_link_text
+  else
+    assign featured_collection_link_text = featured_collection.title | downcase | prepend: 'Shop all '
+  endif
+-%}
+
+<div class="product-carousel product-carousel--{{ section.id }}" role="region" aria-label="Product Carousel" data-product-carousel>
+  <div class="product-carousel__wrapper wrapper">
+    <div class="product-carousel__header{% unless section.settings.enable_cta %} product-carousel__header--no-cta{% endunless %} text-center">
+      <h2 class="h3 sparkles-title">
+        {% if section.settings.enable_sparkles %}
+          {% assign sparkles = '1,1,2,3' | split: ',' %}
+          {% render 'sparkles' with
+            sparkles: sparkles,
+            classes: 'product-carousel__sparkles'
+          %}
+        {% endif %}
+
+        {{ featured_collection_title }}
+      </h2>
+
+      {% if section.settings.enable_cta %}
+        <a href="{{ featured_collection_url }}" title="{{ featured_collection_link_text }}" class="text-link">
+          {{ featured_collection_link_text }}{% render 'icon-arrow-right-new' %}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="product-carousel__carousel{% unless section.settings.enable_scrollbar %} product-carousel__carousel--no-scrollbar{% endunless %} swiper-container" data-product-carousel-slider>
+      <div class="swiper-button-prev">
+        {% render 'icon-arrow-left-large' %}
+      </div>
+
+      <div class="swiper-button-next">
+        {% render 'icon-arrow-right-large' %}
+      </div>
+
+      <div class="swiper-wrapper">
+        {% if product.metafields.custom_fields.related_products != blank %}
+          {% assign product_refs = product.metafields.custom_fields.related_products | split: "|" %}
+
+          {% for product_handle in product_refs limit: 8 %}
+            <div class="product-carousel__item swiper-slide">
+              {% assign product_ref = all_products[product_handle] %}
+              {% render 'collection-item' with
+                product: product_ref,
+                is_carousel: true
+              %}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for product in featured_collection.products limit: 8 %}
+            <div class="product-carousel__item swiper-slide">
+              {% render 'collection-item' with
+                product: product,
+                is_carousel: true
+              %}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="swiper-scrollbar{% unless section.settings.enable_scrollbar %} large--hide{% endunless %}"></div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "paragraph",
+        "content": "If section is on a product page, and the related products metafield is set on that product, the metafield will override the Collection setting"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection",
+        "info": "Collection to be featured in product carousel. Limit of 8 products will appear."
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_sparkles",
+        "label": "Enable Sparkles",
+        "info": "Enables the sparkle elements and animations that appear around the title and CTA",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_scrollbar",
+        "label": "Enable Carousel Scrollbar",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "info": "If left blank, will default to the title of the selected collection"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_cta",
+        "label": "Enable CTA",
+        "default": true
+      },
+      {
+        "type": "url",
+        "id": "cta_link",
+        "label": "CTA Link",
+        "info": "If left blank, will default to the URL of the selected collection"
+      },
+      {
+        "type": "text",
+        "id": "cta_link_text",
+        "label": "CTA Link Text",
+        "info": "If left blank, will default to 'Shop all' + the title of the selected collection"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Carousel"
+      }
+    ]
+  }
+{% endschema %}

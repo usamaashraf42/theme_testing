@@ -1,0 +1,232 @@
+<div class="discover-our-collections-container">
+    <div class="discover-our-collections-title">{{ section.settings.section_title }}</div>
+    <div class="discover-our-collections-row" style="display: none;">
+        {% for block in section.blocks %}
+            <div class="discover-our-collections-collection-card">
+                <div class="discover-our-collections-collection-image">
+                    {{ block.settings.collection_image | image_url: width: 280, height: 280 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}
+                </div>
+                <div class="discover-our-collections-collection-title">{{ block.settings.collection_card.title }}</div>
+                <a class="discover-our-collections-collection-cta" href="{{ block.settings.collection_card.url }}">{{ section.settings.cta_label }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="collection-swiper swiper">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="swiper-slide">
+                    <div class="discover-our-collections-collection-image">
+                        {{ block.settings.collection_image | image_url: width: 280, height: 280 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}
+                    </div>
+                    <div class="discover-our-collections-collection-title">{{ block.settings.collection_card.title }}</div>
+                    <a class="discover-our-collections-collection-cta" style="max-width: 280px" href="{{ block.settings.collection_card.url }}">{{ section.settings.cta_label }}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="discover-collections-next">{% render 'splide-arrow' %}</div>
+<div class="discover-collections-prev">{% render 'splide-arrow' %}</div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".collection-swiper", {
+        slidesPerView: 1.2,
+        loop: true,
+        breakpoints: {
+            769: {
+                slidesPerView: 4
+            }
+        },
+        navigation: {
+            nextEl: ".discover-collections-next",
+            prevEl: ".discover-collections-prev"
+          },
+      });
+    </script>
+
+{% style %}
+
+.swiper {
+        width: 100%;
+        height: 100%;
+}
+
+    .discover-our-collections-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #EBEADE;
+        padding: 80px 0px;
+    }
+
+    @media (min-width: 769px) {
+        .discover-our-collections-container {
+            padding: 80px;
+        }
+    }
+
+    .discover-our-collections-title {
+        color: #656666;
+        font-family: "Manifold Regular";
+        font-size: 34px;
+        letter-spacing: 1.06px;
+        line-height: 49px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .discover-our-collections-row {
+        display: none;
+    }
+
+    @media (min-width: 769px) {
+        .discover-our-collections-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+    .discover-our-collections-collection-card {
+        display: flex;
+        flex-direction: column;
+        max-width: 280px;
+    }
+
+    @media (min-width: 769px) {
+        .discover-our-collections-collection-card {
+            max-width: 100%;
+        }
+    }
+
+    .discover-our-collections-collection-image img {
+        border-radius: 10px;
+    }
+
+    .discover-our-collections-collection-title {
+        color: #656666;
+        font-family: "Manifold Regular";
+        font-size: 24px;
+        letter-spacing: 0.65px;
+        line-height: 35px;
+        text-align: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .discover-our-collections-collection-cta {
+        width: 100%;
+        background: #ffffff;
+        border-radius: 25px;
+        font-family: "Manifold";
+        color: #656666;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 17px;
+        text-decoration: none;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .discover-collections-next {
+        display: none;
+    }
+
+    .discover-collections-prev {
+        display: none;
+    }
+
+    @media (min-width: 769px) {
+    .discover-collections-next {
+    border-radius: 50%;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    margin-top: -365px;
+    right: 0px;
+    z-index: 1000;
+    cursor: pointer;
+    right: 10px;
+}
+
+.discover-collections-prev {
+    border-radius: 50%;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    margin-top: -365px;
+    z-index: 1000;
+    cursor: pointer;
+    left: 10px;
+}
+
+.discover-collections-next svg {
+    transform: rotate(180deg);
+    margin-right: 20px;
+    min-width: 40px;
+    margin-bottom: 25px;
+}
+
+.discover-collections-prev svg {
+    margin-left: 20px;
+    min-width: 40px;
+    margin-top: 25px;
+}
+
+}
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Discover Our Collections",
+    "settings": [
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Title",
+            "default": "Discover our collections"
+        },
+        {
+            "type": "text",
+            "id": "cta_label",
+            "label": "CTA Label",
+            "default": "SHOP ALL"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "Collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "collection_card",
+                    "label": "Choose Collection"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "collection_image",
+                    "label": "Collection Image"
+                }
+            ]
+        }
+    ],
+    "presets": [{
+        "name": "Discover Our Collections",
+        "category": "Black Friday"
+    }]
+}
+{% endschema %}

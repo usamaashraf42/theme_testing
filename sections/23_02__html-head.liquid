@@ -1,0 +1,171 @@
+
+
+{% comment %}
+{% assign domcontentloadeda = "document.addEventListener('DOMContentLoaded'" %}
+{% assign startasyncLoadinga= "document.addEventListener('StartAsyncLoading'" %} 
+{% assign domcontentloaded = 'e.addEventListener("DOMContentLoaded"' %}
+{% assign startasyncLoading= "e.addEventListener('StartAsyncLoading'" %}
+{% assign rapp = ", asyncLoad" %}{% assign napp= ", function(){}" %}
+{% assign rappload = "if(window.attachEvent)" %}
+{% assign nappload= "document.addEventListener('StartAsyncLoading',function(event){asyncLoad();});if(window.attachEvent)" %}
+{% assign rstorefrontload = "var customDocumentWrite = function(content)" %}
+{% assign nstorefrontload= "document.addEventListener('StartKernelLoading', function() { document.dispatchEvent(new CustomEvent('StartShopifyLoading')); var customDocumentWrite = function(content)" %}
+{% assign rstorefront = "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript)" %}
+{% assign nstorefront= "document.getElementsByTagName('head')[0].appendChild(eventsListenerScript);})" %}
+{% if template == 'cart' %}
+    {{ content_for_header | replace: 'src=', 'data-src=' | replace: domcontentloadeda, startasyncLoadinga  | replace: domcontentloaded, startasyncLoading | replace: rapp, napp  | replace: rappload, nappload }}
+{% else %} 
+    {{ content_for_header | replace: 'src=', 'data-src=' | replace: domcontentloadeda, startasyncLoadinga  | replace: domcontentloaded, startasyncLoading | replace: rapp, napp  | replace: rappload, nappload | replace: rstorefrontload, nstorefrontload | replace: rstorefront, nstorefront }}
+{% endif %}
+{% endcomment %}
+
+
+
+{% comment %}
+  <script>
+    var theme = {
+      stylesheet: "{{ 'theme.scss.css' | asset_url }}",
+      modelViewerUiSprite: "{{ 'model-viewer-ui-sprite.svg' | asset_url }}",
+      plyrSprite: "{{ 'plyr-sprite.svg' | asset_url }}",
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        addItemSuccess: {{ 'products.product.item_added_to_cart' | t | json }},
+        viewCart: {{ 'products.product.view_cart' | t | json }},
+        external: {{ 'general.accessibility.link_messages.external' | t | json }},
+        newWindow: {{ 'general.accessibility.link_messages.new_window' | t | json }},
+        newWindowExternal: {{ 'general.accessibility.link_messages.new_window_and_external' | t | json }},
+        cartError: {{ 'cart.general.cart_error' | t | json }},
+        cartQuantityError: {{ 'cart.general.cart_quantity_error_html' | t: quantity: "[quantity]", title: "[title]" | json }},
+        regularPrice: {{ 'products.product.regular_price' | t | json }},
+        salePrice: {{ 'products.product.sale_price' | t | json }},
+        unitPrice: {{ 'products.product.unit_price' | t | json }},
+        unitPriceSeparator: {{ 'general.accessibility.unit_price_separator' | t | json }},
+        newsletter: {
+          blankError: {{ 'general.newsletter_form.blank_error' | t | json }},
+          invalidError: {{ 'general.newsletter_form.invalid_error' | t | json }}
+        },
+        map: {
+          zeroResults: {{ 'sections.map.address_no_results' | t | json }},
+          overQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
+          authError: {{ 'sections.map.auth_error_html' | t | json }},
+          addressError: {{ 'sections.map.address_error' | t | json }}
+        },
+        slideshow: {
+          loadSlideA11yString: {{ 'sections.slider.load_slide' | t: slide_number: '[slide_number]' | json }},
+          activeSlideA11yString: {{ 'sections.slider.active_slide' | t: slide_number: '[slide_number]' | json }}
+        }
+      },
+      isOnline: true,
+      moneyFormat: {{ shop.money_format | json }},
+      mediaQuerySmall: 750,
+      mediaQueryMedium: 990
+    };
+
+    {% if request.page_type contains 'customers/' %}
+      theme.countryOptionTags = {{ all_country_option_tags | json}};
+    {% endif %}
+
+    document.documentElement.className = document.documentElement.className.replace('supports-no-js', '');
+  </script>
+{% endcomment %}
+
+{% comment %}
+{%capture pDescription%}  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/beefup@1.4.1/dist/css/jquery.beefup.css"> 
+  <script src="{{ 'lazysizes.min.js' | asset_url }}" async="async"></script>
+  <script src="{{ 'vendor.min.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'theme.min.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'collection-card.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'splide.min.js' | asset_url }}"></script>
+
+  {{ 'splide.min.css' | asset_url | stylesheet_tag }}
+
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W908C3LLGQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-W908C3LLGQ');
+  </script>
+
+
+
+  {% include 'judgeme_core' %}
+
+  {{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+  {{ shop.metafields.okendo.StyleCustomizations }}
+
+  <script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/NN6rZj8fRcsdXhhpYF383A" async></script>
+
+
+  <!-- TrustBox script -->
+  <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+  <!-- End TrustBox script -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/beefup@1.4.2/dist/js/jquery.beefup.min.js"></script> 
+  <script src="{{ 'main.js' | asset_url }}"></script> 
+  <script src="{{ 'slick.min.js' | asset_url }}"></script>
+  <script src="{{ 'slick.js' | asset_url }}"></script>
+<!--    {{ 'slick.css' | asset_url | stylesheet_tag }}
+   {{ 'slick-theme.css' | asset_url | stylesheet_tag }} -->
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.trust_widget a.trust_custom_click[href^="#"]').on('click',function (e) {
+	    e.preventDefault();
+	    var target = this.hash;
+	    var $target = $(target);
+	    $('html, body').stop().animate({
+	        'scrollTop': $target.offset().top - 100
+	    }, 900, 'swing', function () {
+	        // window.location.hash = target;
+	    });
+	});
+});
+</script>
+
+  {% include 'qikify-contactform' %} 
+    
+  <script type="text/javascript">(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/pVqZR1LmFawzNY6SSZhXCggSCg9OscfPa99T6nVs/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script>
+
+  <script>
+ window.onload = function () { 
+     setTimeout(function(){    
+	var api = new Yotpo.API(yotpo);
+	api.refreshWidgets();
+	},2000);
+      };
+
+  </script>
+{%endcapture%}
+{% endcomment %}
+
+
+{% comment %}
+{% comment %}Removed by amir@radequal.com{% endcomment %}
+<script>
+    var _0xed06=["\x43\x68\x72\x6F\x6D\x65\x2D\x4C\x69\x67\x68\x74\x68\x6F\x75\x73\x65","\x69\x6E\x64\x65\x78\x4F\x66","\x75\x73\x65\x72\x41\x67\x65\x6E\x74","\x6E\x61\x76\x69\x67\x61\x74\x6F\x72","\x58\x31\x31","\x47\x54\x6D\x65\x74\x72\x69\x78","\x70\x69\x6E\x67\x62\x6F\x74"];if(window[_0xed06[3]][_0xed06[2]][_0xed06[1]](_0xed06[0])==  -1&& window[_0xed06[3]][_0xed06[2]][_0xed06[1]](_0xed06[4])==  -1&& window[_0xed06[3]][_0xed06[2]][_0xed06[1]](_0xed06[5])==  -1&& window[_0xed06[3]][_0xed06[2]][_0xed06[1]](_0xed06[6])==  -1){   document.write({{pDescription | json}}); } else { document.write("<html><p>.</p></html>");} document.close();
+</script>  
+{% endcomment %}                
+
+
+{% comment %}
+{% comment %} Please do not edit this section. It is automatically generated by Videowise{% endcomment %}
+	<link rel="stylesheet" href="https://doui4jqs03un3.cloudfront.net/style.css.gz">
+	<script src="https://doui4jqs03un3.cloudfront.net/vendors.js.gz"></script>
+	<script src="https://doui4jqs03un3.cloudfront.net/client.js.gz" defer="defer"></script>
+{% comment %} End Videowise section.{% endcomment %}
+{% endcomment %}
+
+{% comment %}
+	{{ shop.metafields.loox["global_html_head"] }}
+{% endcomment %}

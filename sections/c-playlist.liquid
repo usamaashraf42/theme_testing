@@ -1,0 +1,306 @@
+<div class="c_playcard-container" id="{{ section.settings.c_id | handleize | downcase }}">
+<div class="c_playcard-heading">
+<h2>{{ section.settings.c_heading }}</h2>
+</div>
+  {% for block in section.blocks %}
+    <div class="c_playcard-main" data-music="{{ block.settings.c_music }}" data-spotify="{{ block.settings.c_spotify }}" data-apple="{{ block.settings.c_apple }}">
+  <div class="c_playcard">
+<div class="c_playcard-a">
+  {% if block.settings.c_img != blank %}
+<div class="c_playcard-img">
+<img src="{{ block.settings.c_img | img_url: "master" }}" alt="">
+   <div class="c_playcard-img-icon">
+<span class="c_playcard-img-icon-pause">{% include 'pause-icon' %}</span>
+      <span class="c_playcard-img-icon-play">{% include 'play-icon' %}</span>
+    </div>
+  </div>
+  {% endif %}
+  </div>
+    <div class="c_playcard-a">
+ <div class="c_playcard-content">
+<h2>{{ block.settings.c_title }}</h2>
+   <h3>{{ block.settings.c_brand }}</h3>
+   <button type="button">{{ block.settings.c_btn }}</button>
+  </div>
+  </div>
+  </div>
+      <audio src="{{ block.settings.c_music }}" class="c_playcard-music" controls></audio>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="c_playlist_overly-mainn" style="display: none; z-index: 99999999999999;">
+      {% include 'c-p-form' %}
+    </div>
+
+
+<style>
+  .c_playcard-container{
+      padding: 0px 70px;
+  }
+  .c_playcard-heading{
+    padding-top: 20px;
+  }
+  .c_playcard-heading h2{
+    margin: 0px !important;
+    font-size: 28px;
+    font-weight: 600;
+  }
+  .c_playcard-main{
+   margin: 20px 0px; 
+  }
+  .c_playcard-main:last-child {
+    border-bottom: 1px solid rgba(18, 18, 18, 0.1);
+    padding-bottom: 20px;
+    margin: 0px;
+}
+  .c_playcard{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    background: #d1c7bf;
+    border-radius: 8px;
+    overflow: hidden;
+    align-items: center;
+  }
+  .c_playcard-a{
+    
+  }
+  .c_playcard-a:first-child{
+        width: 160px;
+    height: 160px;
+  }
+  .c_playcard-a:last-child{
+        width: calc(100% - 160px);
+  }
+  .c_playcard-img{
+        position: relative;
+  }
+  .c_playcard-img img{
+    width: 100%;
+    display: block;
+  }
+  .c_playcard-content{
+    padding: 25px;
+  }
+  .c_playcard-content h2{
+        overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    white-space: pre-wrap;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0px !important;
+    color: black;
+    margin-bottom: 10px !important;
+  }
+  .c_playcard-content h3{
+        overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    white-space: pre-wrap;
+    font-size: 18px;
+    color: #7c7773;
+    margin: 0px !important;
+    margin-bottom: 15px !important;
+  }
+  .c_playcard-content button{
+        border: 1px solid black;
+    background: transparent;
+    line-height: normal;
+    margin: 0px;
+    display: block;
+    border-radius: 50px;
+    font-size: 16px;
+    padding: 8px 17px;
+    font-weight: 600;
+        color: #020025;
+  }
+  .c_playcard-img-icon{
+        position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  .c_playcard-img-icon-pause{
+       display: block; 
+        cursor: pointer;
+  }
+  .c_playcard-img-icon-play{
+        cursor: pointer;
+        display: none;
+  }
+  .c_playcard-img-icon svg {
+    width: 32px;
+    height: 32px;
+}
+  .c_playcard-music{
+    display: none;
+  }
+
+
+  @media (max-width: 768px){
+    .c_playcard-container {
+    padding: 0px 50px;
+}
+    .c_playcard-a:first-child {
+    width: 120px;
+    height: 120px;
+}
+    .c_playcard-a:last-child {
+    width: calc(100% - 120px);
+}
+    .c_playcard-content {
+    padding: 10px 10px;
+}
+    .c_playcard-content h2 {
+    font-size: 16px;
+    margin-bottom: 5px !important;
+}
+    .c_playcard-content h3 {
+    font-size: 14px;
+    margin-bottom: 5px !important;
+}
+    .c_playcard-content button {
+    font-size: 16px;
+    padding: 5px 15px;
+}
+  }
+
+    @media (max-width: 490px){
+    .c_playcard-container {
+    padding: 0px 20px;
+}
+  }
+</style>
+
+
+<script>
+$(document).ready(function(){
+  $(".c_playcard-main .c_playcard-img-icon span").click(function(){
+     if ($(this).closest(".c_playcard-main").find('.c_playcard-music')[0].paused == false) {
+        $(this).closest(".c_playcard-main").find('.c_playcard-music')[0].pause();
+        $(this).closest(".c_playcard-main").find(".c_playcard-img-icon-play").hide();
+       $(this).closest(".c_playcard-main").find(".c_playcard-img-icon-pause").show();
+    } else {
+        $(this).closest(".c_playcard-main").find('.c_playcard-music')[0].play();
+       $(this).closest(".c_playcard-main").find(".c_playcard-img-icon-pause").hide();
+       $(this).closest(".c_playcard-main").find(".c_playcard-img-icon-play").show();
+    }
+  });
+
+   $(".c_playlist-card-main .c_playcard-img-icon span").click(function(){
+     if ($(this).closest(".c_playlist-card-main").find('.c_playcard-music-popup')[0].paused == false) {
+        $(this).closest(".c_playlist-card-main").find('.c_playcard-music-popup')[0].pause();
+        $(this).closest(".c_playlist-card-main").find(".c_playcard-img-icon-play").hide();
+       $(this).closest(".c_playlist-card-main").find(".c_playcard-img-icon-pause").show();
+    } else {
+        $(this).closest(".c_playlist-card-main").find('.c_playcard-music-popup')[0].play();
+       $(this).closest(".c_playlist-card-main").find(".c_playcard-img-icon-pause").hide();
+       $(this).closest(".c_playlist-card-main").find(".c_playcard-img-icon-play").show();
+    }
+  });
+
+  $('.c_playcard-content button').click(function(){
+var img = $(this).closest(".c_playcard").find(".c_playcard-img img").attr("src");
+    var title = $(this).closest(".c_playcard-main").find(".c_playcard-content h2").text();
+    var brand = $(this).closest(".c_playcard-main").find(".c_playcard-content h3").text();
+    var music = $(this).closest(".c_playcard-main").attr("data-music");
+    var spotify = $(this).closest(".c_playcard-main").attr("data-spotify");
+    var apple = $(this).closest(".c_playcard-main").attr("data-apple");
+    console.log("img---", img, "title---", title, "brand---", brand, "music---", music, "spotify---", spotify, "apple---", apple,);
+    $(".c_playlist-card-main .c_playcard-img img").attr("src", img);
+    $(".c_playlist-card-main .c_playcard-content h2").text(title);
+    $(".c_playlist-card-main .c_playcard-content h3").text(brand);
+    $(".c_playlist-card-main .c_playcard-music-popup").attr("src", music);
+    $(".c_playlist-card-main .c_playcard-links-spotify a").attr("href", spotify);
+    $(".c_playlist-card-main .c_playcard-links-apple a").attr("href", apple);
+     $(".c_playcard-music").trigger("pause");
+     $(".c_playcard-img-icon-pause").show();
+       $(".c_playcard-img-icon-play").hide();
+     });
+});
+</script>
+
+
+
+{% schema %}
+  {
+    "name": "Playlist Card",
+    "settings": [
+        {
+        "type" : "text",
+        "id" : "c_id",
+        "label" : "Section ID for target",
+        "default" : "Playlist-Card"
+      },
+      {
+        "type" : "text",
+        "id" : "c_heading",
+        "label" : "Heading",
+        "default" : "Podcast Appearances"
+      }
+    ],
+    "blocks" : [
+      {
+        "type" : "block-1",
+        "name" : "Music Card",
+        "settings" : [
+           {
+        "type" : "text",
+        "id" : "c_music",
+        "label" : "Music URL"
+      },
+            {
+        "type" : "text",
+        "id" : "c_spotify",
+        "label" : "Spotify URL"
+      },
+           {
+        "type" : "text",
+        "id" : "c_apple",
+        "label" : "Apple URL"
+      },
+          {
+            "type" : "image_picker",
+            "id" : "c_img",
+            "label" : "Image"
+          },
+          {
+        "type" : "text",
+        "id" : "c_title",
+        "label" : "Heading",
+        "default" : "Getting curious about functional mushrooms and ADHD"
+      },
+          {
+        "type" : "text",
+        "id" : "c_brand",
+        "label" : "Brand",
+        "default" : "Kate Moryoussef"
+      },
+          {
+        "type" : "text",
+        "id" : "c_btn",
+        "label" : "Button",
+        "default" : "Play"
+      }
+        ]
+      }
+    ],
+    "presets" : [
+      {
+        "name" : "C Playlist Card",
+        "category" : "custom"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

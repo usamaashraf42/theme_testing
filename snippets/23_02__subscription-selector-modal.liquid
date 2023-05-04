@@ -1,0 +1,108 @@
+
+<div class="dirtea-full-page-scrim dirtea-product-subscription-modal hide" data-product-variant-id="{{ selected_product.selected_or_first_available_variant.id }}">
+    <div class="dirtea-product-subscription-modal-container bg-light-grey">
+        <div class="subscription-modal-top-bar text-right">
+            <a href="#" class="close-subscription-modal" onclick="closeSubscriptionOptionsModal(event)">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 16.8 16.8"><path fill="#444" d="M16.8 1.5L15.4.1 8.4 7l-7-7L0 1.4l7 7-7 7 1.4 1.4 7-7 7 7 1.4-1.4-7-7z"></path></svg>
+            </a>
+        </div>
+        <p class="subscription-modal-product-title text-center">{{ selected_product.title }}</p>
+        <div class="">
+            {% for subscription_option in selected_product.metafields.custom.subscription_products.value %}
+                {% assign first_subscription_product_variant_id = subscription_option.selected_or_first_available_variant.id %}
+                {% assign first_subscription_product_selling_plan_allocation = subscription_option.selected_or_first_available_variant.selling_plan_allocations | first %}
+                {% assign first_subscription_product_selling_plan_id = first_subscription_product_selling_plan_allocation.selling_plan.id %}
+                {% break %}
+            {% endfor %}
+
+
+            <div class="pdp-product-form">
+
+                {% for subscription_option in selected_product.metafields.custom.subscription_products.value %}
+                {% assign subscription_product_price = subscription_option.price | divided_by : 100.00 | divided_by: subscription_option.metafields.custom.subscription_plan_months | round: 2 %}
+                {% assign price_fraction = subscription_option.price | times: 1.00 | divided_by: subscription_option.metafields.custom.subscription_plan_months | divided_by: selected_product.price %}
+                {% assign savings_pct = 1 | minus: price_fraction | times: 100 | round %}
+
+                {%- liquid
+                assign current_variant = subscription_option.selected_or_first_available_variant | default: subscription_option.variants.first
+                assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
+
+                if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
+                assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
+                endif
+                -%}
+
+                <div
+                    class="pdp-product-form-option"
+                    data-product-variant-id="{{ subscription_option.selected_or_first_available_variant.id }}"
+                    data-product-selling-plan-id="{{ current_selling_plan_allocation.selling_plan.id }}"
+                    data-product-type="subscription"
+                    data-product-price="{{ subscription_option.price | divided_by: 100.00 }}"
+                    data-product-price-monthly="{{ subscription_product_price }}"
+                    data-subscription-months="{{ subscription_option.metafields.custom.subscription_plan_months }}"
+                >
+                    <div class="pdp-product-form-option-radio-button {% if forloop.index != 1 %}filled-radio-button{% endif %} {{ selected_product.handle }}"></div>
+                    <div style="width: 100%;">
+                        <div class="pdp-product-form-option-first-line">
+                            <div class="text-uppercase">{{ subscription_option.metafields.custom.subscription_plan_name }}</div>
+                            <div>&pound;{{ subscription_product_price }}<span style="font-weight: normal">/mo</span></div>
+                        </div>
+                        <div class="pdp-product-form-option-second-line">
+                            <div>Pay &pound;{{ subscription_option.price | divided_by: 100.00 }} Upfront</div>
+                            <div {%if selected_product.metafields.my_fields.modules_bg_colors %}style="background-color: {{ selected_product.metafields.my_fields.modules_bg_colors }};"{% endif %}>
+                                Save {{ savings_pct }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+
+
+        </div>
+        <div class="text-center subscription-modal-add-btn-container">
+            <a
+                href="#"
+                class="btn bg-off-black color-white border-none mw-282 btn-dirtea-primary"
+                onclick="addProductToCartOnClick(event, 'closeSubscriptionModal')"
+                data-product-variant-id="{{ first_subscription_product_variant_id }}"
+                data-product-selling-plan-id="{{ first_subscription_product_selling_plan_id }}"
+            >ADD TO CART</a>
+        </div>
+        <div class="text-center">
+            <a href="#" onclick="closeSubscriptionOptionsModal(event)" class="link-unstyled text-uppercase text-decoration-underline">Cancel</a>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+.dirtea-product-subscription-modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dirtea-product-subscription-modal-container {
+    display: flex;
+    min-width: 400px;
+    height: auto;
+    flex-direction: column;
+    row-gap: 20px;
+    padding: 20px;
+}
+.dirtea-product-subscription-modal-container .close-subscription-modal svg {
+    height: 13px;
+    width: 13px;
+}
+.dirtea-product-subscription-modal-container .subscription-modal-product-title {
+    margin: 0px;
+    font-size: 24px;
+    color: var(--off-black);
+}
+.dirtea-product-subscription-modal-container a.link-unstyled {
+    color: var(--off-black);
+}
+</style>

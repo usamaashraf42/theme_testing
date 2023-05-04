@@ -1,0 +1,121 @@
+<div class="ticker-wrap-three" style="margin-top: -10px;">
+    <div class="ticker-three">
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+      <div class="ticker__item-three">FOLLOW US @DIRTEAWORLD</div>
+      <div class="ticker__item-three">.</div>
+    </div>
+  </div>
+      
+    <style>
+      
+      @-webkit-keyframes ticker {
+        0% {
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+          visibility: visible;
+        }
+      
+        100% {
+          -webkit-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
+        }
+      }
+      
+      @keyframes ticker {
+        0% {
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+          visibility: visible;
+        }
+      
+        100% {
+          -webkit-transform: translate3d(-20%, 0, 0);
+          transform: translate3d(-20%, 0, 0);
+        }
+      }
+      
+      .ticker-wrap-three {
+        margin: auto;
+        overflow: hidden;
+        height: 4rem;
+        padding: 5px;
+        padding-top: 8px;
+        box-sizing: content-box;
+        width: 100%;
+        background-color: #FED880;
+      }
+      
+      .ticker-three {
+      
+      display: inline-block;
+      height: 4rem;
+      line-height: 4rem;  
+      white-space: nowrap;
+      padding-right: 100%;
+      box-sizing: content-box;
+      background-color: #FED880;
+      
+      -webkit-animation-iteration-count: 100; 
+              animation-iteration-count: 100;
+      -webkit-animation-timing-function: linear;
+              animation-timing-function: linear;
+      -webkit-animation-name: ticker;
+             animation-name: ticker;
+      -webkit-animation-duration: 15000ms;
+              animation-duration: 15000ms;
+      
+      }
+      
+      .ticker__item-three {
+        display: inline-block;
+        padding: 0 2rem;
+        font-size: 2rem; 
+        color: #252525;
+        font-family: "Manifold Regular";
+        font-size: 16px;
+        letter-spacing: 0.44px;
+        line-height: 17px;
+    }
+      
+    </style>
+  
+    {% schema %}
+  {
+      "name": "DIRTEA Ticker",
+      "settings": [],
+      "presets": [
+      {
+          "name": "DIRTEA Ticker",
+          "category": "Black Friday"
+      }]
+  }
+  {% endschema %}

@@ -1,0 +1,57 @@
+{%- layout none -%}
+{
+    "item_count": {{ cart.item_count }},
+    "original_total_price": {{ cart.original_total_price }},
+	"items":[
+
+	{%- for item in cart.items -%}
+        {% assign itemImage = item.image | img_url: '800x' %}
+        {% if item.product.metafields.my_fields.transparentimage %}
+            {% assign itemImage = item.product.metafields.my_fields.transparentimage | img_url: '800x' %}
+        {% else if item.product.featured_image %}
+            {% assign itemImage = item.product.featured_image | img_url: '800x' %}
+        {% endif %}
+
+        {%- liquid
+            assign current_variant = item.product.selected_or_first_available_variant | default: item.product.variants.first
+            assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
+
+            if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
+            assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
+            endif
+        -%}
+
+        {% assign firstSubscriptionProduct = item.product.metafields.custom.subscription_products.value | first %}
+        {%- liquid
+            assign firstSubscriptionVariant = firstSubscriptionProduct.selected_or_first_available_variant | default: firstSubscriptionProduct.variants.first
+            assign subscription_selling_plan_allocation = firstSubscriptionVariant.selected_selling_plan_allocation
+
+            if subscription_selling_plan_allocation == nil and firstSubscriptionVariant.requires_selling_plan
+            assign subscription_selling_plan_allocation = firstSubscriptionVariant.selling_plan_allocations | first
+            endif
+        -%}
+
+		{
+            "key": "{{ item.key }}",
+            "product_variant_id": "{{ item.product.selected_or_first_available_variant.id }}",
+            "product_selling_plan_id": "{{ current_selling_plan_allocation.selling_plan.id }}",
+            "subscription_plan_name": "{{ item.product.metafields.custom.subscription_plan_name }}",
+            "subscription_plan_months": "{{ item.product.metafields.custom.subscription_plan_months }}",
+            "url": "{{ item.product.url }}",
+            "title": "{{ item.product.title }}",
+            "short_name": "{{ item.product.metafields.custom.short_name }}",
+            "price": "{{ item.price }}",
+            "compare_at_price": "{{ item.compare_at_price }}",
+            "quantity": "{{ item.quantity }}",
+			"image": "{{ itemImage }}",
+            "subscription_product_option_plan_name": "{{ firstSubscriptionProduct.metafields.custom.subscription_plan_name }}",
+            "subscription_product_option_plan_months": "{{ firstSubscriptionProduct.metafields.custom.subscription_plan_months }}",
+            "subscription_product_option_variant_id": "{{ firstSubscriptionProduct.selected_or_first_available_variant.id }}",
+            "subscription_product_option_selling_plan_id": "{{ subscription_selling_plan_allocation.selling_plan.id }}",
+            "subscription_product_option_compare_at_price": "{{ firstSubscriptionProduct.compare_at_price }}"
+		}{% unless forloop.last %},{% endunless %}
+
+	{%- endfor -%}
+
+	]
+}

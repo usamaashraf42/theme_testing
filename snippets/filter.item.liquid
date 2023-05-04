@@ -1,0 +1,33 @@
+{%- assign key_value = tag | split: ':' -%}
+{%- assign key = key_value[0] | downcase | strip -%}
+{%- assign value = key_value[1] | downcase | handleize | strip -%}
+{%- assign label = key_value[1] | downcase | strip -%}
+{%- assign is_selected = false -%}
+{%- assign filter_tags = '' -%}
+
+{%- if group == key -%}
+    {%- if current_tags contains tag -%}
+        {%- assign is_selected = true -%}
+    {%- endif -%}
+
+    {%- unless is_selected -%}
+        {%- assign filter_tags = '+' | append: key | append: ':' | append: value -%}
+    {%- endunless -%}
+
+    {%- for current_tag in current_tags -%}
+        {%- unless current_tag == tag -%}
+            {%- assign current_tag_key_value = current_tag | split: ':' -%}
+            {%- assign current_tag_key = current_tag_key_value[0] | downcase | strip -%}
+            {%- assign current_tag_value = current_tag_key_value[1] | downcase | handleize | strip -%}
+            {%- assign filter_tags = filter_tags | append: '+' | append: current_tag_key | append: ':' | append: current_tag_value -%}
+        {%- endunless -%}
+    {%- endfor -%}
+
+    {%- assign filter_tags = filter_tags | remove_first: '+' -%}
+    {%- assign url = collection.url | append: '/' | append: filter_tags -%}
+    
+    <div class="filter-item">
+        <input class="filter-item__input" type="checkbox" value="{{ tag }}" id="{{ tag | handleize }}" data-filter>
+        <label class="filter-item__label" for="{{ tag | handleize }}">{{- label | capitalize -}}</label>
+    </div>
+{%- endif -%}

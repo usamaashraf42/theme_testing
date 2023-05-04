@@ -1,0 +1,127 @@
+<div class="page-width">
+  <div class="why_mushr_bnr cmn_bnr section-header-image lazyload" data-bgset="{% include 'bgset', image: section.settings.bg_img %}"></div>
+</div>
+<div class="page-width">
+  <div class="grid text-center">
+    <div class="grid__item">
+      <header class="section-header">
+        <div class="section-header__title collection__title">{{ page.title }}</div>
+        <div class="section-header__description">{{ section.settings.mushr_title }}</div>
+
+        <div class="collection-dropdowns">
+          <label class="medium-up--hide drop_label"></label>
+          <div class="dropdowns-inner tabs">
+            {% for block in section.blocks %}
+              <a href="#tab{{ forloop.index }}">{{ block.settings.nav1 }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+</div>
+<div class="page-width small-width">
+  <ul class="tabs-content">
+    {% for block in section.blocks %}
+    <li class="{% if forloop.first %}active{% endif %}" id="tab{{ forloop.index }}">
+      <div class="rte" >
+        {{ block.settings.mushr_cnt }}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Our Story",
+    "class" : "pagemushroom",
+    "settings": [
+      {
+        "id": "bg_img",
+       "type": "image_picker",
+        "label":"Image"
+      },
+      {
+        "id": "mushr_title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "nav1",
+        "type": "text",
+        "label": "Nav 1"
+      },
+      {
+        "id": "nav1_lnk",
+        "type": "url",
+        "label": "Link"
+      },
+      {
+        "id": "nav2",
+        "type": "text",
+        "label": "Nav 2"
+      },
+      {
+      "id": "nav2_lnk",
+      "type": "url",
+      "label": "Link"
+      },
+      {
+        "id": "mushr_cnt",
+        "type": "html",
+        "label": "Content"
+      }
+
+
+   ],
+"blocks" : [
+{
+"type" : "tab",
+"name" : "Tab",
+"settings" : [
+{
+"type" : "text",
+"id" : "nav1",
+"label" : "Title"
+},
+{
+"type" : "textarea",
+"id" : "mushr_cnt",
+"label" : "Content"
+}
+]
+},
+{
+"type" : "slide",
+"name" : "Slide",
+"limit" : 5,
+"settings" : [
+{
+"type" : "text",
+"id" : "slide_heading",
+"label" : "Slide Heading"
+},
+{
+"type" : "textarea",
+"id" : "slide_content",
+"label" : "Slide Description"
+},
+{
+"type" : "image_picker",
+"id" : "slide_image",
+"label" : "Slide Image"
+}
+]
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

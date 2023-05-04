@@ -1,0 +1,178 @@
+<div class="how-to-dirtea-container bg-mid-grey">
+  <div class="how-to-dirtea-title dirtea-section-title">{{ section.settings.title_text }}</div>
+  <div class="how-to-dirtea-card-row">
+    {% for block in section.blocks %}
+      <div class="how-to-dirtea-card">
+        <div class="how-to-dirtea-card-video">
+          {{ block.settings.card_video | video_tag: autoplay: true,  loop: true}}
+        </div>
+        <div class="how-to-dirtea-card-text">{{ block.settings.card_text }}</div>
+      </div>
+    {% endfor %}
+  </div>
+  <!-- Slider main container -->
+  <div class="how-to-swiper mobile-only">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      {% for block in section.blocks %}
+        <div class="swiper-slide how-to-dirtea-card" style="max-width: 350px">
+          <div class="how-to-dirtea-card-video">
+            {{ block.settings.card_video | video_tag: autoplay: true,  loop: true}}
+          </div>
+          <div class="how-to-dirtea-card-text">{{ block.settings.card_text }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+{% javascript %}
+  const swiper = new Swiper('.how-to-swiper', { // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1.2
+
+  });
+{% endjavascript %}
+
+{% style %}
+
+  .swiper {
+    width: 100%;
+    height: auto;
+  }
+
+  .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+  }
+
+  @media(min-width: 769px) {
+    .mobile-only {
+      display: none;
+    }
+  }
+
+  .how-to-dirtea-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px 0;
+    background: var(--light-grey);
+  }
+
+  .how-to-dirtea-title {
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .how-to-dirtea-card-row {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+
+  @media(min-width: 769px) {
+    .how-to-dirtea-card-row {
+      display: flex;
+    }
+
+    .how-to-dirtea-container {
+      padding: 80px;
+    }
+  }
+
+  .how-to-dirtea-card-image img {
+    border-radius: 10px;
+  }
+
+  .how-to-dirtea-card-video video {
+    width: 280px;
+    border-radius: 10px;
+  }
+
+  @media(min-width: 900px) {
+    .how-to-dirtea-card-video video {
+      width: 200px;
+    }
+  }
+
+
+  @media(min-width: 1200px) {
+    .how-to-dirtea-card-video video {
+      width: 280px;
+    }
+  }
+
+  .how-to-dirtea-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .how-to-dirtea-card-text {
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: 29px;
+    text-align: center;
+    max-width: 280px;
+    margin-top: 25px;
+  }
+  .how-to-dirtea-card-text strong {
+      margin-bottom: 10px;
+      display: block;
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "How To Dirtea",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title_text",
+        "label": "Title",
+        "default": "How to DIRTEA"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "card",
+        "name": "How To Card",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "card_image",
+            "label": "Card Image"
+          }, {
+            "type": "text",
+            "id": "card_text",
+            "label": "Card Text"
+          }, {
+            "type": "video",
+            "id": "card_video",
+            "label": "Card Video"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "How To Dirtea",
+        "category": "Black Friday"
+      }
+    ]
+  }
+{% endschema %}

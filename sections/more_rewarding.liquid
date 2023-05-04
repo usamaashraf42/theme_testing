@@ -1,0 +1,65 @@
+<div class="more_rewarding">
+  <div class="page-width">
+    <div class="feature-row ">
+      <div class="rewarding_left feature-row__item feature-row__item-four feature-row__text text-center">
+        <div class="small-width">
+          <h4 data-aos-delay="900" data-aos="fade-up"> {{ page.title }}</h4>
+          <h2 data-aos-delay="1000" data-aos="fade-up">{{ section.settings.left_title }}</h2>
+          <p data-aos-delay="1100" data-aos="fade-up">{{ section.settings.lft_desc }}</p>
+        </div>
+      </div>
+      <div class="rewarding_rgt feature-row__item feature-row__item-six ">
+        <div class="points-wrapper">
+        {% for block in section.blocks %}
+        <span data-aos-delay="{{forloop.index}}00" data-aos="fade-up" class="points text-center small--one-half">
+          <h3>{{ block.settings.ptitle }}</h3>
+          <p>{{ block.settings.psbtitl }}</p>
+        </span>
+        {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "More Rewarding",
+    "settings": [
+      {
+        "type" : "text",
+        "id" : "left_title",
+        "label" : "Heading"
+      },
+      {
+        "type" : "textarea",
+        "id" : "lft_desc",
+        "label" : "Content"
+      }
+      ],
+        "blocks" : [
+        {
+          "type" : "Points",
+          "name" : "Points",
+          "settings" : [
+        {
+          "type" : "text",
+          "id" : "ptitle",
+          "label" : "Points"
+        },
+        {
+          "type" : "text",
+          "id" : "psbtitl",
+          "label" : "Points Text"
+        }
+          ]
+        }
+      ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

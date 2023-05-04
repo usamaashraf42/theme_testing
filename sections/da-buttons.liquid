@@ -1,0 +1,174 @@
+<div id="da-buttons">
+  <div class="da_buttons">
+    
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+        {% if block.type == "select_button" %}
+        {% if block.settings.da_button != blank %}
+        <div class="swiper-slide {% if forloop.index == 1 %}swiper-slide-actv{% endif %}">
+          <a href="{{block.settings.da_button_url}}">
+            <p>{{block.settings.da_button}}</p>
+          </a>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    
+  </div>
+</div>
+
+<style>
+  .da_buttons {
+    width: 100%;
+    padding: 0px 70px;
+  }
+
+  .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+    display: none !important;
+  }
+
+  .swiper-slide a {
+    text-decoration: none;
+  }
+
+  .swiper-slide a p {
+    margin: 0px;
+    text-align: center;
+    color: rgb(37, 37, 37);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 17px;
+    padding: 10px 5px;
+  }
+
+  .swiper-slide-active a p, .swiper-slide-actv a p {
+    background-color: rgba(18, 18, 18, 0.1);
+    border-radius: 10px;
+    color: #000000;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px){
+    .da_buttons {
+      padding: 0px 50px;
+    }
+
+    .swiper-slide a p {
+      font-size: 14px;
+      line-height: 16px;
+    }
+    .swiper-wrapper {
+    overflow: auto;
+}
+    .swiper-slide {
+    width: max-content;
+      margin-right: 10px;
+          min-width: 140px;
+}
+      .swiper-slide:last-child {
+      margin-right: 0px;
+}
+    .swiper-wrapper::-webkit-scrollbar {
+  width: 0px;
+}
+  }
+
+  @media (max-width: 490px){
+    .da_buttons {
+      padding: 0px 20px;
+    }
+  }
+  
+</style>
+
+<script>
+  (function() {
+
+    if ($(window).width() < 769) {
+ $(".swiper-slide").click(function(){
+   $(".swiper-slide").removeClass("swiper-slide-actv");
+    $(this).addClass("swiper-slide-actv");
+  });
+}
+
+  'use strict';
+  const breakpoint = window.matchMedia( '(max-width:768px)' );
+  let mySwiper;
+
+  const breakpointChecker = function() {
+    if ( breakpoint.matches === true ) {
+	  if ( mySwiper !== undefined ) mySwiper.destroy( true, true );
+	  return;
+      } else if ( breakpoint.matches === false ) {
+        return enableSwiper();
+      }
+
+  };
+
+  const enableSwiper = function() {   
+
+      var mySwiper = new Swiper(".mySwiper", {
+  slidesPerView: 2.5,
+    spaceBetween: 7,
+    direction: 'horizontal',
+    paginationClickable: true,
+    freeMode: true,
+    mousewheel: true,
+    mousewheelControl: true,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    }
+  });
+
+  };
+
+  breakpoint.addListener(breakpointChecker);
+
+  breakpointChecker();
+
+})();
+</script>
+
+
+{% schema %}
+  {
+    "name": "DA Buttons",
+    "settings": [],
+    "blocks": [
+    {
+    "type": "select_button",
+    "name": "Button",
+    "settings": [
+    {
+    "type": "text",
+    "id": "da_button",
+    "label": "Button Text",
+    "default": "Mushrooms 101"
+    },
+    {
+    "type": "url",
+    "id": "da_button_url",
+    "label": "Button URL"
+    }
+    ]
+    }
+    ],
+    "presets": [
+    {
+    "name": "DA Buttons",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

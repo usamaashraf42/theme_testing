@@ -1,0 +1,50 @@
+<div class="dirtea-product-carousel-item swiper-slide">
+    <a href="{{ product.url }}">
+        {% if product.metafields.my_fields.transparentimage %}
+        {% assign image_url = product.metafields.my_fields.transparentimage %}
+        {% else %}
+        {% assign image_url = product.featured_image %}
+        {% endif %}
+        <div class="product-image-container" style="background-image: url('{{ image_url | img_url: '800x' }}')">
+            <!-- <img src="{{ image_url | image_url }}"> -->
+        </div>
+
+        {% if product.metafields.custom.short_name %}
+        {% assign title = product.metafields.custom.short_name %}
+        {% else %}
+        {% assign title = product.title %}
+        {% endif %}
+        <p class="product-title">{{ title }}</p>
+        <p class="product-tagline">{{ product.metafields.custom.product_tagline }}</p>
+    </a>
+  
+    <div class="product-reviews">
+    </div>
+
+    <div class="product-price">
+    {{ product.price | money }}
+    </div>
+
+    <div class="product-card-buttons">
+        <a href="#" class="btn dirtea-add-to-cart-btn btn-dirtea-secondary" onclick="addProductToCartOnClick(event);" data-product-variant-id="{{ product.selected_or_first_available_variant.id }}">Buy now</a>
+        {% if product.metafields.custom.subscription_products.value %}
+
+        {% for subscription_product in product.metafields.custom.subscription_products.value %}
+            {% if subscription_product.title != "" %}
+                {% assign show_subscription_option = true %}
+                {% break %}
+            {% endif %}
+        {% endfor %}
+        {% if show_subscription_option %}
+        <a href="#" class="btn btn-dirtea-primary" onclick="openSubscriptionOptionsModal(event);" data-product-variant-id="{{ product.selected_or_first_available_variant.id }}">
+            <span class="show-mobile">Subscribe &amp; save</span>
+            <span class="show-desktop">Subscribe &amp; save up to 40%</span>
+        </a>
+        {% endif %}
+
+        {% comment %}
+        <a href="{{ product.url }}" class="btn">Save when you subscribe</a>
+        {% endcomment %}
+        {% endif %}
+    </div>
+</div>

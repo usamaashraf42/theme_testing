@@ -1,0 +1,53 @@
+:root {
+  /*   Dirtea brand colours for theme */
+  --light-grey: #F2F3F2;
+  --product-page-grey: #dfdfde;
+  --mid-grey: #DFDCD7;
+  --grey: #EBEADE;
+  --off-black: #252525;
+  --green: #08dc8c;
+  
+  /*   Product branded colours */
+  --chaga-brand-color: #DE8C59;
+  --mane-brand-color: #DCC7B7;
+  --cordyceps-brand-color: #FED880;
+  --reishi-brand-color: #C26E60;
+  --turkey-brand-color: #A9D3DD;
+  --tremella-brand-color: #E3B6C1;
+  --coffee-brand-color: #b88358;
+  --cacao-brand-color: #998293;
+}
+
+/*  Background CSS classses */
+.bg-white {
+    background-color: white;
+}
+.bg-light-grey {
+    background-color: var(--light-grey);
+}
+.bg-mid-grey {
+    background-color: var(--mid-grey);
+}
+.bg-grey {
+    background-color: var(--grey);
+}
+.bg-off-black {
+    background-color: var(--off-black);
+}
+
+
+.color-white {
+    color: white;
+}
+.color-light-grey {
+    color: var(--light-grey);
+}
+.color-mid-grey {
+    color: var(--mid-grey);
+}
+.color-grey {
+    color: var(--grey);
+}
+.color-off-black {
+    color: var(--off-black);
+}

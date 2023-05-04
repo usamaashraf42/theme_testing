@@ -1,0 +1,39 @@
+{% comment %}
+  PARAMETERS
+  sparkles : array of sparkles, comma separated list of numeric sparkle value to be used as icon (values 1 - 4)
+  attrs : any additional data attributes needed (optional)
+  classes : any additional wrappe classes (optional)
+
+  USAGE
+  {% assign sparkles = '1,2,1,3,2' | split: ',' %}
+  {% render 'sparkles' with sparkles: sparkles %}
+{% endcomment %}
+
+{% assign animation_delay = 0 %}
+<span class="sparkles {{ classes }}" {{ attrs }}>
+  {% for sparkle in sparkles %}
+    {% assign sparkle_value = sparkle | plus: 0 %}
+    {% assign animation_delay = animation_delay | plus: 400 %}
+
+    <span class="sparkle sparkle--{{ forloop.index }}">
+      {%- liquid
+        case sparkle_value
+          when 1
+            render 'icon-sparkle-1'
+          when 2
+            render 'icon-sparkle-2'
+          when 3
+            render 'icon-sparkle-3'
+          when 4
+            render 'icon-sparkle-4'
+        endcase
+      -%}
+    </span>
+
+    <style>
+      .sparkle--{{ forloop.index }} {
+        --sparkle-animation-delay: {{ animation_delay }}ms;
+      }
+    </style>
+  {% endfor %}
+</span>

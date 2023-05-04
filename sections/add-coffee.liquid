@@ -1,0 +1,79 @@
+<div class="add-coffee-container">
+    <div class="desktop-only add-coffee-image" style="margin-bottom: -9px">
+        <img src="{{ section.settings.desktop_bg | image_url }}"/>
+    </div>
+    <div class="mobile-only add-coffee-image">
+        {{ section.settings.mobile_bg | image_url: width: 750 | image_tag: sizes: '(min-width:1600px) 100vw, (min-width: 750px) 100vw, 100vw' }}
+    </div>
+
+    <div class="add-coffee-text-container">
+        {{ section.settings.text }}
+    </div>
+</div>
+
+{% style %}
+.add-coffee-container {
+    margin: 0 40px 60px 40px;
+}
+.add-coffee-image img {
+    width: 100vw;
+    height: auto;
+    min-height: 190px;
+    border-radius: 10px;
+}
+
+.add-coffee-text-container {
+    position: absolute;
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    line-height: 35px;
+    text-align: center;
+    width: 80%;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: -94vw;
+}
+
+@media (min-width: 769px) {
+    .add-coffee-text-container {
+        width: 40%;
+        text-align: center;
+        margin-top: -9vw;
+    }
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Add Coffee Section",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "desktop_bg",
+            "label": "Desktop Background Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_bg",
+            "label": "Mobile Background Image"
+        },
+        {
+            "type": "text",
+            "id": "text",
+            "label": "Text",
+            "default": "Or, add to your favourite coffee, matcha, chocolate drink or shake"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Add Coffee Section",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,10 @@
+{% comment %}<p class="">{{ 'DIRTEA Boxset' }}</p>{% endcomment %}
+<p class="">{{ product.metafields.title.variant }}</p>
+<div class="product-list">
+  {% assign current_product = product.handle %}
+  {% for product in collections['all'].products limit:8 %}
+    <a class="{% if current_product == product.handle %}active{% endif %}" href="{{ product.url | within: collection }}">
+      <img class="lazyload" src="{{ product.featured_image | img_url : '40x' }}"/>
+    </a>
+  {% endfor %}
+</div>

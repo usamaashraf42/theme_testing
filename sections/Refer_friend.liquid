@@ -1,0 +1,210 @@
+<div class="Refer_friend">
+  <div class="page-width">
+    <div class="feature-row">
+      <div class="Refer_friend_left rewarding_rgt feature-row__item feature-row__item-six text-center">
+        <img data-aos-delay="100" data-aos="fade-up" src="{{ section.settings.lft_image | img_url : 'master' }}"/>
+        <p class="medium-up--hide small--heading" data-aos-delay="400" data-aos="fade-up">{{ section.settings.rdec }}</p>
+        <a class="medium-up--hide btn" data-aos-delay="500" data-aos="fade-up" href="{{ section.settings.btn_lnk }}" >{{ section.settings.btn_txt }}</a>
+      </div>
+      <div class="Refer_friend_rgt rewarding_left feature-row__item feature-row__item-four feature-row__text text-center">
+        <p data-aos-delay="200" data-aos="fade-up" class="subtitle">{{ section.settings.rsbtitl }}</p>
+        <h3 data-aos-delay="300" data-aos="fade-up">{{ section.settings.rtitle }}</h3>
+        <p class="small--hide small--heading" data-aos-delay="400" data-aos="fade-up">{{ section.settings.rdec }}</p>
+        <button class="modal-toggle small--hide btn" data-aos-delay="500" data-aos="fade-up"
+           href="{{ section.settings.btn_lnk }}" >{{ section.settings.btn_txt }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  <div class="modaln">
+    <div class="modal-overlay modal-toggle"></div>
+    <div class="modal-wrapper modal-transition">
+     <button class="modal-close modal-toggle">X</button>
+     <div class="modal-bodyn">
+     <div class="modal-contentn">         
+           <div class="page-width">
+    {% form 'customer', id:'discount-form1' %}
+    <div class="input-text">
+        <div class="popup_txt">{{ section.settings.poptxt }}</div>
+
+    </div>
+    <div class="form-inputs1">
+      <div class="input-group--underline" data-animate>
+        <input
+               type="text"
+               id="CustomerFormAllergies" required="required"
+               placeholder="Name"
+               name="contact[note][Name]" class="input-group__field" id="EmailName{{ section.id }}" 
+               />
+      </div>
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="input-group--underline" data-animate>
+        <input required="required" type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="contact[email]" class="input-group__field" id="EmailField{{ section.id }}" aria-label="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" autocorrect="off" autocapitalize="off">
+
+      </div>
+      <div class="input-group__btn input-group__btn--newsletter1">
+        <button type="submit" class="btn--newsletter__submit">
+          {{ 'general.newsletter_form.submit' | t }}
+        </button>
+      </div>
+    </div>
+    <div class="newsletter__message" aria-role="alert">
+      {% if form.posted_successfully? %}
+      <p class="form-success" aria-role="alert">
+            {% unless section.settings.success_message == blank %}
+              {{ section.settings.success_message | escape }}
+            {% endunless %}
+          </p>
+        {% endif %}
+        {{ form.errors | default_errors }}
+      </div>
+    {% endform %}
+  </div>      
+        </div>
+      </div>
+    </div>
+   </div>
+
+<script>
+
+ 
+</script>
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Refe Friend",
+    "settings": [
+      {
+        "id": "lft_image",
+       "type": "image_picker",
+        "label":"left Image"
+      },
+      {
+        "type" : "text",
+        "id" : "rsbtitl",
+        "label" : "Sub Title"
+      },
+      {
+        "type" : "text",
+        "id" : "rtitle",
+        "label" : "Title"
+      },
+      {
+        "type" : "textarea",
+        "id" : "rdec",
+        "label" : "Title"
+      },
+        {
+          "type" : "url",
+          "id" : "btn_lnk",
+          "label" : "Link"
+        },
+        {
+          "type" : "text",
+          "id" : "btn_txt",
+          "label" : "Text"
+        },
+      {
+        "type" : "textarea",
+        "id" : "poptxt",
+        "label" : "Popup Text"
+      }
+      ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+<style>
+
+.modaln {
+    position: absolute;
+    z-index: 10000; /* 1 */
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+}
+.modal-bodyn {
+    text-align: center;
+    padding: 2px 2px;
+}
+.modaln.is-visible {
+    visibility: visible;
+}
+.modal-overlay {
+  position: fixed;
+  z-index: 10;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: hsla(0, 0%, 0%, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.3s, opacity 0.3s;
+}
+
+.modaln.is-visible .modal-overlay {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+div#PageContainer {
+    transform: none;
+}
+.modal-wrapper {
+	position: fixed;
+    z-index: 9999;
+    top: 100px;
+    left: 0;
+    right: 0;
+ 	width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.modal-transition {
+  transition: all 0.3s 0.12s;
+  transform: translateY(-10%);
+  opacity: 0;
+}
+
+.modaln.is-visible .modal-transition {
+  transform: translateY(0);
+  opacity: 1;
+}
+.modal-close {
+    position: absolute;
+    top: -15px;
+    right: 2px;
+    padding: 10px 10px;
+    color: #000;
+    background: none;
+    border: 0;
+    z-index: 9;
+    font-size: 26px;
+    font-weight: bold;
+}
+@media screen and (min-width: 1380px) {
+.modal-wrapper {
+    max-width: 650px;
+}
+  
+  
+}
+</style>

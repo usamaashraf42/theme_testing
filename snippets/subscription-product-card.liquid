@@ -1,0 +1,17 @@
+<div class="subscription-product-card-container">
+    <div class="subscription-product-card-image"><img src="{{ image_src }}"/></div>
+    <div class="subscription-product-card-title">{{ product.title }}</div>
+    <div class="subscription-product-card-subtitle">{{ subtitle }}</div>
+    <div class="subscription-product-card-reviews-container">
+        {% for i in (1..5) %}
+            {% render 'green-star' %}
+        {% endfor %}
+    </div>
+    <div class="subscription-product-card-one-time-cta btn-dirtea-primary"></div>
+    <div class="subscription-product-card-subscription-cta"></div>
+    <div class="subscription-product-card-product-form">
+        <div>3 Months</div>
+        <div>6 Months</div>
+        <div>12 Months</div>
+    </div>
+</div>

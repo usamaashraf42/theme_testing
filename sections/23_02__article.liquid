@@ -1,0 +1,8 @@
+{% if blog.handle contains "recipe" %}
+    {% render '23_02__article-recipe-content' %}
+    {% render '23_02__section-shop-the-recipe' %}
+    {% render '23_02__section-best-sellers' %}
+{% else %}
+    {% render '23_02__article-default-content' %}
+    {% render '23_02__article-component-more-posts' %}
+{% endif %}

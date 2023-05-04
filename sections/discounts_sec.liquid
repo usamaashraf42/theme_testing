@@ -1,0 +1,47 @@
+<div class="vip_earn">
+  <div class="page-width width-small text-center">
+    <h4 class="subtitle">{{ section.settings.dis_sb_title }}</h4>
+    <h2 class="title">{{ section.settings.dis_title }}</h2>
+    <p class="rte">{{ section.settings.dis_desc | newline_to_br  }}</p>
+    <p class="content-bottom">{{ section.settings.subtitle_below }}</p>
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Redeem for discounts",
+    "class" : "vip-context",
+    "settings": [
+    {
+    "type" : "text",
+    "id" : "dis_sb_title",
+    "label" : "Sub Title"
+    },
+    {
+    "type" : "text",
+    "id" : "dis_title",
+    "label" : "Title"
+    },
+    {
+    "type" : "textarea",
+    "id" : "dis_desc",
+    "label" : "Desc"
+    },
+    {
+    "type" : "textarea",
+    "id" : "subtitle_below",
+    "label" : "Desc"
+    }
+
+]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

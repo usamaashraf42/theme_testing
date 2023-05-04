@@ -1,0 +1,106 @@
+<div class="black-friday-discount-banner-container">
+    <div class="black-friday-discount-banner-title" >15% OFF</div>
+    <div class="black-friday-discount-banner-subtitle">WHEN YOU SPEND <br/> £50 OR MORE</div>
+    <div class="black-friday-discount-banner-body" style="color: black;background: white;padding: 5px;border-radius: 20px;max-width: 420px;margin: auto;margin-top: 25px;">USE CODE: <a style="text-decoration: underline; font-weight: bold; color: #000; font-size: 26px;" href="/collections/all">BLACKFRIDAY15</a></div>
+</div>
+{% style %}
+
+.black-friday-discount-banner-arrows-container {
+    background: #252525;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10vw;
+    padding-bottom: 20px;
+}
+
+@media (min-width: 1440px) {
+    .black-friday-discount-banner-arrows-container {
+        padding: 0px 15vw;
+        padding-bottom: 20px;
+    }
+}
+
+.black-friday-discount-banner-container {
+    background: #252525;
+    color: #ffffff;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+@media (min-width: 769px) {
+    .black-friday-discount-banner-container {
+        padding-left: 30vw;
+        padding-right: 30vw;
+    }
+}
+
+.black-friday-discount-banner-title {
+    color: #FFFFFF;
+    font-size: 55px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    line-height: 55px;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Manifold";
+}
+
+.black-friday-discount-banner-subtitle {
+    color: #FFFFFF;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    line-height: 38px;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Manifold";
+}
+
+.black-friday-discount-banner-body {
+    color: #FFFFFF;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    line-height: 38px;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Manifold";
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.black-friday-discount-banner-cta {
+    margin-top: 25px
+}
+
+.black-friday-discount-banner-cta a {
+    color: #252525;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    line-height: 26px;
+    font-weight: bold;
+    border-radius: 25px;
+    background-color: #FFFFFF;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Black Friday Banner",
+    "settings": [],
+    "presets": [
+    {
+        "name": "Black Friday Discount Banner Home",
+        "category": "Black Friday"
+    }]
+}
+{% endschema %}

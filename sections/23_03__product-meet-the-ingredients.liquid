@@ -1,0 +1,111 @@
+<div class="meet-the-cacao-ingredients">
+    <div class="meet-the-cacao-ingredients-section-title">
+        <h3>Meet the new ingredients</h3>
+    </div>
+
+    <div class="cacao-ingredients-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-cacao.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">Cacao</p>
+                <p class="ingredients-text-country">The Netherlands</p>
+                <p class="ingredients-text-serving">2.8g per serving</p>
+                <p class="ingredients-text-description">Raw and organic, rich in antioxidants, magnesium, calcium, zinc, copper, and selenium.</p>
+            </div>
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-turkey-tail.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">Turkey Tail</p>
+                <p class="ingredients-text-country">Fujian, China</p>
+                <p class="ingredients-text-serving">1,000mg per serving</p>
+                <p class="ingredients-text-description">Organic, packed full of immune-boosting antioxidants, vitamin B3 and D.</p>
+            </div>
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-tremella.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">Tremella</p>
+                <p class="ingredients-text-country">Fujian, China</p>
+                <p class="ingredients-text-serving">1,000mg per serving</p>
+                <p class="ingredients-text-description">Organic, rich in polysaccharides and antioxidants.</p>
+            </div>
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-reishi.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">Reishi</p>
+                <p class="ingredients-text-country">Fujian, China</p>
+                <p class="ingredients-text-serving">500mg per serving</p>
+                <p class="ingredients-text-description">Organic, high in polysaccharides and triterpenes. Rich in vitamins D and B-complex and minerals, potassium, calcium, magnesium and iron.</p>
+            </div>
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-coconut.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">Coconut Milk Powder</p>
+                <p class="ingredients-text-country">Sri Lanka</p>
+                <p class="ingredients-text-serving">300mg per serving</p>
+                <p class="ingredients-text-description">Organic, rich in immune-supporting lauric acid.</p>
+            </div>
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-moringa.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">Moringa</p>
+                <p class="ingredients-text-country">Brazil</p>
+                <p class="ingredients-text-serving">100mg per serving</p>
+                <p class="ingredients-text-description">Organic, packed with protective antioxidants, 7x more vitamin C than oranges and 15x more potassium than bananas.</p>
+            </div>
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-mct.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">MCT</p>
+                <p class="ingredients-text-country">India</p>
+                <p class="ingredients-text-serving">200mg per serving</p>
+                <p class="ingredients-text-description">Organic, clean fuel for the body and brain that’s packed full of natural healthy fats.</p>
+            </div>
+            <div class="swiper-slide">
+                <div class="cacao-ingredient-item" style="background-image: url('{{ 'ingredients-salt.jpg' | asset_url }}');"></div>
+                <p class="ingredients-text-title">Pink Himalayan Salt</p>
+                <p class="ingredients-text-country">Himalayas</p>
+                <p class="ingredients-text-serving">100mg per serving</p>
+                <p class="ingredients-text-description">Organic, contains more than 80 minerals that aren’t found in regular salt.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const swiperIngredients = new Swiper('.cacao-ingredients-container', {
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1.7,
+    centeredSlides: true,
+    breakpoints: {
+        769: {
+            slidesPerView: 5
+        }
+    }
+  });
+
+</script>
+
+{% style %}
+.meet-the-cacao-ingredients {
+    width: 100%;
+    /*background-color: #DFDCD7;*/
+    background-color: {{ product.metafields.custom.product_color_2 }};
+    padding: 80px 0 70px 0;
+}
+.meet-the-cacao-ingredients-section-title {
+    max-width: 500px;
+    margin: 0 auto;
+}
+.meet-the-cacao-ingredients-section-title h3 {
+    color: white;
+    font-size: 34px;
+    text-align: center;
+}
+
+.cacao-ingredients-container {display: flex; justify-content: center; align-items: center; margin-top: 40px; overflow: hidden; }
+.cacao-ingredients-container .cacao-ingredient-item { width: 150px; height: 150px; border-radius: 100%; margin: 0 25px; background-size: cover; background-position: center; }
+.cacao-ingredients-container .cacao-ingredient-item.big { width: 250px; height: 250px; }
+.cacao-ingredients-container .cacao-ingredient-item.biggest { width: 300px; height: 300px; }
+.cacao-ingredients-container .swiper-slide {text-align: center; align-items: center; }
+
+.cacao-ingredients-container p { color: white; }
+.cacao-ingredients-container p.ingredients-text-title { margin-top: 20px; margin-bottom: 0px; font-size: 26px; }
+.cacao-ingredients-container p.ingredients-text-country { display: none; margin-top: 10px; margin-bottom: 0px; font-size: 14px; text-transform: uppercase; }
+.cacao-ingredients-container p.ingredients-text-serving { font-size: 14px; text-transform: uppercase; }
+.cacao-ingredients-container p.ingredients-text-description { margin-top: 10px; font-size: 16px; padding: 0 40px; }
+{% endstyle %}

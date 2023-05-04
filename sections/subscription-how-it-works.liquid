@@ -1,0 +1,154 @@
+<section class='how-it-works'>
+
+    <div class='how-it-works-textcontainer'>
+        <div class='how-it-works-header'>{{ section.settings.how_it_works_header }}</div>
+        <br>
+        <div class='how-it-works-body'>{{ section.settings.how_it_works_body }}</div>
+    </div>
+
+    <div class='how-it-works-img-container'><img src="{{ section.settings.how_it_works_image | image_url: width: 2880 }}" class='how-it-works-img'/></div>
+    
+
+</section>
+
+
+
+
+
+<style>
+    
+    .how-it-works{
+        background-color:#F2F3F2;
+        display:flex;
+        align-items:center;
+        width:70%;
+        margin:0 auto;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+        @media only screen and (max-width: 1000px) {
+            .how-it-works {
+              width:90%;
+              height:43vh;
+              padding: auto;
+            }
+        }
+
+        @media only screen and (max-width: 700px) {
+            .how-it-works {
+              display:block;
+              width:90%;
+              margin-bottom: 80px;
+            }
+        }
+
+        @media only screen and (max-width: 450px) {
+            .how-it-works {
+              height:auto;
+              padding-bottom:25px;
+            }
+        }
+
+    .how-it-works-textcontainer{
+        flex:2;
+        padding-right:50px;
+        
+    }
+
+    @media only screen and (max-width: 700px) {
+        .how-it-works-textcontainer {
+          padding-right:0;
+        }
+    }
+
+    .how-it-works-img-container{
+        flex:1.5;
+        
+    }
+
+    @media only screen and (max-width: 700px) {
+        .how-it-works-img-container {
+          display:none;
+        }
+    }
+
+    .how-it-works-header{
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 34px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 41px;
+
+    }
+
+    .how-it-works-body{
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 22px;
+       
+    }
+
+    @media only screen and (max-width: 1000px) {
+        .how-it-works-body {
+          font-size:16px;
+        }
+      }
+
+      @media only screen and (max-width: 700px) {
+        .how-it-works-body {
+          font-size:20px;
+        }
+    }
+    @media only screen and (max-width: 600px) {
+        .how-it-works-body {
+          font-size:15px;
+        }
+    }
+    .how-it-works-img{
+        width:100%;
+    }
+
+    @media only screen and (max-width: 700px) {
+        .how-it-works-img {
+          display:none;
+        }
+    }
+
+</style>
+
+{% schema %}
+{
+    "name": "How It Works",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "how_it_works_image",
+            "label": "Main Image"
+        },
+        {
+            "type": "textarea",
+            "id": "how_it_works_body",
+            "label": "Body Text",
+            "default": "<p>For your first shipment, you’ll receive an empty DIRTEA tin with travel-safe, resealable pouches. That way, it’s up to you whether you want to fill your tin or take your DIRTEA on the go. In the following shipments, you’ll receive our recyclable 60g pouches. We ask DIRTEA subscribers to reuse their tins from their first shipment by filling them up in an effort to help reduce our waste. Creating an environmentally-friendly business model is really important to us here at DIRTEA, and we hope you’re on board. We want to help make less waste so you can enjoy your mushrooms more! Upon purchasing, you can login to your account using the email address you checked out with. Here you can manage your subscription by skipping, swapping or cancelling it. We offer 3, 6, and 12 month subscription models which will be purchased upfront and shipments will be delivered every month. See our returns policy for more details on returns and refunds.</p>"
+            
+        },
+        {
+            "type": "text",
+            "id": "how_it_works_header",
+            "label": "Header Text",
+            "default": "How it works"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Subscription How It Works",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

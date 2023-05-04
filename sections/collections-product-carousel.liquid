@@ -1,0 +1,423 @@
+<div class="subscription-product-carousel-container">
+    <div class="subscription-product-carousel-title dirtea-section-title">{{ section.settings.title }}</div>
+    <div class="subscriptions-slider">
+        <div class="swiper-wrapper">
+            {% if section.settings.num_carousel_items > 0 %}
+                {% assign num_carousel_items = section.settings.num_carousel_items %}
+            {% else %}
+                {% assign num_carousel_items = 10 %}
+            {% endif  %}
+
+            {% for product in section.settings.collection.products %}
+                {% if forloop.index0 < num_carousel_items %}
+
+                <div class="subscription-product-card-container swiper-slide">
+                    <a href="{{ product.url }}" class="text-decoration-none carousel-linkable-item" style="width: 100%;">
+                        <div class="subscription-product-card-image" style="background-image: url('{{ product.metafields.my_fields.transparentimage | img_url: '400x' }}');">
+                                <img src="{{ product.metafields.my_fields.transparentimage | img_url: '400x' }}"/>
+                        </div>
+                        <div class="subscription-product-card-title">
+                            {% if product.metafields.custom.short_name %}
+                                {{ product.metafields.custom.short_name }}
+                            {% else %}
+                                {{ product.title }}
+                            {% endif %}
+                        </div>
+                        <div class="subscription-product-card-subtitle">{{ product.metafields.custom.purpose }}</div>
+                    </a>
+
+                    {% comment %}
+                    <div class="subscription-product-card-reviews-container">
+                       <div class="loox-rating"
+                            data-id="{{ product.id }}"
+                            data-rating="{{ product.metafields.loox.avg_rating }}"
+                            data-raters="{{ product.metafields.loox.num_reviews }}"
+                        ></div><span>Reviews</span>
+                    </div>
+                    {% endcomment %}
+
+                    {% if product.metafields.custom.subscription_plan_months %}
+                        {%- liquid
+                        assign current_variant = product.selected_or_first_available_variant | default: product.variants.first
+                        assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
+                    
+                        if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
+                        assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
+                        endif
+                        -%}
+        
+                        {% comment %}
+                        <p class="subscription-lenth">{{ product.metafields.custom.subscription_plan_months }} month subscription</p>
+                        {% endcomment %}
+
+                        <p class="subscription-price">{{ product.price | money }}</p>
+
+                        {% if product.metafields.custom.subscription_plan_months > 1 %}
+                            {% assign month_plurality = "months" %}
+                        {% else %}
+                            {% assign month_plurality = "month" %}
+                        {% endif %}
+
+                        {% if product.metafields.custom.subscription_plan_months == 1 %}
+                            {% assign subscription_saving = 10 %}
+                        {% elsif product.metafields.custom.subscription_plan_months == 3 %}
+                            {% assign subscription_saving = 20 %}
+                        {% elsif product.metafields.custom.subscription_plan_months == 6 %}
+                            {% assign subscription_saving = 30 %}
+                        {% elsif product.metafields.custom.subscription_plan_months == 12 %}
+                            {% assign subscription_saving = 40 %}
+                        {% endif %}
+
+
+                        <p class="subscription-lenth">Paid every {{ product.metafields.custom.subscription_plan_months }} {{ month_plurality }}</p>
+                        <p class="subscription-saving">Saving {{ subscription_saving }}%</p>
+                        <a
+                            href="#"
+                            class="btn mb-15 mw-282 dirtea-add-to-cart-btn btn-dirtea-secondary"
+                            onclick="addProductToCartOnClick(event);"
+                            data-product-variant-id="{{ product.selected_or_first_available_variant.id  }}"
+                            data-product-selling-plan-id="{{ current_selling_plan_allocation.selling_plan.id }}"
+                        >Add to cart</a>
+                    {% else %}
+                        <a href="#" class="btn mb-15 mw-282 dirtea-add-to-cart-btn btn-dirtea-secondary" onclick="addProductToCartOnClick(event);" data-product-variant-id="{{ product.selected_or_first_available_variant.id }}">One time purchase {{ product.price | money }}</a>
+                    {% endif  %}
+
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="subscription-product-card-one-time-cta btn-dirtea-primary" style="margin-top: 60px; background: var(--off-black); color: #ffffff; text-align: center;"><a href="https://www.dirteaworld.com/collections/all">SEE ALL PRODUCTS</a></div>
+    </div>
+
+    <div class="swiper-subscription-button swiper-subscription-button-prev">
+        {% render 'icon-arrow-left-large' %}
+    </div>
+    <div class="swiper-subscription-button swiper-subscription-button-next">
+        {% render 'icon-arrow-right-large' %}
+    </div>
+</div>
+
+{% javascript %}
+// Slider
+
+const swiper = new Swiper('.subscriptions-slider', {
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1,  
+    breakpoints: {
+        769: {
+            slidesPerView: 4
+        }
+    },      
+    navigation: {
+        nextEl: ".swiper-subscription-button-next",
+        prevEl: ".swiper-subscription-button-prev"
+    }
+
+  });
+{% endjavascript %}
+
+{% style %}
+
+.subscription-product-card-container .subscription-price {
+    font-size: 29px;
+    margin-top: 15px;
+    margin-bottom: 0px;
+}
+.subscription-product-card-container .subscription-lenth {
+    font-size: 20px;
+    font-weight: bold;
+}
+.subscription-product-card-container .subscription-saving {
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    background: var(--green);
+    padding: 5px 10px;
+    margin-bottom: 30px;
+}
+
+
+
+.swiper-subscription-button {
+    position: absolute;
+    z-index: 100;
+    top: 300px;
+    cursor: pointer;
+    background: #ffffff54;
+    padding: 7px 8px 0px 8px;
+    border-radius: 100px;
+    box-shadow: 0px 0px 4px 0px #0000004f;
+}
+.swiper-subscription-button-prev {
+    left: 20px;
+}
+.swiper-subscription-button-next {
+    right: 20px;
+}
+.swiper-subscription-button-next svg {
+    transform: scale(-1, 1);
+}
+
+
+
+.subscription-product-carousel-container {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    overflow: hidden;
+    position: relative;
+}
+
+.subscription-product-carousel-title {
+    font-family: "Manifold Regular";
+    letter-spacing: 0;
+    line-height: 41px;
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.subscription-product-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    font-family: 'Manifold Regular';
+    color: #252525;
+    width: 300px;
+    align-items: center;
+}
+.subscription-product-card-container a.carousel-linkable-item {
+    width: 100%;
+}
+
+.subscription-product-card-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 230px;
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.subscription-product-card-image a {
+    height: 100%;
+    width: 100%;
+}
+
+.subscription-product-card-image img {
+    max-width: 230px;
+    display: none;
+    /*margin-left: 60px;*/
+}
+
+.subscription-product-card-title {
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: 29px;
+    margin-top: 20px;
+    color: var(--off-black);
+}
+
+.subscription-product-card-subtitle {
+    font-family: 'Manifold';
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-top: 5px;
+    color: var(--off-black);
+}
+
+.subscription-product-card-reviews-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 16px;
+    margin-top: 20px;
+}
+
+.subscription-product-card-reviews-container span {
+    margin-left: 5px;
+}
+
+.subscription-product-card-one-time-cta {
+    background-color: #ffffff;
+    font-size: 12px;
+    color: #252525;
+    width: 280px;
+    margin: auto;
+    border-radius: 25px;
+    border: none;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subscription-product-card-one-time-cta a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.subscription-product-card-subscription-cta {
+    background-color: #000000;
+    font-size: 12px;
+    color: #ffffff;
+    width: 280px;
+    margin: auto;
+    border-radius: 25px;
+    padding: 15px;
+    margin-bottom: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subscription-product-card-product-form {
+    display: none;
+}
+
+.show-product-form {
+    display: block;
+}
+
+.subscription-product-carousel-buttons-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -410px;
+    z-index: 1;
+}
+
+
+.subscription-product-card-add-to-cart-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 280px;
+    border-radius: 25px;
+    border: none;
+    background-color: #DE8C59;
+
+    color: #FFFFFF;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 14px;
+    cursor: pointer;
+}
+
+.subscription-product-card-cancel-cta {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-decoration: underline;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.subscription-product-card-product-form-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 280px;
+}
+
+.subscription-product-card-product-form-option-radio-button {
+    width: 22px;
+    height: 20px;
+    border-radius: 50px;
+    border: 1px solid #DE8C59;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.filled-radio-button {
+    background: #FFFFFF !important;
+}
+
+.subscription-product-card-product-form-option-first-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.subscription-product-card-product-form-option-second-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.subscription-product-card-product-form-option-second-line div:nth-child(2) {
+    color: #FFFFFF;
+    background-color: #DE8C59;
+    font-size: 10px;
+    border-radius: 30px;
+    padding: 2px 8px;
+}
+
+.show-product-form {
+    display: block !important;
+}
+
+.subscription-product-form {
+    display: none;
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Carousel (subs CTA)",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Carousel Title",
+            "default": "Which DIRTEA is right for you?"
+        },
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+        },
+        {
+            "type": "number",
+            "id": "num_carousel_items",
+            "label": "Number of carousel items"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Carousel (subs CTA)",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

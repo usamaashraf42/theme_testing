@@ -1,0 +1,440 @@
+{% if product.handle contains 'chaga' %}
+    {% assign mushroom_type = 'chaga' %}
+{% endif %}
+
+{% if product.handle contains 'cordyceps' %}
+    {% assign mushroom_type = 'cordyceps' %}
+{% endif %}
+
+{% if product.handle contains 'reishi' %}
+    {% assign mushroom_type = 'reishi' %}
+{% endif %}
+
+{% if product.handle contains 'mane' %}
+    {% assign mushroom_type = 'lions mane' %}
+{% endif %}
+
+{% if product.handle contains 'turkey' %}
+    {% assign mushroom_type = 'turkey' %}
+{% endif %}
+
+{% if product.handle contains 'tremella' %}
+    {% assign mushroom_type = 'tremella' %}
+{% endif %}
+
+<div class="mushrooms-faq-card">
+    <div class="mushroom-faq-section-title dirtea-section-title">{{ section.settings.mushroom_faq_title }}</div>
+    <div class="mushrooms-faq-image">
+        {% if mushroom_type == 'chaga' %}<img src="{{ section.settings.chaga_mushroom_image | image_url: width: '320x320' }}"/>{% elsif mushroom_type == 'cordyceps' %}<img src="{{ section.settings.cordyceps_mushroom_image | image_url: width: '320x320' }}"/>{% elsif mushroom_type == 'reishi' %}<img src="{{ section.settings.reishi_mushroom_image | image_url: width: '320x320' }}"/>{% elsif mushroom_type == 'lions mane' %}<img src="{{ section.settings.lion_mushroom_image | image_url: width: '320x320' }}"/>{% elsif mushroom_type == 'turkey' %}<img src="{{ section.settings.turkey_mushroom_image | image_url: width: '320x320' }}"/>{% elsif mushroom_type == 'tremella' %}<img src="{{ section.settings.tremella_mushroom_image | image_url: width: '320x320' }}"/>{% endif %}
+    </div>
+    <div class="mushrooms-faq-title">
+        {{ mushroom_type }}
+    </div>
+    <div class="mushrooms-faq-subtitle">
+        {% for block in section.blocks %}
+            {% if block.type == "subtitle" %}
+                {% if  block.settings.subtitle_mushroom_type == mushroom_type %}
+                    {{ block.settings.mushroom_subtitle }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="mushrooms-faq-body">
+        {% for block in section.blocks %}
+            {% if block.type == "body" %}
+                {% if  block.settings.body_mushroom_type == mushroom_type %}
+                    {{ block.settings.mushroom_body }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="mushrooms-faq-accordion">
+        {% for block in section.blocks %}
+            {% if block.type == 'FAQ' %}
+                {% if block.settings.faq_mushroom_type == mushroom_type %}
+                    <button class="accordion-btn">
+                        <span>{{ block.settings.faq_mushroom_question }}</span>
+                        <span class="plusButton" style="width: 30px;"><img style="min-width: 30px;" src="{{ 'pdp-plus-btn.png' | asset_img_url }}"/></span>
+                        <span class="minusButton hidden-button" style="width: 30px"><img img style="min-width: 30px;" src="{{ 'pdp-plus-btn.png' | asset_img_url }}"/></span> 
+                    </button>
+                    <div class="mushroom-panel">
+                        {{ block.settings.faq_mushroom_answer}}
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+
+    let accordionMushroomButtons = document.querySelectorAll('.accordion-btn')
+    let accordionMushroomPanels = document.querySelectorAll('.mushroom-panel')
+    
+    let allMushroomPluses = document.querySelectorAll('.plusButton')
+    let allMushroomMinuses = document.querySelectorAll('.minusButton')
+    
+    for (let i = 0; i < accordionMushroomButtons.length; i++) {
+      accordionMushroomButtons[i].addEventListener('click', () => {
+        accordionMushroomPanels[i].classList.toggle('visible')
+        allMushroomPluses[i].classList.toggle('hidden-button')
+        allMushroomMinuses[i].classList.toggle('hidden-button')
+      })
+    }
+
+</script>
+
+{% style %}
+
+    .mushroom-faq-section-title {
+        font-family: "Manifold";
+        letter-spacing: 0;
+        line-height: 41px;
+        text-align: center;
+        margin-top: 80px;
+        margin-bottom: 25px;
+    }
+
+    .mushrooms-faq-container {
+        background-color: #F2F3F2;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .mushrooms-faq-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 80px;
+    }
+    
+    @media (min-width: 769px) {
+        ..mushrooms-faq-container {
+            padding: 80px;
+        }
+    }
+    
+    .mushrooms-faq-title {
+        color: #252525;
+        font-family: "manifold";
+        font-size: 34px;
+        letter-spacing: 1.06px;
+        line-height: 49px;
+        text-transform: capitalize;
+    }
+    
+    .mushrooms-faq-subtitle {
+        color: #252525;
+        font-family: "manifold";
+        font-size: 16px;
+        letter-spacing: 1.14px;
+        line-height: 22px
+    }
+    
+    .mushrooms-faq-body {
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: 40px;
+        width: 90%;
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 24px;
+        letter-spacing: 0;
+        line-height: 26px;
+        text-align: center;
+    }
+    
+    @media (min-width: 769px) {
+        .mushrooms-faq-body {
+            width: 60%;
+        }
+    }
+    
+    .mushrooms-faq-image {
+        border-radius: 50%;
+        overflow: hidden;
+        width: 160px;
+        height: 160px;
+    }
+
+    .mushrooms-faq-image img {
+        width: 160px;
+        height: auto;
+    }
+    
+    .hidden-button {
+        display: none;
+      }
+    
+    .mushrooms-faq-accordion {
+        margin-top: 40px;
+        width: 100%;
+        margin: auto;
+    }
+
+    @media (min-width: 769px) {
+    .mushrooms-faq-accordion {
+        width: 45%;
+        }
+    }
+    
+      .accordion-btn {
+        margin: auto;
+        background-color: transparent;
+        color: #252525;
+        cursor: pointer;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: 1.14px;
+        line-height: 26px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0px;
+        width: 90%;
+      }
+      
+      .mushroom-panel {
+        margin: auto;
+        opacity: 0;
+        background-color: transparent;
+        overflow: hidden;
+        color: #252525;
+        font-family: "manifold";
+        font-size: 16px;
+        letter-spacing: 1.14px;
+        line-height: 22px;
+        text-align: left;
+        width: 100%;
+        height: 0px;
+        width: 90%;
+      }
+    
+      .mushroom-panel.visible {
+        transition: all 1s;  
+        opacity: 1;
+        height: auto;
+      }
+    
+      .mushrooms-faq-cta {
+        margin-top: 30px;
+        background-color: #E3B6C1;
+        color: #ffffff;
+        padding: 17px;
+        width: 280px;
+        border-radius: 25px;
+        font-family: "Manifold";
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 17px;
+        text-align: center;
+        cursor: pointer;
+        margin: auto;
+        margin-top: 30px;
+        margin-bottom: 40px;
+      }
+
+      .how-to-dirtea-container {
+        background: #DFDCD7 !important;
+      }
+    
+    
+    {% endstyle %}
+
+{%  schema  %} 
+{
+    "name": "Product Page FAQ",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "chaga_mushroom_image",
+            "label": "Chaga Mushroom Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "lion_mushroom_image",
+            "label": "Lion's Mane Mushroom Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "cordyceps_mushroom_image",
+            "label": "Cordyceps Mushroom Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "reishi_mushroom_image",
+            "label": "Reishi Mushroom Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "turkey_mushroom_image",
+            "label": "Turkey Tail Mushroom Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "tremella_mushroom_image",
+            "label": "Tremella Mushroom Image"
+        },
+        {
+            "type": "text",
+            "id": "mushroom_faq_title",
+            "default": "Meet the mushroom",
+            "label": "Section Title"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "FAQ",
+            "name": "FAQ",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "faq_mushroom_type",
+                    "label": "Mushroom Name",
+                    "options": [
+                        {
+                        "value": "chaga",
+                        "label": "Chaga"
+                        },
+                        {
+                        "value": "cordyceps",
+                        "label": "Cordyceps"
+                        },
+                        {
+                        "value": "lions mane",
+                        "label": "Lion's Mane"
+                        },
+                        {
+                            "value": "reishi",
+                            "label": "Reishi" 
+                        },
+                        {
+                            "value": "turkey",
+                            "label": "Turkey Tail" 
+                        },
+                        {
+                            "value": "tremella",
+                            "label": "Tremella" 
+                        }
+                    ],
+                    "default": "chaga"
+                },
+                {
+                    "type": "text",
+                    "id": "faq_mushroom_question",
+                    "label": "FAQ Question",
+                    "default": "Is it even a mushroom"
+                },
+                {
+                    "type": "textarea",
+                    "id": "faq_mushroom_answer",
+                    "label": "FAQ Answer",
+                    "default": "<p>Question Answer Should Go Here..</p>"
+                }
+            ]
+        },
+        {
+            "type": "subtitle",
+            "name": "Subtitle",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "subtitle_mushroom_type",
+                    "label": "Mushroom Name",
+                    "options": [
+                        {
+                        "value": "chaga",
+                        "label": "Chaga"
+                        },
+                        {
+                        "value": "cordyceps",
+                        "label": "Cordyceps"
+                        },
+                        {
+                        "value": "lions mane",
+                        "label": "Lion's Mane"
+                        },
+                        {
+                            "value": "reishi",
+                            "label": "Reishi" 
+                        },
+                        {
+                            "value": "turkey",
+                            "label": "Turkey Tail" 
+                        },
+                        {
+                            "value": "tremella",
+                            "label": "Tremella" 
+                        }
+                    ],
+                    "default": "chaga"
+                },
+                {
+                    "type": "text",
+                    "id": "mushroom_subtitle",
+                    "label": "Mushroom Subtitle",
+                    "default": "For defence, skin & energy"
+                }
+            ]
+        },
+        {
+            "type": "body",
+            "name": "Body",
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "body_mushroom_type",
+                    "label": "Mushroom Name",
+                    "options": [
+                        {
+                        "value": "chaga",
+                        "label": "Chaga"
+                        },
+                        {
+                        "value": "cordyceps",
+                        "label": "Cordyceps"
+                        },
+                        {
+                        "value": "lions mane",
+                        "label": "Lion's Mane"
+                        },
+                        {
+                            "value": "turkey",
+                            "label": "Turkey Tail" 
+                        },
+                        {
+                            "value": "tremella",
+                            "label": "Tremella" 
+                        }
+                    ],
+                    "default": "chaga"
+                },
+                {
+                    "type": "textarea",
+                    "id": "mushroom_body",
+                    "label": "Mushroom Body",
+                    "default": "<p>Known as the “king of medicinal mushrooms”, Chaga is a potent antioxidant used for immune support, digestive health, and getting your body back in balance*.</p>"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Product Page FAQ",
+            "category": "Jan"
+        }
+    ]
+}    
+{% endschema %}

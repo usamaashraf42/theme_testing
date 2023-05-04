@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>A34A6743-CF35-4AE9-990D-3229C70CFCD3</title>
+    <defs>
+        <path d="M15,9.66666667 C15.3681898,9.66666667 15.6666667,9.9651435 15.6666667,10.3333333 L15.6666667,14.3326667 L19.6666667,14.3333333 C20.0013847,14.3333333 20.2784887,14.5800084 20.326105,14.9014849 L20.3333333,15 C20.3333333,15.3681898 20.0348565,15.6666667 19.6666667,15.6666667 L15.6666667,15.6666667 L15.6666667,19.6666667 C15.6666667,20.0013847 15.4199916,20.2784887 15.0985151,20.326105 L15,20.3333333 C14.6318102,20.3333333 14.3333333,20.0348565 14.3333333,19.6666667 L14.3326667,15.6666667 L10.3333333,15.6666667 C9.9986153,15.6666667 9.72151132,15.4199916 9.67389505,15.0985151 L9.66666667,15 C9.66666667,14.6318102 9.9651435,14.3333333 10.3333333,14.3333333 L14.3326667,14.3326667 L14.3333333,10.3333333 C14.3333333,9.9986153 14.5800084,9.72151132 14.9014849,9.67389505 Z" id="path-1"></path>
+    </defs>
+    <g id="Dirtea-–-Full-Designs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="00_Dirtea---HP---Desktop-WIP" transform="translate(-997.000000, -6837.000000)">
+            <rect fill="none" x="0" y="0" width="1440" height="7494"></rect>
+            <g id="FAQs" transform="translate(0.000000, 6556.000000)">
+                <rect id="Rectangle" fill="none" transform="translate(720.000000, 354.000000) scale(1, -1) translate(-720.000000, -354.000000) " x="0" y="0" width="1440" height="708"></rect>
+                <g transform="translate(401.000000, 80.000000)">
+                    <text id="Lorem-ipsum-dolor-si" font-family="ManifoldCF-Regular, Manifold CF" font-size="24" font-weight="normal" line-spacing="26" fill="none">
+                        <tspan x="12" y="222">Lorem ipsum dolor sit amet?</tspan>
+                    </text>
+                    <g id="_BRANDING-/-Icons-/-More-+-Copy" transform="translate(596.000000, 201.000000)">
+                        <circle id="Oval" stroke="#252525" cx="15" cy="15" r="14.5"></circle>
+                        <mask id="mask-2" fill="none">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Combined-Shape" fill="#252525" fill-rule="nonzero" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

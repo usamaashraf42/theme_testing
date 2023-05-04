@@ -1,0 +1,78 @@
+<div class="dirtea-recipe-content-container">
+    <div class="dirtea-recipe-image {{ article.handle }}"
+        style="{% if article.image %}background-image: url('{{ article.image | img_url: '800x' }}');{% endif %} {% if article.metafields.global.hero_img_y_offset %} background-position-y: {{ article.metafields.global.hero_img_y_offset }};{% endif %}"
+    ></div>
+    <div class="dirtea-recipe-content">
+        {% if article.tags[0] %}<h3>Recipes / {{ article.tags[0] }}</h3>{% endif %}
+        <h1>{{ article.title }}</h1>
+        {{ article.content }}
+    </div>
+</div>
+
+
+<style>
+/* Typography */
+.dirtea-recipe-content-container h1 { font-size: 34px; padding-bottom: 20px; margin: 0px !important; }
+.dirtea-recipe-content-container h2 {}
+.dirtea-recipe-content-container h3 { padding-bottom: 10px; margin: 0px !important; font-size: 14px; text-transform: uppercase; }
+.dirtea-recipe-content-container p { font-size: 24px; }
+
+.dirtea-recipe-content-container {
+    width: 100%;
+    margin-bottom: 80px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.dirtea-recipe-image {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    max-height: 900px;
+}
+.dirtea-recipe-content {
+    padding: 60px;
+}
+
+
+@media only screen and (max-width: 576px) {
+    .dirtea-recipe-content-container {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .dirtea-recipe-image {
+        min-height: 375px;
+    }
+    .dirtea-recipe-content {
+       padding: 40px 20px;
+    }
+    .dirtea-recipe-content h1, .dirtea-recipe-content h3:first-child {
+        text-align: center
+    }
+}
+</style>
+
+
+
+{% comment %}
+
+{% if article.image %}
+<div class="static-page-hero {{ article.handle }}"
+    style="background-image: url('{{ article.image | img_url: '800x' }}'); {% if article.metafields.global.hero_img_y_offset %} background-position-y: {{ article.metafields.global.hero_img_y_offset }};{% endif %}"
+></div>
+{% endif %}
+
+<div class="page-width dirtea-content-page">
+  <header class="section-header text-center">
+    {% if article.tags %}<h3 class="section-header__subtitle">{{ article.tags[0] }}</h3>{% endif %}
+    <h1 class="section-header__title">{{ article.title }}</h1>
+  </header>
+  <div class="grid static-page-content">
+    <div class="grid__item medium-up--four-fifths medium-up--push-one-tenth">
+      <div class="rte">
+        {{ article.content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endcomment %}
+

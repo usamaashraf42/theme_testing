@@ -1,0 +1,157 @@
+<div class="page-width">
+  <div class="why_mushr_bnr cmn_bnr section-header-image lazyload" data-bgset="{% include 'bgset', image: section.settings.bg_img %}"></div>
+</div>
+<div class="page-width">
+  <div class="grid text-center">
+    <div class="grid__item">
+      <header class="section-header">
+        <div class="section-header__title collection__title">{{ section.settings.mushr_title }}</div>
+        <div class="section-header__description">{{ page.title }}</div>
+
+        <div class="collection-dropdowns">
+          <label class="medium-up--hide drop_label"></label>
+          <div class="dropdowns-inner">
+            <a href="{{ section.settings.nav1_lnk }}">{{ section.settings.nav1 }}</a>
+            <a href="{{ section.settings.nav2_lnk }}">{{ section.settings.nav2 }}</a>
+            <a href="{{ section.settings.nav3_lnk }}"><u>{{ section.settings.nav3 }}</u></a>
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+</div>
+<div class="page-width small-width">
+  {% if page.content != blank %}
+  <div class="rte rte--contact">
+    {{ page.content }}
+  </div>
+  {% endif %}
+  
+  {% if section.settings.contact_mail != blank %}
+  <div class="rte rte--contact contact_mail">
+    <div>Email : </div>
+    <a href="mailto:{{ section.settings.contact_mail }}" target="_blank">{{ section.settings.contact_mail }}</a>
+  </div>
+  {% endif %}
+  
+  {% if section.settings.contact_address != blank %}
+    <div class="rte rte--contact contact_address">
+      <div>Address: </div> 
+      <span>{{- section.settings.contact_address | newline_to_br -}}</span>
+    </div>
+  {% endif %}
+  
+  <div class="grid">
+    <div class="grid__item">
+
+
+      {% form 'contact' %}
+      {% if form.posted_successfully? %}
+      <p class="form-success">
+        {{ 'contact.form.post_success' | t }}
+      </p>
+      {% endif %}
+
+      {{ form.errors | default_errors }}
+
+      <label for="ContactFormEnquirytype" class="label--hidden">{{ 'Choose a flavor' }}</label>
+      <select id="ContactFormEnquirytype" name="contact[Enquiry type]">
+        <option disabled selected="selected">Enquiry type: (please select)</option>
+        <option>Order</option>
+        <option>Prduct</option>
+      </select>
+      
+      <div class="grid">
+        <div class="grid__item medium-up--one-half">
+          <label for="ContactFormFirstName" class="label--hidden">{{ 'First Name' }}</label>
+          <input required="required" type="text" id="ContactFormFirstName" name="contact[{{ 'First name' }}]" placeholder="{{ 'First name' }}" autocapitalize="words" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.first_name }}{% endif %}">
+        </div>
+        <div class="grid__item medium-up--one-half">
+          <label for="ContactFormLastName" class="label--hidden">{{ 'Last Name' }}</label>
+          <input required="required" type="text" id="ContactFormLastName" name="contact[{{ 'Last name' }}]" placeholder="{{ 'Last name' }}" autocapitalize="words" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.last_name }}{% endif %}">
+        </div>
+      </div>
+
+      <label for="ContactFormEmail" class="label--hidden">{{ 'contact.form.email' | t }}</label>
+      <input required="required" type="email" id="ContactFormEmail" name="contact[email]" placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+      
+
+      <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
+      <textarea required="required" rows="6" id="ContactFormMessage" name="contact[{{ 'contact.form.message' | t }}]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+      <div class="text-center"><input type="submit" class="btn" value="{{ 'send message' }}"></div>
+      {% endform %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Contact Us",
+    "class" : "pagemushroom contact-page",
+    "settings": [
+      {
+        "id": "bg_img",
+       "type": "image_picker",
+        "label":"Image"
+      },
+     {
+        "id": "mushr_title",
+        "type": "text",
+        "label": "Title",
+        "default" : "DIRTEA help"
+      },
+      {
+        "id": "nav1",
+        "type": "text",
+        "label": "Nav 1"
+      },
+      {
+        "id": "nav1_lnk",
+        "type": "url",
+        "label": "Link"
+      },
+      {
+        "id": "nav2",
+        "type": "text",
+        "label": "Nav 2"
+      },
+      {
+      "id": "nav2_lnk",
+      "type": "url",
+      "label": "Link"
+      },
+      {
+        "id": "nav3",
+        "type": "text",
+        "label": "Nav 3"
+      },
+      {
+      "id": "nav3_lnk",
+      "type": "url",
+      "label": "Link"
+      },
+      {
+      "type" : "header",
+      "content" : "Contact Information"
+      },
+      {
+       "type" : "text",
+       "id" : "contact_mail",
+      "label" : "Contact Mail"
+      },
+      {
+       "type" : "textarea",
+       "id" : "contact_address",
+      "label" : "Contact Address"
+      }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

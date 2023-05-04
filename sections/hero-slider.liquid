@@ -1,0 +1,291 @@
+<div class="hero-slider swiper">
+  <div class="swiper-wrapper">
+    {% for block in section.blocks %}
+      <div class="swiper-slide">
+        <div class="hero-slider-image desktop-only" style="background-image: url('{{ block.settings.hero_image | img_url: '1800x' }}')">
+          <img src="{{ block.settings.hero_image | image_url: width: 2880 }}" style="display:none;"/>
+        </div>
+        <div class="hero-slider-image mobile-only" style="background-image: url('{{ block.settings.hero_image_mobile | img_url: '1800x' }}')">
+          {% comment %}
+          {{ block.settings.hero_image_mobile | image_url: width: 2880 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}
+          {% endcomment %}
+        </div>
+        <div class="hero-slider-text-container" {% if block.settings.text_color.value %}style="color: {{ block.settings.text_color }} !important"{% endif %}>
+          <div class="hero-slider-text-title">
+            {{ block.settings.hero_title }}
+          </div>
+          {% if block.settings.show_reviews %}
+            <div class="hero-slider-reviews-container">
+              {% render 'green-star' %}
+              {% render 'green-star' %}
+              {% render 'green-star' %}
+              {% render 'green-star' %}
+              {% render 'green-star' %}
+              <span>{{ block.settings.review_number }} Reviews</span>
+            </div>
+          {% endif %}
+          <div class="hero-slider-text-body">
+            {{ block.settings.hero_body }}
+          </div>
+          <a
+            class="hero-slider-text-cta btn-dirtea-primary"
+            href="{{ block.settings.button_url }}"
+            style="background-color: {{ block.settings.button_color}};">
+            {{ block.settings.cta_label }}
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="hero-slider-pagination"></div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper(".hero-slider", {
+    slidesPerView: 1,
+    loop: true,
+    pagination: {
+      el: ".hero-slider-pagination"
+    }
+  });
+
+  {% comment %}
+  let siteHeader = document.querySelector('.site-header__wrapper')
+  siteHeader.classList.add('transparent-header')
+
+  let scrollTop = (window.pageYOffset !== undefined)
+    ? window.pageYOffset
+    : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+  addEventListener("scroll", (event) => {
+    scrollTop = (window.pageYOffset !== undefined)
+      ? window.pageYOffset
+      : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    if (scrollTop > 50) {
+      siteHeader.classList.remove('transparent-header')
+    } else {
+      siteHeader.classList.add('transparent-header')
+    }
+  });
+  {% endcomment %}
+</script>
+
+
+{% style %}
+
+  .template-index:not(.announcement-hidden) .hero-slider {
+    padding-top: 50px;
+  }
+
+  .transparent-header {
+    background: transparent !important;
+  }
+
+
+  @media(min-width: 769px) {
+  }
+
+  .hero-slider-image {
+    width: 100vw;
+    height: 90vh;
+    margin-bottom: -11px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  @media(min-width: 769px) {
+    .hero-slider-image {
+        width: 100vw;
+        height: 48vw;
+        max-height: 700px;
+
+    }
+  }
+
+  .hero-slider-image img {
+    width: 100%;
+    height: auto;
+  }
+  .hero-slider-text-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #252525;
+    padding: 0 30px;
+    top: 130px;
+  }
+
+  @media(min-width: 769px) {
+    .hero-slider-text-container {
+        left: 27%;
+        margin-left: -230px;
+        top: 50%;
+        margin-top: -100px;
+        max-width: 550px;
+    }
+    .template-index .hero-slider-text-container {
+        left: auto;
+        margin-left: auto;
+        top: 50%;
+        margin-top: -100px;
+        max-width: 550px;
+        color: white;
+    }
+    .template-index .hero-slider-text-container .hero-slider-text-title {
+      color: white;
+    }
+    .template-index .hero-slider-reviews-container span {
+      color: white;
+    }
+    body.template-index .hero-slider-text-container .btn-dirtea-primary {
+      background-color: white !important;
+      color: var(--off-black) !important;
+    }
+  }
+
+  .hero-slider-pagination {
+    text-align: center;
+    background: transparent;
+    position: absolute;
+    margin-top: -15vh;
+    z-index: 1000;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #252525 !important;
+  }
+
+  .swiper-pagination-bullet-inactive {
+    background: #ffffff !important;
+  }
+
+  .hero-slider-text-title {
+    font-family: "Manifold Regular";
+    font-size: 42px;
+    letter-spacing: 1.05px;
+    line-height: 50px;
+    color: #252525;
+  }
+
+  @media(max-width: 769px) {
+    .hero-slider-text-title {
+        font-size: 38px;
+    }
+  }
+
+  .hero-slider-reviews-container {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .hero-slider-reviews-container span {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 16px;
+    margin-left: 10px;
+  }
+
+  .hero-slider-text-body {
+    font-family: "Manifold";
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 1.14px;
+    line-height: 26px;
+  }
+
+  .hero-slider-text-cta {
+    color: #FFFFFF;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+    padding: 15px;
+    background: #000000;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-top: 20px;
+    width: 250px;
+    height: 50px;
+  }
+{% endstyle %}
+{% schema %}
+  {
+    "name": "New Hero Slider",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "hero",
+        "name": "Hero",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "hero_image",
+            "label": "Choose Hero Image Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "hero_image_mobile",
+            "label": "Choose Hero Image Mobile"
+          },
+          {
+            "type": "text",
+            "id": "hero_title",
+            "label": "Title",
+            "default": "Your New Daily Ritual"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_reviews",
+            "label": "Show Review Stars?",
+            "default": true
+          }, {
+            "type": "text",
+            "id": "review_number",
+            "label": "How many reviews?",
+            "default": "2,300"
+          }, {
+            "type": "textarea",
+            "id": "hero_body",
+            "label": "Body Text",
+            "default": "<p>Delicious Organic Super Mushroom Teas, Coffee & Cacao Super Blends For Natural Energy, Immunity, Calm & Focus.</p>"
+          }, {
+            "type": "text",
+            "id": "cta_label",
+            "label": "CTA Label",
+            "default": "SHOP NOW"
+          }, {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text Colour"
+          }, {
+            "type": "color",
+            "id": "button_color",
+            "label": "Button Background Colour"
+          }, {
+            "type": "url",
+            "id": "button_url",
+            "label": "Button URL"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "New Hero Slider",
+        "category": "Black Friday"
+      }
+    ]
+  }
+{% endschema %}

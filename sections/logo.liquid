@@ -1,0 +1,70 @@
+<div class="page-width">
+  <div class="logo-flex small--hide">
+    {% for block in section.blocks %}
+    <div class="logo-inner text-center" data-aos-delay="{{ forloop.index }}00" data-aos="fade-up"> 
+      {% if block.settings.text != blank %}
+      <div class="about-logo">{{ block.settings.text }}</div>
+      {% endif %}
+      <div class="logo">
+        {% if block.settings.image == blank %}
+        {{ 'logo' | placeholder_svg_tag }}
+        {% else %}
+        <img src="{{ block.settings.image | img_url: '300x300' }}"/>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+    <div class="logo-slide medium-up--hide">
+    {% for block in section.blocks %}
+    <div class="logo-inner text-center six-tenths">
+      {% if block.settings.text != blank %}
+      <div class="about-logo">{{ block.settings.text }}</div>
+      {% endif %}
+      <div class="logo">
+        {% if block.settings.image == blank %}
+        {{ 'logo' | placeholder_svg_tag }}
+        {% else %}
+        <img src="{{ block.settings.image | img_url: '300x300' }}"/>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Logo",
+"class" : "featured-collection featured-logo",
+    "blocks": [
+{
+"type" : "logo",
+"name" : "Logo",
+"settings" : [
+{
+"type" : "textarea",
+"id" : "text",
+"label": "Text"
+},
+{
+"type" : "image_picker",
+"id" : "image",
+"label": "Image"
+}
+]
+}
+],
+"presets" : [
+{
+"name" : "Logo",
+"category" : "Image"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

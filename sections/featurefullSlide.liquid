@@ -1,0 +1,97 @@
+<div class="page-width">
+ {% if section.settings.heading != blank %} <div class="heading"><h2>{{section.settings.heading}}</h2></div>{% endif %}
+  <div class="featurefullSlide-inner">
+    {% for block in section.blocks %}
+    <div class="slick-item">
+    <div class="feature-row">
+      <div class="feature-row__item feature-row__text text-center">
+        {% if block.settings.title != blank %}
+        <h2 class="feature-row__heading h3 separator " >{{ block.settings.title }}</h2>
+        {% endif %}
+        {% if block.settings.subtitle != blank %}
+        <h6 class="feature-row__heading separator feature-subhead" >{{ block.settings.subtitle }}</h6>
+        {% endif %}        
+        {% if block.settings.text != blank %}
+        <div class="rte-setting featured-row__subtext rte-sett" >{{ block.settings.text }}</div>
+        {% endif %}
+        {% if block.settings.button_label != blank %}
+        <a href="{{ block.settings.button_link }}"  class="btn{% if block.settings.use_second_button %} btn--secondary{% endif %} feature-row__btn">
+          {{ block.settings.button_label }}
+        </a>
+        {% endif %}
+        {% if block.settings.button_label2 != blank %}
+        <div class="btn-container">
+          <a href="{{ block.settings.button_link2 }}" class="btn--secondary feature-row__btn">
+            <span class="btn-underline">{{ block.settings.button_label2 }}</span>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      <div class="feature-row__item feature-row__image-wrapper">
+        {% if block.settings.image != blank %}
+        {% assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+        <img class="featureImage lazyload"
+             data-src="{{ img_url }}"
+             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+             data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ block.settings.image.alt | escape }}">
+
+        <noscript>
+          <img src="{{ block.settings.image | img_url: '1024x1024' }}" alt="{{ block.settings.image.alt | escape }}" class="custom__block-image">
+        </noscript>
+        {% endif %}
+      </div>
+    </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "SlideShow Full",
+    "class" : "featurefullSlide",
+"settings": [
+{
+"type":"text",
+"id":"heading",
+"label":"Heading"
+}
+],
+    "blocks": [
+{
+"type" : "image",
+"name" : "Slide Block",
+"settings" : [
+{
+"type" : "image_picker",
+"id" : "image",
+"label" : "Image"
+},
+{
+"type" : "textarea",
+"id" : "title",
+"label" : "Title"
+},
+{
+"type" : "richtext",
+"id" : "subtitle",
+"label" : "SubTitle"
+}
+]
+}
+],
+"presets" : [
+{
+"name" : "Feature Full Slide",
+"category" : "Image"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

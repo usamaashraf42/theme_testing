@@ -1,0 +1,39 @@
+<div class="dirtea-section shop-the-recipe-container {{ bg_class }}">
+    <h3 class="text-center dirtea-section-title">{{ section_title }}</h3>
+
+    <div class="dirtea-product-carousel swiper-carousel-{{ section.id }} mobile-only">
+
+        <div class="swiper-wrapper">
+        {% for product in product_list %}
+        {% if forloop.index < limit %}
+            {% render '23_02__product-carousel-item' with product: product %}
+        {% endif %}
+        {% endfor %}
+        </div>
+
+    </div>
+
+
+    <div class="dirtea-product-carousel desktop-only">
+
+    {% for product in product_list %}
+    {% if forloop.index < limit %}
+        {% render '23_02__product-carousel-item' with product: product %}
+        {% if product.metafields.custom.subscription_products %}
+            {% include '23_02__subscription-selector-modal', selected_product: product %}
+        {% endif %}
+
+    {% endif %}
+    {% endfor %}
+
+    </div>
+
+</div>
+
+<script>
+  swiper = new Swiper('.swiper-carousel-{{ section.id }}', { // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1.1
+  });
+</script>

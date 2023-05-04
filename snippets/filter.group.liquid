@@ -1,0 +1,33 @@
+{%- assign group = filter.settings.tag | downcase | strip -%}
+{%- assign has_selected_value = false -%}
+{%- assign found_group = false -%}
+
+{%- for tag in collection.all_tags -%}
+    {%- assign key_value = tag | split: ':' -%}
+    {%- assign key = key_value[0] | downcase | strip -%}
+
+    {%- if key == group -%}
+        {%- assign found_group = true -%}
+        {%- break -%}
+    {%- endif -%}
+{%- endfor -%}
+
+{%- if found_group -%}
+    <div class="filter-group">
+        <h2 class="filter-group__title">{{ group | capitalize }}</h2>
+        {%- for tag in collection.all_tags -%}
+
+            {%- if group == key and has_selected_value == false -%}
+                {%- if current_tags contains tag -%}
+                    {%- assign current_key_value = tag | split: ':' -%}
+                    {%- assign current_key = current_key_value[0] | downcase | strip -%}
+                    {%- if group == current_key -%}
+                        {%- assign has_selected_value = true -%}
+                    {%- endif -%}
+                {%- endif -%}
+            {%- endif -%}
+
+            {%- render 'filter.item', collection: collection, group: group, tag: tag, index: index -%}
+        {%- endfor -%}
+    </div>
+{%- endif -%}

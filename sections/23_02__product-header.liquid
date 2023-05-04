@@ -1,0 +1,391 @@
+<div class="padding-from-menu" style="margin-top: 40px;"></div>
+{% if product.metafields.custom.new_recipe %}
+
+<div class="dirtea-new-recipe-container">
+    <!-- <div class="new-box">New</div> -->
+    <div class="new-text">INTRODUCING OUR <b>NEW CACAO</b> WITH 4X MUSHROOM STRENGTH</div>
+</div>
+{% endif %}
+
+<div class="dirtea-product-page dirtea-product-page-details product-template-new-container">
+    {% if product.metafields.custom.image_product_page %}
+        {% assign productImage = product.metafields.custom.image_product_page %}
+    {% elsif product.metafields.my_fields.transparentimage %}
+        {% assign productImage = product.metafields.my_fields.transparentimage %}
+    {% elsif product.featured_image %}
+        {% assign productImage = product.featured_image %}
+    {% else %}
+        {% assign productImage = product.featured_image %}
+    {% endif %}
+    <div class="product-hero-image-container product-template-new-lhs">
+        <div class="product-hero-image"
+        style="background-image: url('{{ productImage | img_url: '1800x' }}');"
+        data-product-image-months-0="{{ productImage | img_url: '1800x' }}"
+        {% for subscription_option in product.metafields.custom.subscription_products.value %}
+            {% if subscription_option.metafields.custom.image_product_page %}
+                {% assign subscriptionProductImage = subscription_option.metafields.custom.image_product_page %}
+            {% elsif subscription_option.metafields.my_fields.transparentimage %}
+                {% assign subscriptionProductImage = subscription_option.metafields.my_fields.transparentimage %}
+            {% elsif subscription_option.featured_image %}
+                {% assign subscriptionProductImage = subscription_option.featured_image %}
+            {% else %}
+                {% assign subscriptionProductImage = subscription_option.featured_image %}
+            {% endif %}
+        data-product-image-months-{{ subscription_option.metafields.custom.subscription_plan_months }}="{{ subscriptionProductImage | img_url: '1800x' }}"
+        {% endfor %}
+        ></div>
+
+        {% comment %}
+        <img class="product-image product-image-variant-months-0" src="{{ productImage | img_url: '1800x' }}"/>
+
+        {% for subscription_option in product.metafields.custom.subscription_products.value %}
+            {% if subscription_option.metafields.custom.image_product_page %}
+                {% assign subscriptionProductImage = subscription_option.metafields.custom.image_product_page %}
+            {% elsif subscription_option.metafields.my_fields.transparentimage %}
+                {% assign subscriptionProductImage = subscription_option.metafields.my_fields.transparentimage %}
+            {% elsif subscription_option.featured_image %}
+                {% assign subscriptionProductImage = subscription_option.featured_image %}
+            {% else %}
+                {% assign subscriptionProductImage = subscription_option.featured_image %}
+            {% endif %}
+        <img class="product-image product-image-variant-months-{{ subscription_option.metafields.custom.subscription_plan_months }} hide" src="{{ subscriptionProductImage | img_url: 'grande' }}"/>
+        {% endfor %}
+        {% endcomment %}
+
+
+    </div>
+    <div class="product-description-container product-template-new-rhs text-start">
+        <div class="product-template-new-category text-uppercase">{{ product.metafields.custom.product_tagline }}</div>
+        <div class="product-template-new-title">{{ product.title }}</div>
+        <div class="product-template-new-subtitle">{{ product.metafields.custom.purpose }}</div>
+        {% if product.metafields.custom.product_description %}
+        <div class="product-template-new-description">{{ product.metafields.custom.product_description }}</div>
+        {% else %}
+        <div class="product-template-new-description">{{ product.content }}</div>
+        {% endif %}
+        <div class="product-template-new-icons-container">
+            {% for bullet in product.metafields.custom.bullets.value %}
+            <div class="product-template-new-icon">
+                <span class="icon-svg"></span>
+                <div>{{ bullet }}</div>
+            </div>
+            {% endfor %}
+
+            <!-- Tolstoy product widget -->
+            <div data-product-id="{{ product.id }}" class='tolstoy-stories' style="grid-column: span 2; padding-top: 20px;"></div>
+
+        </div>
+
+        <div class="product-template-new-form">
+            {% render '23_02__product-form' %}
+        </div>
+
+        {% if product.metafields.custom.nutritional_information.value %}
+        <div class="dirtea-product-page-nutrition-and-ingredients-info text-center">
+            <a class="text-uppercase" href="#" onclick="showHideNutritionPanel(event);" {% if product.metafields.my_fields.modules_bg_colors %}style="color: {{ product.metafields.my_fields.modules_bg_colors }};"{% endif %}>Nutrition &amp; ingredients</a>
+        </div>
+        {% endif %}
+                
+    </div>
+</div>
+
+
+<div class="dirtea-full-page-scrim dirtea-product-page-nutrition-and-ingredients-panel hide">
+    <div class="dirtea-panel-slideout dirtea-nutrition-slideout">
+        
+        <div class="panel-top-bar">
+            <h3 class="">Nutrition &amp; ingredients</h3>
+            <button class="btn btn--clear" onclick="showHideNutritionPanel(event);">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 16.8 16.8"><path fill="#444" d="M16.8 1.5L15.4.1 8.4 7l-7-7L0 1.4l7 7-7 7 1.4 1.4 7-7 7 7 1.4-1.4-7-7z"></path></svg>
+            </button>
+        </div>
+        <h3 class="">{{ product.metafields.custom.short_name }}</h3>
+        <p>Serving size: {{ product.metafields.custom.serving_size_in_grams }}g</p>
+        
+        <div class="amount-per-serving-container">
+            <div class="amount-per-serving-table-container">
+                <p>Amount per serving</p>
+                <hr>
+                <table>
+                    {% for ingredient in product.metafields.custom.nutritional_information.value %}
+                    <tr>
+                        <td>{{ ingredient.ingredient }}</td>
+                        <td>{{ ingredient.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <hr>                
+            </div>
+        </div>
+
+        <div class="nutrition-panel-bullets-container">
+            <div class="nutrition-panel-bullet text-center">
+                <img src="{{ 'icon-double-extracted.svg' | asset_url }}">
+                <p class="text-center">Dual extracted</p>
+            </div>
+            <div class="nutrition-panel-bullet text-center">
+                <img src="{{ 'icon-fruiting-body.svg' | asset_url }}">
+                <p class="text-center">100% fruiting body</p>
+            </div>
+            <div class="nutrition-panel-bullet text-center">
+                <img src="{{ 'icon-organic.svg' | asset_url }}">
+                <p class="text-center">Organic</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="nutrition-panel-ingredients-container">
+            <p>{{ product.metafields.custom.ingredients }}</p>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<style>
+.dirtea-new-recipe-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 90px;
+    font-size: 42px;
+}
+.dirtea-new-recipe-container .new-box {
+    background-color: #04DA8D;
+    padding: 14px 10px 10px 10px;
+    color: white;
+    text-transform: uppercase;
+    width: fit-content;
+    height: fit-content;
+    line-height: 38px;
+    rotate: -9deg;
+}
+.dirtea-new-recipe-container .new-text {
+    /*color: #04DA8D;*/
+    color: rgb(137 115 175);
+    text-align: center;
+    padding: 0 20px;
+}
+
+@media (max-width: 769px) {
+    .dirtea-new-recipe-container {
+        font-size: 24px;
+    }
+    .dirtea-new-recipe-container .new-box {
+        padding: 6px 10px 3px 10px;
+    }
+}
+
+
+.dirtea-product-page-nutrition-and-ingredients-info {
+    padding: 30px;
+    font-size: 14px;
+}
+.dirtea-nutrition-slideout {
+    padding: 0 30px 30px 30px;
+    font-size: 14px;
+    color: var(--off-black);
+    overflow-y: scroll; 
+}
+.dirtea-nutrition-slideout hr {
+    margin: 20px 0px;
+    border: 1px solid var(--off-black);
+    background: var(--off-black);
+}
+.dirtea-product-page-nutrition-and-ingredients-panel .panel-top-bar {
+    flex-direction: row;
+    margin-bottom: 20px;
+    border-bottom: 5px solid var(--off-black);
+    position: initial;
+    width: auto;
+}
+.dirtea-product-page-nutrition-and-ingredients-panel .panel-top-bar h3 {
+    font-size: 24px;
+}
+.dirtea-nutrition-slideout .amount-per-serving-table-container table tr {
+    height: 34px;
+}
+.dirtea-nutrition-slideout .nutrition-panel-bullets-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.dirtea-nutrition-slideout .nutrition-panel-bullets-container .nutrition-panel-bullet {
+    width: 90px;
+}
+.dirtea-nutrition-slideout .nutrition-panel-bullets-container .nutrition-panel-bullet img {
+    width: 40px;
+}
+
+</style>
+
+<style>
+    .product-template-new-container {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        font-family: 'Manifold';
+        color: #252525;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-container {
+            grid-template-columns: repeat(2,1fr);
+            /*height: 900px;*/
+        }
+    }
+
+    .product-template-new-lhs {
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--light-grey);
+        min-height: 40vh;
+    }
+
+    .product-hero-image {
+        background-repeat: no-repeat;
+        background-position: top;
+        /*background-position-y: 60px;*/
+        background-size: contain;
+        height: 100%;
+        width: 100%;   
+    }
+
+    body.announcement-hidden .main-content { padding-top: 10px !important; }
+    .main-content { padding-top: 60px !important; }
+
+    @media (min-width: 769px) {
+        .main-content { padding-top: 80px !important; }
+        .product-template-new-lhs {
+            width: 50vw;
+            justify-content: flex-start;
+            /*padding: 100px;*/
+            min-height: 500px;
+        }
+    }
+
+    .product-template-new-lhs img {
+        width: 100%;
+        max-width: 400px;
+        margin-left: 20px;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-lhs img {
+            margin: 70px auto;
+        }
+    }
+
+    .product-template-new-rhs {
+        width: 100%;
+        margin-top: 40px;
+        /*text-align: center;*/
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 80px;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-rhs {
+            width: 50vw;
+            padding: 80px;
+            padding-left: 130px;
+            padding-top: 40px;
+            margin: 0px;
+            text-align: left;
+        }
+    
+    }
+
+    .product-template-new-category {
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        line-height: 17px;
+        margin-bottom: 10px;
+    }
+
+    .product-template-new-title {
+        font-size: 34px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 41px;
+        margin-bottom: 10px;
+    }
+
+    .product-template-new-subtitle {
+        font-size: 24px;
+        letter-spacing: 0;
+        line-height: 26px;
+        margin-bottom: 10px;
+    }
+
+    .product-template-new-description {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 22px;
+        margin-bottom: 20px;
+    }
+
+    .product-template-new-icons-container {
+        text-align: left;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #252525;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-icons-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+
+    .product-template-new-icon {
+        display: flex;
+        flex-direction: row;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 26px;
+        padding-right: 10px;
+    }
+
+    .product-template-new-icon span.icon-svg {
+      background-image: url('{{ '23_02__tick-grey.svg' | asset_url }}');
+      background-repeat: no-repeat;
+      height: 16px;
+      aspect-ratio: 1/1;
+      margin-right: 10px;
+      margin-top: 2px;
+    }
+
+    @media (min-width: 769px) {
+        .product-template-new-icon {
+        }
+    }
+
+    .product-template-new-icon div:first-child {
+        margin-right: 10px;
+    }
+
+
+
+
+</style>
+
+
+<script>
+
+function showHideNutritionPanel(e){
+    e.preventDefault();
+    document.querySelector(".dirtea-product-page-nutrition-and-ingredients-panel").classList.toggle("hide")
+}
+</script>

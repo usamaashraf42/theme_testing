@@ -1,0 +1,32 @@
+<div class="ingredients-ticker">
+    <ul>
+        {% for ingredient in product.metafields.custom.ingredients_ticker.value %}
+        <li>{{ ingredient }}</li>
+        <li class="ticker-spacer">.</li>
+        {% endfor %}
+        {% for ingredient in product.metafields.custom.ingredients_ticker.value %}
+        <li>{{ ingredient }}</li>
+        <li class="ticker-spacer">.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% style %}
+.ingredients-ticker {
+  width: 100%;
+  height: fit-content;
+  padding: 4px 0;
+  /*background: {{ product.metafields.custom.product_color_2 }};*/
+  background-color: #DFDCD7;
+}
+.ingredients-ticker ul { display: flex; list-style: none; gap: 66px; overflow: hidden; }
+.ingredients-ticker ul li { font-size: 16px; text-transform: uppercase; color: rgb(118 68 150); font-weight: bold; white-space: nowrap; animation-name: marquee; animation-duration: 15s; animation-iteration-count: infinite; animation-timing-function: linear; }
+.ingredients-ticker ul li.ticker-spacer { font-size: 43px; font-weight: bold; line-height: 7px; }
+
+@keyframes marquee {
+  from { transform: translatex(0px); }
+  to { transform: translatex(-1000px); }
+}
+
+{% endstyle %}

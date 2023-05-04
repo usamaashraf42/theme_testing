@@ -1,0 +1,306 @@
+<div class="black-friday-bundle-container">
+    <div class="black-friday-card-container">
+        <div class="black-friday-card-badge" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>
+            <div><span>25%</span><br/><span>OFF</span></div>
+        </div>
+        <a href="{{ section.settings.product_one.url}}"><div class="black-friday-card-image">{{ section.settings.product_one | image_url: width: 310, height: 310 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div></a>
+        <div class="black-friday-card-body">
+            <div class="black-friday-card-title" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_one.title }}</div>
+            <div class="black-friday-card-price-container">
+                <div class="black-friday-card-price-before">{{ section.settings.product_one.compare_at_price | money_with_currency }}</div>
+                <a href="{{ section.settings.product_one.url}}" class="black-friday-card-price-after" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_one.price | money_with_currency }}</a>
+            </div>
+            <div class="black-friday-card-body-text" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_one_body_text }}</div>
+        </div>
+        <div class="black-friday-card-subtitle" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_one_subtitle_text }}</div>
+        <div class="black-friday-card-cta"><a href="{{ section.settings.product_one.url}}" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>BUY NOW</a></div>
+    </div>
+    <div class="black-friday-card-container">
+        <div class="black-friday-card-badge" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>
+            <div><span>25%</span><br/><span>OFF</span></div>
+        </div>
+        <a href="{{ section.settings.product_two.url}}"><div class="black-friday-card-image">{{ section.settings.product_two | image_url: width: 310, height: 310 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div></a>
+        <div class="black-friday-card-body">
+            <div class="black-friday-card-title" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_two.title }}</div>
+            <div class="black-friday-card-price-container">
+                <div class="black-friday-card-price-before">{{ section.settings.product_two.compare_at_price | money_with_currency }}</div>
+                <a href="{{ section.settings.product_two.url}}" class="black-friday-card-price-after" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_two.price | money_with_currency }}</a>
+            </div>
+            <div class="black-friday-card-body-text" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_two_body_text }}</div>
+        </div>
+        <div class="black-friday-card-subtitle" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_two_subtitle_text }}</div>
+        <div class="black-friday-card-cta"><a href="{{ section.settings.product_two.url}}" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>BUY NOW</a></div>
+    </div>
+    <div class="black-friday-card-container">
+        <div class="black-friday-card-badge" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>
+            <div><span>25%</span><br/><span>OFF</span></div>
+        </div>
+        <a href="{{ section.settings.product_three.url}}"><div class="black-friday-card-image">{{ section.settings.product_three | image_url: width: 310, height: 310 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div></a>
+        <div class="black-friday-card-body">
+            <div class="black-friday-card-title" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_three.title }}</div>
+            <div class="black-friday-card-price-container">
+                <div class="black-friday-card-price-before">{{ section.settings.product_three.compare_at_price | money_with_currency }}</div>
+                <a href="{{ section.settings.product_three.url}}" class="black-friday-card-price-after" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_three.price | money_with_currency }}</a>
+            </div>
+            <div class="black-friday-card-body-text" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_three_body_text }}</div>
+        </div>
+        <div class="black-friday-card-subtitle" {% if section.settings.main_color %} style="color: {{ section.settings.main_color }}" {% endif %}>{{ section.settings.product_three_subtitle_text }}</div>
+        <div class="black-friday-card-cta"><a href="{{ section.settings.product_three.url}}" {% if section.settings.main_color %} style="background: {{ section.settings.main_color }}" {% endif %}>BUY NOW</a></div>
+    </div>
+</div>
+
+{% style %}
+
+.black-friday-bundle-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: #FFFEF2;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+@media (min-width: 769px) {
+    .black-friday-bundle-container {
+        padding-top: 120px;
+    }
+}
+
+
+.black-friday-card-badge {
+    background: #000000;
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    padding-top: 25px;
+    text-align: center;
+    color: #ffffff;
+    position: absolute;
+    margin-bottom: 700px;
+    margin-left: 225px;
+}
+
+@media (min-width: 769px) {
+    .black-friday-bundle-container {
+        flex-wrap: nowrap
+    }
+
+    .black-friday-card-badge {
+        margin-bottom: 700px;
+    }
+}
+
+.black-friday-card-badge span {
+    color: #FFFFFF;
+    font-size: 18px;
+    letter-spacing: 0.89px;
+    line-height: 5px;
+    text-align: center;
+}
+
+.black-friday-card-badge span:first-child {
+    color: #FFFFFF;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 1.69px;
+    line-height: 45px;
+    font-family: "Manifold";
+}
+
+@media (max-width: 769px) {
+    .black-friday-card-container :first-child {
+        margin-top: 0px
+    }
+
+    .black-friday-card-container {
+        margin-top: 80px
+    }
+}
+
+.black-friday-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 50px;
+    padding-left: 50px;
+    max-width: 410px;
+}
+
+.black-friday-card-image img {
+    border-radius: 9px;
+}
+
+.black-friday-card-body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: #012169;
+}
+
+.black-friday-card-title {
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0.76px;
+    line-height: 40px;
+    font-weight: bold;
+    padding: 20px 0px;
+    font-family: "Manifold";
+    height: 100px;
+    color: #000000;
+}
+
+.black-friday-card-body-text {
+    color: #000000;
+    font-size: 16px;
+    letter-spacing: 1.29px;
+    line-height: 22px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-family: "Manifold";
+    height: 130px;
+}
+
+.black-friday-card-subtitle {
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1.29px;
+    line-height: 22px;
+    min-height: 44px;
+    font-family: "Manifold";
+    text-align: center;
+    text-decoration: underline;
+}
+
+.black-friday-card-cta {
+    margin-top: 65px
+}
+
+@media (max-width: 769px) {
+    .black-friday-card-cta {
+        width: 100vw;
+        display: flex;
+        padding: 10px;
+    }
+}
+
+.black-friday-card-cta a {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    line-height: 26px;
+    border-radius: 25px;
+    background-color: #000000;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Manifold";
+    width: 100%;
+
+    -webkit-padding-before: 10px;
+    -webkit-padding-end: 50px;
+    -webkit-padding-after: 10px;
+    -webkit-padding-start: 50px;
+}
+
+.black-friday-card-price-container {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 1.33px;
+    line-height: 26px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    font-family: "Manifold";
+}
+
+.black-friday-card-price-before {
+    text-decoration: line-through;
+    color: #000000;
+    margin-right: 20px;
+}
+
+.black-friday-card-price-after {
+    color: #ffffff;
+    background: #000000;
+    border-radius: 25px;
+    padding: 8px 16px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Black Friday Bundles",
+    "settings": [
+        {
+            "type": "color",
+            "id":"main_color",
+            "label": "Main Colour"
+        },
+        {
+            "type": "product",
+            "id": "product_one",
+            "label": "First Product"
+        },
+        {
+            "type": "textarea",
+            "id": "product_one_body_text",
+            "label": "First Product Description",
+            "default": "<p>Start your mushroom health journey the right way by jumping straight into the DIRTEA World and saving £100 off our complete range</p>"
+        },
+        {
+            "type": "text",
+            "id": "product_one_subtitle_text",
+            "label": "First Product Subtitle",
+            "default": "Subtitle"
+        },
+        {
+            "type": "product",
+            "id": "product_two",
+            "label": "Second Product"
+        },
+        {
+            "type": "textarea",
+            "id": "product_two_body_text",
+            "label": "First Product Description",
+            "default": "<p>Start your mushroom health journey the right way by jumping straight into the DIRTEA World and saving £100 off our complete range</p>"
+        },
+        {
+            "type": "text",
+            "id": "product_two_subtitle_text",
+            "label": "Second Product Subtitle",
+            "default": "Subtitle"
+        },
+        {
+            "type": "product",
+            "id": "product_three",
+            "label": "Third Product"
+        },
+        {
+            "type": "textarea",
+            "id": "product_three_body_text",
+            "label": "First Product Description",
+            "default": "<p>Start your mushroom health journey the right way by jumping straight into the DIRTEA World and saving £100 off our complete range</p>"
+        },
+        {
+            "type": "text",
+            "id": "product_three_subtitle_text",
+            "label": "Third Product Subtitle",
+            "default": "Subtitle"
+        }
+    ],
+    "presets": [{
+        "name": "Black Friday Bundles",
+        "category": "Black Friday"
+    }]
+  }
+{% endschema %}

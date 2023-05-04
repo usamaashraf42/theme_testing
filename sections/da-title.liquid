@@ -1,0 +1,73 @@
+<div id="da-title">
+  {% if section.settings.da_title != blank %}
+  <div class="da_title">
+    <img src="{{section.settings.da_title | img_url: "master"}}">
+  </div>
+  {% endif %}
+</div>
+
+<style>
+  .da_title {
+    width: 100%;
+    background: linear-gradient(rgba(231, 219, 210, 0) 0%, rgba(231, 219, 210, 0.78) 51.04%, rgb(231, 219, 210) 100%);
+    padding: 20px 70px 0px;
+  }
+
+  .da_title img {
+    width: 100%;
+    max-width: 370px;
+    margin: 0px auto;
+    display: block;
+  }
+
+  @media (max-width: 768px){
+    .da_title {
+      padding: 20px 50px 0px;
+    }
+  }
+
+  @media (max-width: 490px){
+    #da-title {
+      position: relative;
+    }
+    
+    .da_title {
+      position: absolute;
+      z-index: 1;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      padding: 20px 20px 0px;
+    }
+
+    .da_title img {
+      max-width: 100%;
+    }
+  }
+  
+</style>
+
+{% schema %}
+  {
+    "name": "DA Title",
+    "settings": [
+    {
+    "type": "image_picker",
+    "id": "da_title",
+    "label": "Image"
+    }
+    ],
+    "presets": [
+    {
+    "name": "DA Title",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,131 @@
+<div class="worksForYou_container">
+    <div class="page-width">
+        <h2>{{ section.settings.title }}</h2>
+        <div class="worksForYou__inner">
+
+{% for block in section.blocks %}
+{% assign bs = block.settings %}
+<div class="usp_item">
+    <img src="{{ bs.usp_image.src | img_url: 'master' }}" alt="{{ bs.image.alt }}">
+    <h5>{{ bs.usp_title }}</h5>
+    <p>{{ bs.usp_body }}</p>
+</div>
+{% endfor %}
+        </div>
+        </div>
+        </div>
+
+
+<style>
+    .worksForYou__inner {
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    
+    .usp_item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        min-height: 250px;
+
+    }
+
+    .worksForYou_container h2 {
+        text-align: center;
+        margin-bottom: 2em !important;
+        font-weight: bold;
+        font-size: 34px;
+        font-family: 'Calder';
+    }
+
+    .usp_item img {
+        margin-bottom: 1em;
+    }
+
+    .usp_item + .usp_item {
+        margin-left: 4em;
+    }
+
+    .usp_item h5 {
+        font-size: 24px !important;
+    }
+
+    .usp_item p {
+        max-width: 145px;
+        text-align: center;
+        font-size: 16px;
+        font-family: 'Calder';
+    }
+
+    @media (min-width:764px) and (max-width:1000px) {
+        .usp_item + .usp_item {
+        margin-left: 2em;
+    }
+    .usp_item h5 {
+        font-size: 21px !important;
+    }
+    .usp_item p {
+        font-size: 14px;
+    }
+    }
+
+    @media (max-width:764px) {
+        .worksForYou__inner {
+            flex-direction: column;
+            margin-bottom: 3em;
+        }
+        .usp_item {
+            min-height: 240px !important;
+        }
+        .usp_item + .usp_item { 
+            margin-left: 0 !important;
+        }
+    }
+
+</style>
+
+{% schema %}
+{
+  "name": "What works for you",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading Text",
+      "default":"Find What Works For You"
+      }
+  ],
+"blocks" : [
+{
+"type" : "USP_Item",
+"name" : "USP Item",
+"settings" : [
+{
+    "type": "text",
+    "id": "usp_title",
+    "label": "USP Title"
+    },
+{
+    "type": "textarea",
+    "id": "usp_body",
+    "label": "USP Body"
+    },
+    {
+        "type": "image_picker",
+        "id": "usp_image",
+        "label": "USP Image"
+        }
+]
+}
+    
+],
+  "presets": [
+    {
+      "name": "What works for you",
+      "category": "CTA"
+    }
+  ]
+}
+{% endschema %}

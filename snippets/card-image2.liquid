@@ -1,0 +1,72 @@
+<div class="card-wrapper card-wrapper-{{ forloop.index }}" style="margin-bottom: 20px">
+  {% assign img_url = type | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+
+  {% if grid_style == 'grid' %}
+  <div class="card__image-wrapper card__image-wrapper--aligned">
+
+    <img class="card__image card__image--align lazyload fade-in"
+         src="{{ type | img_url: '300x'}}"
+         data-parent-fit="cover"
+         data-src="{{ img_url }}"
+         data-widths="[360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+         data-aspectratio="{{ type.aspect_ratio }}"
+         data-sizes="auto"
+         alt="{{ type.alt | escape }}"
+         data-variant-media-image>
+    <div class="card__preloader"></div>
+  </div>
+  {% else %}
+  <a href="{{ product.url | within: collection }}">
+    <div class="card__image-wrapper">
+      <img class="card__image lazyload fade-in"
+           data-src="{{ img_url }}"
+           data-widths="[180, 220, 300, 360, 460, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+           data-aspectratio="{{ type.aspect_ratio }}"
+           data-sizes="auto"
+           alt="{{ type.alt | escape }}">
+
+      <div class="card__preloader"></div>
+
+      <noscript>
+        {% assign card_image = type | img_url: '1024x1024' %}
+        <img src="{{ card_image }}" alt="{{ type.alt | escape }}" class="card__image">
+      </noscript>
+    </div>
+  </a>
+  {% endif %}
+  <div class="btn_container text-center small--hide">
+    {% form 'product', product, class:'product-form' %}
+    <input class="hide" type="hidden" hidden name="id" value="{{ product.variants.first.id }}" />
+    <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+
+    <div class="hide hidden" hide hidden>
+      {% for group in product.selling_plan_groups %}
+
+      <input type="radio" name="selling_plan" data-plan-name="" value="onetime">
+      {% for selling_plan in group.selling_plans %}
+      {% if selling_plan.name == "Ship every 30 Days" %}  
+        {% assign thirty_day_value = selling_plan.id %}
+      {% endif %}
+      <input type="radio" name="selling_plan" data-plan-name="{{ selling_plan.name }}" value="{{ thirty_day_value }}">
+      {% endfor %}
+      {% endfor %}
+    </div>
+
+    {% if product.metafields.custom.subscription_product_ != false %}
+      {% if product.metafields.custom.hide_subscription_cta != true %}
+        <button type="autoship_submit" class="collsubmit btn btn--secondary btn-collection add_btn">Subscribe & Save <span class="hide-small">15%</span></button>
+      {% endif %}
+    {% endif %}
+
+    
+    <button type="normal_addtocart" class="collsubmit btn add_btn btn-collection-addtocart" {% if product.metafields.custom.pre_order %} style="background: green !important; color: white !important; border: green; opacity: 1 !important" {% endif %}>
+      {% if product.metafields.custom.pre_order %}
+        Pre-Order
+      {% else %}
+        Buy now
+      {% endif %}
+    </button>
+
+    {% endform %}
+  </div>
+</div>

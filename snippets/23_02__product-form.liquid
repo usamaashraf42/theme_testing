@@ -1,0 +1,447 @@
+{% if product.metafields.custom.subscription_products %}
+    {% assign active_subscription_products = false %}
+    {% for p in product.metafields.custom.subscription_products.value %}
+        {% assign active_subscription_products = true %}
+        {% break %}
+    {% endfor %}
+    {% if active_subscription_products == true %}
+        {% assign has_subscription = true %}
+    {% endif %}
+{% else %}
+{% assign has_subscription = false %}
+{% endif %}
+
+
+
+{% comment %}
+Subscription options row
+{% endcomment %}
+
+{% if has_subscription %}
+<div class="pdp-product-form">
+
+    {% comment %} PURCHASE OPTION: One time {% endcomment %}
+    <div class="pdp-product-form-option" data-product-variant-id="{{ product.selected_or_first_available_variant.id }}" data-product-type="original" data-product-type="subscription" data-product-price="{{ product.price | divided_by: 100.00 }}" data-subscription-months="0">
+        <div class="pdp-product-form-option-radio-button {{ product.handle }}"></div>
+        <div class="pdp-product-from-one-time-option">
+            ONE TIME PURCHASE
+        </div>
+    </div>
+
+    {% comment %} PURCHASE OPTION: Other selling plans {% endcomment %}
+    {% for subscription_option in product.metafields.custom.subscription_products.value %}
+    {% assign subscription_product_price = subscription_option.price | divided_by : 100.00 | divided_by: subscription_option.metafields.custom.subscription_plan_months | round: 2 %}
+    {% assign price_fraction = subscription_option.price | times: 1.00 | divided_by: subscription_option.metafields.custom.subscription_plan_months | divided_by: product.price %}
+    {% assign savings_pct = 1 | minus: price_fraction | times: 100 | round %}
+
+    {%- liquid
+    assign current_variant = subscription_option.selected_or_first_available_variant | default: subscription_option.variants.first
+    assign current_selling_plan_allocation = current_variant.selected_selling_plan_allocation
+
+    if current_selling_plan_allocation == nil and current_variant.requires_selling_plan
+    assign current_selling_plan_allocation = current_variant.selling_plan_allocations | first
+    endif
+    -%}
+
+    <div
+        class="pdp-product-form-option"
+        data-product-variant-id="{{ subscription_option.selected_or_first_available_variant.id }}"
+        data-product-selling-plan-id="{{ current_selling_plan_allocation.selling_plan.id }}"
+        data-product-type="subscription"
+        data-product-price="{{ subscription_option.price | money_without_currency }}"
+        data-product-price-monthly="{{ subscription_product_price }}"
+        data-subscription-months="{{ subscription_option.metafields.custom.subscription_plan_months }}"
+    >
+        <div class="pdp-product-form-option-radio-button filled-radio-button {{ product.handle }}"></div>
+        <div style="width: 100%;">
+            <div class="pdp-product-form-option-first-line">
+                <div class="text-uppercase">{{ subscription_option.metafields.custom.subscription_plan_name }}</div>
+                <div>&pound;{{ subscription_product_price }}<span style="font-weight: normal">/mo</span></div>
+            </div>
+            <div class="pdp-product-form-option-second-line">
+                {% assign payment_cycle_text = "Upfront" %}
+                {% if subscription_option.metafields.custom.subscription_plan_months == 1 %}
+                {% assign payment_cycle_text = "monthly" %}
+                {% elsif subscription_option.metafields.custom.subscription_plan_months == 3 %}
+                {% assign payment_cycle_text = "every 3 months" %}
+                {% elsif subscription_option.metafields.custom.subscription_plan_months == 6 %}
+                {% assign payment_cycle_text = "every 6 months" %}
+                {% elsif subscription_option.metafields.custom.subscription_plan_months == 12 %}
+                {% assign payment_cycle_text = "annually" %}
+                {% endif %}
+
+                <div>Pay &pound;{{ subscription_option.price | money_without_currency }} <strong>{{ payment_cycle_text }}</strong></div>
+                <div {%if product.metafields.my_fields.modules_bg_colors %}style="background-color: {{ product.metafields.my_fields.modules_bg_colors }};"{% endif %}>
+                    Save {{ savings_pct }}%
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endif %}
+
+
+{% if product.metafields.custom.what_gets_shipped %}
+<div class="pdp-what-gets-shipped-container text-start what-gets-shipped-months-0">
+    <p>How your DIRTEA will be shipped to you</p>
+    <ul>
+        {% for shipping_item in product.metafields.custom.what_gets_shipped.value %}
+        <li>{{ shipping_item }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% for subscription_option in product.metafields.custom.subscription_products.value %}
+    {% if subscription_option.metafields.custom.what_gets_shipped %}
+    <div class="pdp-what-gets-shipped-container text-start what-gets-shipped-months-{{ subscription_option.metafields.custom.subscription_plan_months }} hide">
+        <p>How your DIRTEA will be shipped to you</p>
+        <ul>
+            {% for shipping_item in subscription_option.metafields.custom.what_gets_shipped.value %}
+            <li>{{ shipping_item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endfor %}
+
+
+
+
+{% comment %}
+Add to cart row
+{% endcomment %}
+
+<div class="pdp-cta-form-container show-product-form dirtea-product-page-price-summary">
+
+    {% comment %}<div class="pdp-cta-form-price">{{ product.variants.first.price | money }}</div>{% endcomment %}
+
+    <div class="pdp-cta-form-price-container">
+      {% if product.compare_at_price %}<div class="pdp-cta-form-price-strikethrough discounted-price">&pound;{{ product.compare_at_price | money_without_currency }}</div>{% endif %}
+      <div class="pdp-cta-form-price-strikethrough subscription-saving">&pound;{{ product.variants.first.price | money_without_currency }}</div>
+      <div class="pdp-cta-form-price">&pound;{{ product.price  | money_without_currency }}</div>
+    </div>
+
+    <div class="pdp-cta-form">
+        <a
+            href="#"
+            class="collsubmit add_btn pdp-add-to-cart-cta text-decoration-none text-uppercase dirtea-add-to-cart-btn btn-dirtea-primary"
+            onclick="addProductToCartOnClick(event);"
+            data-product-variant-id="{{ product.variants.first.id }}"
+            data-product-selling-plan-id=""
+            {%if product.metafields.my_fields.modules_bg_colors %}style="background-color: {{ product.metafields.my_fields.modules_bg_colors }};"{% endif %}
+            >Add to cart</a>
+    </div>
+</div>
+
+
+
+
+{% comment %}
+<script>
+productOptionSelectors = document.querySelectorAll(".pdp-product-form-option")
+productSummary = document.querySelector(".dirtea-product-page-price-summary")
+addToCartBtn = productSummary.querySelector(".pdp-cta-form a.collsubmit")
+
+productOptionSelectors.forEach(function(elem) {
+    elem.addEventListener("click", function(e) {
+
+        // Add .filled-radio-button to all options
+        document.querySelectorAll(".pdp-product-form-option .pdp-product-form-option-radio-button").forEach(function(radioBtn){
+            radioBtn.classList.add("filled-radio-button")
+        })
+
+        // Mark clicked item as selected (by removing .filled-radio-button)
+        elem.querySelector(".pdp-product-form-option-radio-button").classList.remove("filled-radio-button")
+
+        // If subscription, show strikethrough price and replace product price
+        if (elem.dataset.productType == "subscription" ){
+            // Show strikethrough price
+            document.querySelector(".pdp-cta-form-price-container").classList.add("product-subscription-discount-applied")
+            // Replace price
+            document.querySelector(".pdp-cta-form-price-container .pdp-cta-form-price").innerHTML = `&pound;${elem.dataset.productPriceMonthly} /mo`
+        } else {
+            // Hide strikethrough price
+            document.querySelector(".pdp-cta-form-price-container").classList.remove("product-subscription-discount-applied")
+            // Replace price
+            document.querySelector(".pdp-cta-form-price-container .pdp-cta-form-price").innerHTML = `&pound;${elem.dataset.productPrice}`
+        }
+
+
+        // Change product-variant-id for add to cart button
+        document.querySelector(".pdp-cta-form a").dataset.productVariantId = elem.dataset.productVariantId
+
+        // Change product-selling-plan-id for add to cart button
+        productSellingPlanId = elem.dataset.productSellingPlanId
+        if (productSellingPlanId) {
+            document.querySelector(".pdp-cta-form a").dataset.productSellingPlanId = productSellingPlanId
+        } else {
+            document.querySelector(".pdp-cta-form a").dataset.productSellingPlanId = ""
+        }
+
+
+    });
+});
+</script>
+{% endcomment %}
+
+
+<style>
+.pdp-cta-form-price-container .pdp-cta-form-price-strikethrough.subscription-saving {display: none;}
+.pdp-cta-form-price-container.product-subscription-discount-applied .pdp-cta-form-price-strikethrough {display: block;}
+
+
+.pdp-what-gets-shipped-container {
+    margin-top: 30px;
+}
+.pdp-what-gets-shipped-container p {
+    font-size: 18px;
+    margin: 0px;
+    font-weight: bold;
+}
+.pdp-what-gets-shipped-container ul {
+    padding-left: 15px;
+    font-size: 14px;
+}
+</style>
+
+
+<style>
+
+
+
+{% comment %}
+.rc_container_wrapper {
+    display: none !important;
+}
+
+.pdp-product-form {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #252525;
+}
+
+.show-product-form {
+    display: block;
+}
+
+.subscription-product-carousel-buttons-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -410px;
+    z-index: 1;
+}
+
+.swiper-subscription-button-next {
+    cursor: pointer;
+}
+
+.swiper-subscription-button-next {
+    transform: scale(-1, 1);
+    cursor: pointer;
+}
+
+.pdp-add-to-cart-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 245px;
+    border-radius: 25px;
+    border: none;
+    /*background-color: #DE8C59;*/
+    background-color: var(--off-black);
+
+    color: #FFFFFF;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 14px;
+    cursor: pointer;
+}
+
+@media (min-width: 769px) {
+    .pdp-add-to-cart-cta {
+        width: 280px;
+    }
+}
+
+.pdp-cancel-cta {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-decoration: underline;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+    
+}
+
+.pdp-product-form-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 90vw;
+}
+
+@media (min-width: 769px) {
+    .pdp-product-form {
+        max-width: 100vw;
+    }
+}
+
+.pdp-product-form-option-radio-button {
+    width: 22px;
+    height: 20px;
+    border-radius: 50px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+.pdp-product-form-option-radio-button {
+  border: 1px solid var(--off-black);
+  background-color: var(--off-black);
+}
+{% endcomment %}
+
+
+
+{% comment %}
+{% if product.metafields.my_fields.modules_bg_colors %}
+.pdp-product-form-option-radio-button {
+  border: 1px solid {{ product.metafields.my_fields.modules_bg_colors }} !important;
+  background-color: {{ product.metafields.my_fields.modules_bg_colors }};
+}
+{% else %}
+.pdp-product-form-option-radio-button {
+  border: 1px solid var(--off-black);
+  background-color: var(--off-black);
+}
+{% endif %}
+{% endcomment %}
+
+
+
+
+{% comment %}
+.pdp-product-form-option-radio-button[class*="chaga"] {
+  border: 1px solid var(--chaga-brand-color) !important;
+  background-color: var(--chaga-brand-color);
+}
+.pdp-product-form-option-radio-button[class*="mane"] {
+  border: 1px solid var(--mane-brand-color) !important;
+  background-color: var(--mane-brand-color);
+}
+.pdp-product-form-option-radio-button[class*="cordyceps"] {
+  border: 1px solid var(--cordyceps-brand-color) !important;
+  background-color: var(--cordyceps-brand-color);
+}
+.pdp-product-form-option-radio-button[class*="reishi"] {
+  border: 1px solid var(--reishi-brand-color) !important;
+  background-color: var(--reishi-brand-color);
+}
+.pdp-product-form-option-radio-button[class*="turkey"] {
+  border: 1px solid var(--turkey-brand-color) !important;
+  background-color: var(--turkey-brand-color);
+}
+.pdp-product-form-option-radio-button[class*="tremella"] {
+  border: 1px solid var(--tremella-brand-color) !important;
+  background-color: var(--tremella-brand-color);
+}
+.pdp-product-form-option-radio-button[class*="coffee"] {
+  border: 1px solid var(--coffee-brand-color) !important;
+  background-color: var(--coffee-brand-color);
+}
+.pdp-product-form-option-radio-button[class*="cacao"] {
+  border: 1px solid var(--cacao-brand-color) !important;
+  background-color: var(--cacao-brand-color);
+}
+  
+.filled-radio-button {
+    background: #FFFFFF !important;
+}
+
+.pdp-product-from-one-time-option {
+    text-align: left;
+    width: 100%;
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.17px;
+    line-height: 18px;
+}
+
+.pdp-product-form-option-first-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.pdp-product-form-option-second-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.pdp-product-form-option-second-line div:nth-child(2) {
+    color: #FFFFFF;
+    background-color: #DE8C59;
+    font-size: 10px;
+    border-radius: 30px;
+    padding: 2px 8px;
+}
+
+.show-product-form {
+    display: flex !important;
+}
+
+
+.pdp-cta-form-container {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "Manifold";
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #252525;
+}
+
+.pdp-cta-form-price-container {
+  
+}
+.pdp-cta-form-price-strikethrough {
+  text-decoration: line-through;
+  font-size: 16px;
+}
+
+.pdp-cta-form-price {
+    color: #252525;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 24px;
+    margin-right: 20px;
+}
+{% endcomment %}
+
+</style>

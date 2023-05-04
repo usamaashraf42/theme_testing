@@ -1,0 +1,306 @@
+<div class="recipes_container">
+    <div class="page-width">
+
+        <h2>{{ section.settings.title }}</h2>
+        <div class="recipes__inner">
+
+            <div class="splide" id="recipes__splide">
+                <div class="splide__track">
+                      <ul class="splide__list">
+
+            {% for block in section.blocks %}
+            {% assign bs = block.settings %}
+            {% assign article_item = bs.recipe_article %}
+
+            <!-- image, title, body, cta button -->
+
+
+
+            <div class="recipe__item splide__slide">
+
+                <img src="{{ article_item.image.src | img_url: '285x182' }}" alt="{{ bs.image.alt | escape }}">
+
+                <h3>{{ article_item.title | capitalize }}</h3>
+
+                <p>{{ article_item.content | strip_html }}</p>
+
+                <a href="{{ article_item.url }}"><h4>{{ bs.cta_text }}</h4></a>
+
+            </div>
+
+            {% endfor %}
+
+            </ul>
+            </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="recipes_ctaAll">
+        <a href="{{ section.settings.see_all_link }}"><div>{{ section.settings.see_all_text }}</div></a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener( 'DOMContentLoaded', function() {
+      var splide = new Splide( '#recipes__splide', {
+            type: 'loop',
+            rewind: true,
+            pagination: false,
+            arrows: true,
+            perPage: 2,
+            arrowPath:'M0.310263 7.19621L6.60211 0.750895C6.76597 0.583035 7.03141 0.583035 7.19524 0.750895C7.3591 0.918755 7.3591 1.19067 7.19524 1.35849L1.6194 7.07032H19.9018C20.1337 7.07032 20.3213 7.26252 20.3213 7.50003C20.3213 7.73754 20.1337 7.92973 19.9018 7.92973H1.6194L7.19524 13.6415C7.3591 13.8094 7.3591 14.0813 7.19524 14.2491C7.11332 14.333 7.00597 14.375 6.89865 14.375C6.79134 14.375 6.68402 14.333 6.60207 14.2491L0.310225 7.8038C0.146401 7.63598 0.146399 7.36407 0.310263 7.19621Z',
+            breakpoints: {
+                4500: {
+                    destroy:true,
+                },
+                1100: {
+                    perPage: 2,
+                    destroy:false,
+                    gap:'3em',
+                },
+                780: {
+                    perPage: 1,
+                    destroy:false,
+
+                },
+
+            },
+        });
+      splide.mount();
+    } );
+  </script>
+
+<style>
+
+    .recipes_container h2 {
+        width: 100%;
+        margin: auto;
+        text-align: center;
+        padding-bottom: 1.1em;
+        font-family: 'Roc Grotesk';
+        font-size: 34px;
+    }
+
+    .recipes__inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .recipes_container {
+        background-color: {{ section.settings.bg_colour }};
+        padding-bottom:8em;
+        padding-top:2em;
+    }
+
+    .recipe__item + .recipe__item {
+        margin-left: 3.5em;
+    }
+
+    .recipe__item {
+        border-radius: 8px;
+        max-width: 330px;
+        background-color: #F2F3F2;
+        padding:2em;
+    }
+
+    .recipe__item h3 {
+        text-transform: capitalize;
+        padding-top: .6em;
+        padding-bottom: .5em;
+        font-size: 22px;
+        font-family: 'Calder';
+    }
+
+    .recipe__item a h4 {
+        text-decoration: underline;
+        font-family: 'Roc Grotesk';
+        font-size: 18px;
+    }
+
+    .recipe__item a {
+        width: 100%;
+    }
+
+.recipe__item p {
+    font-size: 15px;
+    display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  color: #012169;
+  font-family: 'Roc Grotesk';
+  margin-bottom: .9em !important;
+}
+
+.recipes_container .recipes_ctaAll a div {
+    background-color: #012169;
+    color: #FFF;
+    max-width: 280px;
+    margin:auto;
+    margin-top: 4.5em;
+    text-align: center;
+    padding: 0.5em;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+/* responsive */
+
+.splide.is-initialized:not(.is-active) .splide__list {
+    display: flex;
+}
+
+@media (max-width:1100px) {
+
+    .recipes_container,
+    .featured-collection {
+        padding-left:1em !important;
+        padding-right: 1em !important;
+    }
+
+.splide.is-initialized:not(.is-active) .splide__list {
+    display: block;
+}
+
+.recipe__item {
+    max-width: unset !important;
+}
+
+.recipe__item + .recipe__item {
+    margin-left: 0 !important;
+}
+
+.recipes_container .splide {
+    max-width: 90%;
+}
+
+.recipe__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+}
+
+@media (max-width:900px) {
+    .recipes_container {
+    padding-top: 0;
+    margin-top: -2em;
+}
+}
+
+@media (max-width:749px) {
+
+    .recipes_container {
+    margin-top: 0;
+}
+
+
+.recipes_container .splide .splide__arrow--next {
+right: -5em !important;
+}
+
+.recipes_container .splide .splide__arrow--prev {
+left: -5em !important;
+}
+
+}
+
+@media (max-width:650px) {
+    .recipes_container .splide {
+    max-width: 90%;
+}
+
+.splide__arrow {
+    width: 35px !important;
+    height: 35px !important;
+}
+
+.splide__arrow svg {
+height: 48px!important;
+    width: 48px!important;
+    margin-top: 30px;
+    margin-left: -24px;
+}
+
+.recipes_container .splide .splide__arrow--next {
+right: -4.5em !important;
+}
+
+.recipes_container .splide .splide__arrow--prev {
+left: -4.5em !important;
+}
+
+}
+
+@media (max-width:430px) {
+  .recipes_container .splide .splide__arrow--next {
+right: -3.6em !important;
+}
+
+.recipes_container .splide .splide__arrow--prev {
+left: -3.6em !important;
+}
+}
+
+
+</style>
+
+
+{% schema %}
+{
+  "name": "Recipes",
+  "settings": [
+  {
+        "type": "color",
+        "id": "bg_colour",
+        "label": "Background colour"
+  },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading Text",
+      "default":"Our Recipes"
+      },
+      {
+        "type": "text",
+        "id": "see_all_text",
+        "label": "CTA Text",
+        "default":"See All"
+        },
+        {
+            "type": "url",
+            "id": "see_all_link",
+            "label": "CTA Link"
+            }
+  ],
+"blocks" : [
+{
+"type" : "recipe_item",
+"name" : "Recipe Item",
+"settings" : [
+{
+    "type": "article",
+    "id": "recipe_article",
+    "label": "Recipe Article"
+},
+{
+    "type": "text",
+    "id": "cta_text",
+    "label": "CTA Text"
+    }
+]
+}
+    
+],
+  "presets": [
+    {
+      "name": "Recipes",
+      "category": "CTA"
+    }
+  ]
+}
+{% endschema %}

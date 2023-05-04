@@ -1,0 +1,204 @@
+<div class="find-us-in-container bg-mid-grey">
+    {% comment %}
+    <div class="find-us-in-title">{{ section.settings.section_title }}</div>
+    {% endcomment %}
+    <div class="swiper brands-swiper">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="find-us-in-brand swiper-slide">
+                    {% if block.settings.image_or_vector %}
+                        <a href="{{ block.settings.brand_link}}">
+                            {{ block.settings.brand_image | image_url: width: 280 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}
+                        </a>
+                    {% else %}
+                        <a href="{{ block.settings.brand_link}}">
+                            <span>{{ block.settings.brand_SVG }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% comment %}
+    <div class="find-us-swiper-next">{% render 'splide-arrow' %}</div>
+    <div class="find-us-swiper-prev">{% render 'splide-arrow' %}</div> 
+    <a class="shop-online" href="/collections/all">OR SHOP ONLINE</a>
+    {% endcomment %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+{% javascript %}
+  const swiper = new Swiper('.brands-swiper', { // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+    speed: 2400,
+    autoplay: {
+        delay: 0,
+    },
+    slidesPerView: 1,
+    spaceBetween: 30,
+    centeredSlides: true,
+    breakpoints: {
+        769: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+        }
+    }
+  });
+{% endjavascript %}
+
+{% style %}
+
+.find-us-in-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.find-us-in-title {
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    margin-bottom: 55px;
+}
+
+.shop-online {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1.17px;
+    line-height: 20px;
+    text-decoration: none;
+    border-bottom: 1px solid #252525;
+    padding-bottom: 2px;
+    max-width: 145px;
+    margin: auto;
+    margin-top: 55px;
+}
+
+.find-us-in-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+}
+
+.find-us-in-brand img {
+    width: 100%;
+    height: auto;
+}
+
+.find-us-swiper-next {
+    display: none;
+}
+
+.find-us-swiper-prev {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .find-us-swiper-next {
+    border-radius: 50%;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 80px;
+    margin-top: -75px;
+    z-index: 1000;
+    cursor: pointer;
+    margin-top: 100px;
+}
+
+.find-us-swiper-prev {
+    border-radius: 50%;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 80px;
+    margin-top: -75px;
+    z-index: 1000;
+    cursor: pointer;
+    margin-top: 100px;
+}
+
+.find-us-swiper-next svg {
+    transform: rotate(180deg);
+    margin-right: 20px;
+    min-width: 40px;
+    margin-bottom: 25px;
+}
+
+.find-us-swiper-prev svg {
+    margin-left: 20px;
+    min-width: 40px;
+    margin-top: 25px;
+}
+
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Find Us In",
+    "settings": [
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Title",
+            "default": "Find us in"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "brand",
+            "name": "Brand",
+            "settings": [
+                {
+                    "type": "checkbox",
+                    "default": true,
+                    "id": "image_or_vector",
+                    "label": "Use Image (uncheck to use SVG)"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "brand_image",
+                    "label": "Brand Logo (PNG, JPEG)"
+                },
+                {
+                    "type": "text",
+                    "id": "brand_SVG",
+                    "label": "Brand Logo (SVG)"
+                },
+                {
+                    "type": "url",
+                    "id": "brand_link",
+                    "label": "Brand Link"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Find Us In",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema %}

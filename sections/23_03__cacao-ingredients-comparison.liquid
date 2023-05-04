@@ -1,0 +1,187 @@
+<div class="cacao-ingredients-comparison">
+    <div class="cacao-ingredients-comparison-section-title">
+        <h3>New vs Old Cacao</h3>
+        <p class="cacao-subtitle">A smoother, creamier taste, packed with antioxidants and vitamins A, B, C, D & E. Now with 4x the mushroom strength per serving. Served hot or cold.</p>
+    </div>
+
+    <div class="comparison-pouch"></div>
+
+
+    <div class="old-vs-new-label">
+      <div class="label-container">NEW RECIPE</div>
+      <div class="size-text"></div>
+      <div class="label-container" style="color: #606060;">OLD RECIPE</div>
+    </div>
+
+
+    <div class="serving-size-container">
+      <div class="size-bubble">6g</div>
+      <div class="size-text">Serving size</div>
+      <div class="size-bubble old-color">5g</div>
+    </div>
+
+    <div class="ingredients-listing-comparison">
+      <div class="comparison-new-ingredients">
+        <div class="comparison-ingredient-group">
+          <p class="comparison-table-ingredient">Cacao</p>
+          <p class="comparison-table-serving-size">2,800mg</p>
+        </div>
+        <div class="comparison-ingredient-group">
+          <p class="comparison-table-ingredient">Coconut Milk Powder</p>
+          <p class="comparison-table-serving-size">300mg</p>
+        </div>
+        <div class="comparison-ingredient-group">
+          <p class="comparison-table-ingredient">Reishi</p>
+          <p class="comparison-table-serving-size">500mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-new">
+          <p class="comparison-table-ingredient">Tremella</p>
+          <p class="comparison-table-serving-size">1,000mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-new">
+          <p class="comparison-table-ingredient">Turkey Tail</p>
+          <p class="comparison-table-serving-size">1,000mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-new">
+          <p class="comparison-table-ingredient">MCT</p>
+          <p class="comparison-table-serving-size">200mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-new">
+          <p class="comparison-table-ingredient">Moringa</p>
+          <p class="comparison-table-serving-size">100mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-new">
+          <p class="comparison-table-ingredient">Pink Himalayan Salt</p>
+          <p class="comparison-table-serving-size">100mg</p>
+        </div>
+      </div>
+
+      <div class="comparison-pouch"></div>
+
+      <div class="comparison-old-ingredients">
+        <div class="comparison-ingredient-group">
+          <p class="comparison-table-ingredient">Cacao</p>
+          <p class="comparison-table-serving-size">2,675mg</p>
+        </div>
+        <div class="comparison-ingredient-group">
+          <p class="comparison-table-ingredient">Coconut Milk Powder</p>
+          <p class="comparison-table-serving-size">1,250mg</p>
+        </div>
+        <div class="comparison-ingredient-group">
+          <p class="comparison-table-ingredient">Reishi</p>
+          <p class="comparison-table-serving-size">625mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-old">
+          <p class="comparison-table-ingredient">Lacuma</p>
+          <p class="comparison-table-serving-size">312.5mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-old">
+          <p class="comparison-table-ingredient">Ceylon Cinnamon</p>
+          <p class="comparison-table-serving-size">75mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-old">
+          <p class="comparison-table-ingredient">Ashwaghanda</p>
+          <p class="comparison-table-serving-size">50mg</p>
+        </div>
+        <div class="comparison-ingredient-group ingredient-old">
+          <p class="comparison-table-ingredient">Vanilla Bean Powder</p>
+          <p class="comparison-table-serving-size">12.5mg</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="pouch-size-container">
+      <div class="size-bubble">180g</div>
+      <div class="size-text">Pouch size</div>
+      <div class="size-bubble old-color">150g</div>
+    </div>
+
+</div>
+
+
+{% style %}
+.cacao-ingredients-comparison {
+  padding-top: 40px;
+  margin-bottom: 70px;
+  /* background: linear-gradient(0deg, rgba(200,182,212,0) 70%, rgba(200,182,212,1) 100%);*/
+  background: linear-gradient(0deg, rgba(200,182,212,0) 70%, rgb(169 138 189) 100%);
+}
+.cacao-ingredients-comparison-section-title {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.cacao-ingredients-comparison-section-title h3 {
+    color: white;
+    font-size: 34px;
+    text-align: center;
+}
+.cacao-ingredients-comparison .cacao-subtitle {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+}
+
+
+.comparison-pouch {
+  height: 401px;
+  width: 100%;
+  background-size: contain;
+  background-position: center;
+  margin: 20px 0;
+  background-repeat: no-repeat;
+  background-image: url('{{ 'cacao-pouch.png' | asset_url }}');
+}
+
+
+.old-vs-new-label, .serving-size-container, .pouch-size-container { display: flex; gap: 40px; justify-content: center; align-items: center; margin: 15px 0; }
+.pouch-size-container .size-bubble, .serving-size-container .size-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  background-color: {{ product.metafields.custom.product_color_2 }};
+}
+
+.old-vs-new-label {font-size: 26px; text-align: center; color: var(--off-black); }
+.old-vs-new-label .label-container { width: 100px; color: #9148c4; }
+
+
+@media (max-width: 769px) {
+    .old-vs-new-label, .serving-size-container, .pouch-size-container {
+        gap: 0px;
+        justify-content: space-around;
+    }
+    .old-vs-new-label .size-text, .pouch-size-container .size-text, .serving-size-container .size-text {
+      min-width: 100px;
+    }
+    .comparison-pouch {
+      height: 262px;
+    }
+}
+
+.pouch-size-container .size-bubble { font-size: 30px;}
+.old-vs-new-label .size-text, .pouch-size-container .size-text, .serving-size-container .size-text { min-width: 130px; font-size: 24px; text-align: center; color: var(--off-black); }
+
+.size-bubble.old-color { background-color: #c8c8c8; }
+
+
+
+.ingredients-listing-comparison { display: flex; gap: 30px; justify-content: center; }
+.ingredients-listing-comparison .comparison-pouch { display: none; aspect-ratio: 926/615; min-width: 600px; background-image: url('{{ 'cacao-pouch.png' | asset_url }}'); background-size: cover; background-position: center; }
+
+.ingredients-listing-comparison .comparison-new-ingredients { text-align: right; }
+.ingredients-listing-comparison .comparison-ingredient-group { margin-bottom: 20px; }
+.ingredients-listing-comparison .comparison-table-ingredient { font-size: 22px; color: var(--off-black); margin: 0px; }
+.ingredients-listing-comparison .comparison-table-serving-size { font-size: 16px; font-weight: bold;  color: var(--off-black); }
+.ingredients-listing-comparison .ingredient-new p { color: #9148c4; }
+.ingredients-listing-comparison .ingredient-old p { color: #a3a3a3; }
+
+{% endstyle %}

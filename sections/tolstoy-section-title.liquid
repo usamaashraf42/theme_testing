@@ -1,0 +1,36 @@
+<div class="tolstoy-custom-title dirtea-section-title">
+    {{ section.settings.tolstoy_title }}
+</div>
+
+<style>
+.tolstoy-custom-title {
+    font-family: "Manifold Regular";
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    padding-top: 30px;
+    margin-bottom: 30px;
+  }
+</style>
+
+{% schema %}
+{
+    "name": "Tolstoy Title",
+    "settings": [
+        {
+            "type": "text",
+            "id": "tolstoy_title",
+            "default": "Mushrooms 101",
+            "label": "Tolsoy Section Title"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Tolstoy Title",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema %}

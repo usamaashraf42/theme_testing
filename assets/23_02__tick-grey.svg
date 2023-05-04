@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>C616A274-47C6-406A-B2D5-AACCA26A7528</title>
+    <defs>
+        <path d="M0.6069713,2.23747314 C0.468118218,2.09862006 0.242992893,2.09862006 0.104139811,2.23747314 C-0.0347132704,2.37632623 -0.0347132704,2.60145155 0.104139811,2.74030463 L1.88191759,4.51808241 C2.02077067,4.65693549 2.245896,4.65693549 2.38474908,4.51808241 L6.29586019,0.6069713 C6.43471327,0.468118218 6.43471327,0.242992893 6.29586019,0.104139811 C6.15700711,-0.0347132704 5.93188178,-0.0347132704 5.7930287,0.104139811 L2.13333333,3.76383518 L0.6069713,2.23747314 Z" id="path-1"></path>
+    </defs>
+    <g id="Dirtea-–-Full-Designs" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="02_Dirtea---PDP-2022---Desktop" transform="translate(-855.000000, -373.000000)">
+            <rect fill="none" x="0" y="0" width="1440" height="7778"></rect>
+            <g id="Details" transform="translate(855.000000, 184.000000)">
+                <g id="List" transform="translate(0.000000, 183.000000)">
+                    <g id="_BRANDING-/-Icons-/-More-+" transform="translate(0.000000, 6.000000)">
+                        <circle id="Oval" stroke="#252525" stroke-width="0.533333333" cx="8" cy="8" r="7.73333333"></circle>
+                        <g id="minus-copy" transform="translate(4.800000, 5.866667)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Shape" fill="#000000" fill-rule="nonzero" xlink:href="#path-1"></use>
+                            <g id="COLOR/-black" mask="url(#mask-2)" fill="#252525">
+                                <g transform="translate(-1.066667, -2.133333)" id="Rectangle-Copy-2">
+                                    <rect x="0" y="0" width="8.53333333" height="8.53333333"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

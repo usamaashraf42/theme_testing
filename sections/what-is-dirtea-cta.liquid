@@ -1,0 +1,347 @@
+<div class="whatIsDirtea__container">
+<div class="page-width">
+    
+    <div class="whatIsDirtea__inner">
+
+<div class="whatIsDirtea__LeftContent">
+
+    <!-- title, body, bp's -->
+
+<h2>{{ section.settings.headerTitle }}</h2>
+
+<p>{{ section.settings.headerBody }}</p>
+
+<!-- iterate over bullet points  -->
+<!-- check which type the bullet point is and add first type here -->
+<!-- check which size the bullet point is set at (setting for each block) -->
+<!-- add class which has a before element that can distinguish between sizes -->
+
+<div class="bulletPoint__holder">
+
+{% for block in section.blocks %}
+{% if block.type == 'bulletPointLeft' %}
+{% assign bs = block.settings %}
+<p class='{{ bs.point_size }}' >{{ bs.bulletPoint }}</p>
+{% endif %}
+{% endfor %}
+
+</div>
+</div>
+
+<div class="whatIsDirtea__MidContent">
+    
+    <!-- image -->
+    <img src="{{ section.settings.image.src | img_url: 'master' }}" alt="{{ section.settings.image.alt }}">
+
+</div>
+
+<div class="whatIsDirtea__RightContent">
+
+<!-- bp's, cta button -->
+
+<!-- iterate over bullet points  -->
+<!-- check which type the bullet point is and add first type here -->
+<!-- check which size the bullet point is set at (setting for each block) -->
+<!-- add class which has a before element that can distinguish between sizes -->
+
+<div class="bulletPoint__holder">
+
+    {% for block in section.blocks %}
+    {% if block.type == 'bulletPointRight' %}
+    {% assign bs = block.settings %}
+    <p class='{{ bs.point_size }}' >{{ bs.bulletPoint }}</p>
+    {% endif %}
+    {% endfor %}
+    
+    </div>
+
+    <a href="{{ section.settings.btnLink }}"><button>{{ section.settings.btnText }}</button></a>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<style>
+
+    .whatIsDirtea__container {
+        background-color: #FFFFFF;
+        overflow: hidden;
+        padding: 2.5em .5em 3.5em .5em;
+    }
+
+    .whatIsDirtea__inner {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .whatIsDirtea__LeftContent {
+        max-width: 400px;
+    }
+
+    .whatIsDirtea__LeftContent h2 {
+        font-weight: 600;
+        font-size: 34px;
+    }
+
+    .whatIsDirtea__LeftContent p,
+    .whatIsDirtea__RightContent p {
+        margin-bottom:.5em;
+    }
+
+    .whatIsDirtea__LeftContent .bulletPoint__holder {
+        margin-top: 2.2em;
+    }
+
+    .whatIsDirtea__LeftContent p,
+    .bulletPoint__holder p {
+        font-size: 15px;
+    }
+
+    .whatIsDirtea__MidContent img {
+        width: 100%;
+        margin-top: -80px;
+    }
+
+    .whatIsDirtea__RightContent button {
+        border-radius: 7px;
+        color:#012169;
+        font-size: 17px;
+        background-color: #FFFFFF;
+        font-weight: 600;
+        width: 80%;
+        margin-top: 2.2em;
+        padding: .4em 1em;
+    }
+
+    @media (max-width:940px) {
+        .whatIsDirtea__MidContent img {
+            margin-top: -120px;
+        }
+
+        .whatIsDirtea__LeftContent {
+            max-width: 340px;
+        }
+    }
+
+    @media (max-width:845px) {
+        .whatIsDirtea__MidContent img {
+            margin-top: -140px;
+        }
+
+        .whatIsDirtea__LeftContent {
+            max-width: 300px;
+        }
+
+        .whatIsDirtea__RightContent {
+            max-width: 250px;
+        }
+    }
+
+    @media (max-width:800px) { 
+
+        .whatIsDirtea__inner {
+            flex-direction: column;
+            max-width: 500px;
+            margin:auto;
+            align-items: baseline;
+        }
+
+        .whatIsDirtea__MidContent {
+            order: 1;
+            margin:auto;
+        }
+
+        .whatIsDirtea__LeftContent {
+            order: 2;
+            max-width: unset !important;
+        }
+
+        .whatIsDirtea__RightContent  { 
+            order: 3;
+            max-width: unset !important;
+            width: 100%;
+        }
+
+        .whatIsDirtea__MidContent img {
+            margin-top: -30px !important;
+        }
+
+        .whatIsDirtea__RightContent a {
+            display: flex;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+    }
+
+    .point__small::before {
+            margin-top: 8px !important;
+            left: 2px !important;
+        }
+
+        .point__med::before {
+            margin-top: 6px !important;
+            left: 1px !important;
+        }
+
+        .point__large::before {
+            left: -1px !important;
+        }
+
+
+    /* bullet point styling */
+
+    .bulletPoint__holder {
+        position: relative;
+    }
+
+    .point__small,
+    .point__med,
+    .point__large {
+        margin-left: 2em !important;
+    }
+
+    .point__small::before {
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background-color: #012169;
+        border-radius: 50%;
+        left: 0;
+        margin-top: 4px;
+    }
+
+    .point__med::before {
+        content: '';
+        position: absolute;
+        width: 9px;
+        height: 9px;
+        background-color: #012169;
+        border-radius: 50%;
+        left: 0;
+        margin-top: 4px;
+    }
+
+    .point__large::before {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: #012169;
+        border-radius: 50%;
+        left: 0;
+        margin-top: 4px;
+    }
+
+</style>
+
+{% schema %}
+{
+  "name": "What is DIRTEA CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headerTitle",
+      "label": "Heading Text",
+      "default":"What is DIRTEA?"
+      },
+      {
+        "type": "textarea",
+        "id": "headerBody",
+        "label": "Heading Body",
+        "default":"We make the purest and most potent functional mushroom extract powders around, proven to improve your health, wellbeing and lifestyle when consumed daily. Just add a teaspoon to hot water, your coffee or a smoothie."
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Upload Image"
+            },
+            {
+                "type": "text",
+                "id": "btnText",
+                "label": "Button CTA Text",
+                "default":"Learn More"
+                },
+                {
+                    "type": "url",
+                    "id": "btnLink",
+                    "label": "Button CTA Link"
+                    }
+  ],
+"blocks" : [
+{
+"type" : "bulletPointLeft",
+"name" : "Bullet Point Left",
+"settings" : [
+{
+"type" : "textarea",
+"id" : "bulletPoint",
+"label" : "Bullet Point"
+},
+{
+    "type": "radio",
+    "id": "point_size",
+    "label": "Bullet Point Size",
+    "options": [
+      {
+        "value": "point__small",
+        "label": "Small"
+      },
+      {
+        "value": "point__med",
+        "label": "Medium"
+      },
+      {
+        "value": "point__large",
+        "label": "Large"
+      }
+    ],
+    "default": "point__small"
+  }
+  
+]
+},
+{
+    "type" : "bulletPointRight",
+    "name" : "Bullet Point Right",
+    "settings" : [
+    {
+    "type" : "textarea",
+    "id" : "bulletPoint",
+    "label" : "Bullet Point"
+    },
+    {
+        "type": "radio",
+        "id": "point_size",
+        "label": "Bullet Point Size",
+        "options": [
+          {
+            "value": "point__small",
+            "label": "Small"
+          },
+          {
+            "value": "point__med",
+            "label": "Medium"
+          },
+          {
+            "value": "point__large",
+            "label": "Large"
+          }
+        ],
+        "default": "point__small"
+      }
+    ]
+    }
+],
+  "presets": [
+    {
+      "name": "What is DIRTEA CTA",
+      "category": "CTA"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+<!-- CSS files -->
+{% comment %}{{ 'css-variables' | asset_url | stylesheet_tag }}{% endcomment %}
+
+{% include 'critical-css' %}
+
+{% comment %}{% include 'load-css' %}{% endcomment %}
+
+{{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+{{ '23_02__dirtea-brand-variables.css' | asset_url | stylesheet_tag }}
+{{ '23_02__dirtea-global-overrides.css' | asset_url | stylesheet_tag }}
+{{ 'custom.css' | asset_url | stylesheet_tag }}

@@ -1,0 +1,118 @@
+<div class="bgrnd-container">
+  <div class="subscription-icon-strip-row">
+    <div class="subscription-icon-strip-item">
+      <div class="icon-strip-icon"><img src="{{ 'icon-save-money.svg' | asset_url }}"></div>
+      <div>UP TO 40% OFF</div>
+    </div>
+    <div class="subscription-icon-strip-item">
+      <div class="icon-strip-icon"><img src="{{ 'icon-infinite.svg' | asset_url }}"></div>
+      <div>NEVER RUN OUT</div>
+    </div>
+    <div class="subscription-icon-strip-item">
+      <div class="icon-strip-icon"><img src="{{ 'icon-world.svg' | asset_url }}"></div>
+      <div>ECO FRIENDLY</div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+  .subscription-icon-strip-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 65%;
+    margin: auto;
+  }
+
+  @media(min-width: 769px) {
+    .subscription-icon-strip-row {
+      justify-content: space-between;
+      width: 55%;
+    }
+  }
+
+  .subscription-icon-strip-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    color: #252525;
+    font: "Manifold";
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.44px;
+    line-height: 17px;
+  }
+
+  .icon-strip-icon img {
+    height: 100px;
+    width: 100px;
+    color: var(--off-black);
+  }
+
+  .subscription-icon-strip-item div:first-child {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+
+  @media(min-width: 769px) {
+    .subscription-icon-strip-item {
+      flex-direction: column;
+    }
+
+    .subscription-icon-strip-item div:first-child {
+      margin: auto auto 10px;
+    }
+  }
+
+  @media(min-width: 769px) {
+    .subscription-icon-strip-container {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .bgrnd-container {
+    width: 100%;
+    background-color: #dfdcd7;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  @media(min-width: 769px) {
+    .bgrnd-container {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+  }
+  .subscription-icon-strip-container {
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  .subscription-icon-strip-text-container {
+    display: flex;
+    gap: 25px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  .subscription-icon-strip-text {
+    color: #252525;
+    font: "Manifold";
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.44px;
+    line-height: 17px;
+  }
+</style>

@@ -1,0 +1,333 @@
+
+<style>
+  .new_section {
+    display: inline-block;
+    width: 100%;
+    float: left;
+    padding: 50px 0;
+  }
+  .new_section .left_block {
+    width: 50%;
+    float: left;
+  }
+.new_section .right_block {
+    width: 50%;
+    float: left;
+    position: sticky;
+    top: 150px;
+    padding: 50px 0;
+    display: inline-block;
+    height: 100vh;
+    overflow: hidden;
+}
+  .new_section img {
+    width: 100%;
+    float: left;
+  }
+  .new_section .right_block .block_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: .5s;
+  }
+  .new_section .right_block .block_img.active {
+    z-index: 2;
+    opacity: 1;
+  }
+  .new_section .left_block .blocks {
+    padding: 40px 0;
+    opacity: .6;
+  }
+  .new_section .left_block .blocks.active {
+    opacity: 1;
+  }
+  .new_section .new_section_blocks {
+    display: inline-block;
+    width: 100%;
+  }
+  .rte .left_block .blocks h4 {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 46px !important;
+    font: inherit;
+    vertical-align: baseline;
+  } 
+  .rte .left_block .blocks p {
+    padding-left: 6.5rem;
+    padding-right: 6.5rem;
+  }
+  .dropdowns-inner.tabs {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+  }
+  .dropdowns-inner.tabs a:empty {
+    display: none;
+  }
+  @media(min-width: 1200px){
+    .why_mushrooms_custom.page-width {
+      max-width: 100%;
+      padding-right: 0;
+    }
+    .why_mushrooms_custom .new_section_rem_pad {
+      padding-right: 0;
+      max-width: 100%;
+    }
+  }
+</style>
+
+
+
+<div class="page-width">
+  <div class="why_mushr_bnr cmn_bnr section-header-image lazyload" data-bgset="{% include 'bgset', image: section.settings.bg_img %}"></div>
+</div>
+<div class="page-width">
+  <div class="grid text-center">
+    <div class="grid__item">
+      <header class="section-header">
+        <div class="section-header__title collection__title">{{ page.title }}</div>
+        <div class="section-header__description">{{ section.settings.mushr_title }}</div>
+
+        <div class="collection-dropdowns">
+          <label class="medium-up--hide drop_label"></label>
+          <div class="dropdowns-inner tabs">
+            {% for block in section.blocks %}
+            <a href="#tab{{ forloop.index }}">{{ block.settings.nav1 }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+</div>
+<div class="why_mushrooms_custom page-width{% comment %} small-width{% endcomment %}">
+  <ul class="tabs-content">
+    {% for block in section.blocks %}
+    <li class="{% if forloop.first %}active{% endif %}" id="tab{{ forloop.index }}">
+      <div class="rte" >
+
+
+
+
+
+        <div class="new_section new_section_rem_pad">
+          <div class="page-width new_section_rem_pad">
+            <div class="new_section_blocks">
+              <div class="left_block">
+                {% for block in section.blocks %}
+                  {% if block.type == 'slide' %}
+                    <div class="blocks{% if forloop.first %} active{% endif %}" data-id="tabb_{{ forloop.index }}">
+                      <h4>{{ forloop.index }}.  {{ block.settings.slide_heading }}</h4>
+                      <p>{{ block.settings.slide_content }}</p>
+                    </div>
+                  {% endif %}
+                {% endfor %}	
+              </div>
+
+
+              <div class="right_block">
+                {% for block in section.blocks %}
+                {% if block.type == 'slide' %}
+                <div class="block_img{% if forloop.first %} active{% endif %}" data-id="tabb_{{ forloop.index }}">
+                  <img src="{{ block.settings.slide_image | img_url: 'master' }}" />
+                </div>
+                {% endif %}
+                {% endfor %}		
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        {% comment %}{{ block.settings.mushr_cnt }}{% endcomment %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+  $(document).ready(function() {
+    var height_top_1=$(".new_section .left_block .blocks[data-id='tabb_1']").offset().top;
+    var height_top_2=$(".new_section .left_block .blocks[data-id='tabb_2']").offset().top;
+    var height_top_3=$(".new_section .left_block .blocks[data-id='tabb_3']").offset().top;
+    var height_top_4=$(".new_section .left_block .blocks[data-id='tabb_4']").offset().top;
+    var height_top_5=$(".new_section .left_block .blocks[data-id='tabb_5']").offset().top;
+
+    var window_height=screen.height;
+    var window_hgh=window_height/4;
+
+    var calculate_1=parseFloat(height_top_1)-parseFloat(window_hgh);
+    var calculate_2=parseFloat(height_top_2)-parseFloat(window_hgh);
+    var calculate_3=parseFloat(height_top_3)-parseFloat(window_hgh);
+    var calculate_4=parseFloat(height_top_4)-parseFloat(window_hgh);
+    var calculate_5=parseFloat(height_top_5)-parseFloat(window_hgh);
+
+
+
+    $(window).on("scroll", function() {
+      var scroll_top=$(this).scrollTop();
+
+      if(scroll_top < height_top_1){
+        $(".new_section .blocks[data-id='tabb_1']").addClass("active");
+
+      }
+
+
+
+      if(scroll_top >= calculate_1){
+        $(".new_section .blocks[data-id='tabb_1']").addClass("active");
+        $(".new_section .block_img[data-id='tabb_1']").addClass("active");
+      } else {
+        //$(".new_section .blocks[data-id='tabb_1']").removeClass("active");
+      }
+
+      if(scroll_top >= calculate_2){
+        $(".new_section .blocks").removeClass("active");
+        $(".new_section .blocks[data-id='tabb_2']").addClass("active");
+
+        $(".new_section .block_img").removeClass("active");  
+        $(".new_section .block_img[data-id='tabb_2']").addClass("active");
+      } else {
+        $(".new_section .blocks[data-id='tabb_2']").removeClass("active");
+        $(".new_section .block_img[data-id='tabb_2']").removeClass("active");
+      }
+
+
+      if(scroll_top >= calculate_3){
+        $(".new_section .blocks").removeClass("active");
+        $(".new_section .blocks[data-id='tabb_3']").addClass("active");
+
+        $(".new_section .block_img").removeClass("active");  
+        $(".new_section .block_img[data-id='tabb_3']").addClass("active");	  
+      } else {
+        $(".new_section .blocks[data-id='tabb_3']").removeClass("active");
+        $(".new_section .block_img[data-id='tabb_3']").removeClass("active");
+
+      }
+
+      if(scroll_top >= calculate_4){
+        $(".new_section .blocks").removeClass("active");
+        $(".new_section .blocks[data-id='tabb_4']").addClass("active");
+
+        $(".new_section .block_img").removeClass("active");  
+        $(".new_section .block_img[data-id='tabb_4']").addClass("active");	  
+      } else {
+        $(".new_section .blocks[data-id='tabb_4']").removeClass("active");
+        $(".new_section .block_img[data-id='tabb_4']").removeClass("active");
+      }
+
+
+
+      if(scroll_top >= calculate_5){
+        $(".new_section .blocks").removeClass("active");
+        $(".new_section .blocks[data-id='tabb_5']").addClass("active");
+
+        $(".new_section .block_img").removeClass("active");  
+        $(".new_section .block_img[data-id='tabb_5']").addClass("active");	  
+      } else {
+        $(".new_section .blocks[data-id='tabb_5']").removeClass("active");
+        $(".new_section .block_img[data-id='tabb_5']").removeClass("active");
+      }	
+
+    });
+
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Why Mushrooms",
+    "class" : "pagemushroom",
+    "settings": [
+      {
+        "id": "bg_img",
+       "type": "image_picker",
+        "label":"Image"
+      },
+      {
+        "id": "mushr_title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "nav1",
+        "type": "text",
+        "label": "Nav 1"
+      },
+      {
+        "id": "nav1_lnk",
+        "type": "url",
+        "label": "Link"
+      },
+      {
+        "id": "nav2",
+        "type": "text",
+        "label": "Nav 2"
+      },
+      {
+      "id": "nav2_lnk",
+      "type": "url",
+      "label": "Link"
+      },
+      {
+        "id": "mushr_cnt",
+        "type": "html",
+        "label": "Content"
+      }
+
+
+   ],
+"blocks" : [
+{
+"type" : "tab",
+"name" : "Tab",
+"limit" : 2,
+"settings" : [
+{
+"type" : "text",
+"id" : "nav1",
+"label" : "Title"
+},
+{
+"type" : "textarea",
+"id" : "mushr_cnt",
+"label" : "Content"
+}
+]
+},
+{
+"type" : "slide",
+"name" : "Slide",
+"limit" : 5,
+"settings" : [
+{
+"type" : "text",
+"id" : "slide_heading",
+"label" : "Slide Heading"
+},
+{
+"type" : "textarea",
+"id" : "slide_content",
+"label" : "Slide Description"
+},
+{
+"type" : "image_picker",
+"id" : "slide_image",
+"label" : "Slide Image"
+}
+]
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

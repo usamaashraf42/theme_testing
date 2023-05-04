@@ -1,0 +1,115 @@
+<div class="page-width">
+  <header class="section-header text-center">
+    <h1 class="section-header__title">{{ page_title }}</h1>
+  </header>
+  <div class="dirtea-page-menu">
+    <ul>
+        <li {% if current_tags == blank %}class="active"{% endif %}><a href="{{ blog.url }}">All</a></li>
+        {% for tag in blog.all_tags %}
+        <li {% if current_tags contains tag %}class="active"{% endif %}>{{ tag | link_to_tag: tag }}</li>
+        {% endfor %}
+    </ul>
+  </div>
+</div>
+
+
+<div class="page-width">
+    <div class="dirtea-blog-collection">
+        {% for article in blog.articles %}
+        {% if article.image %}
+        {% assign article_image = article.image %}
+        {% else %}
+        {% assign article_image = article.products.first %}
+        {% endif %}
+        <a href="{{ article.url }}" class="post-{{ forloop.index0 }}">
+            <div class="dirtea-blog-post">
+                <div class="blog-thumbnail" style="background-image: url('{{ article_image | img_url: '800x' }}')"></div>
+                <div class="blog-details">
+                    <p class="card-lead">{{ article.tags[0] }}</p>
+                    <p>{{ article.title }}</p>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+/* Blog grid override for news blog*/
+{% if blog.handle contains "news" %}
+
+    @media only screen and (min-width: 576px) {
+        .page-width .dirtea-blog-collection {  display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr !important;
+        grid-template-rows: auto;
+        grid-gap: var(--dirtea-blogpost-gap-desktop);
+        grid-auto-flow: row;
+        grid-template-areas:
+            "post-0 post-0 post-1 post-2"
+            "post-3 post-4 post-5 post-5"
+            "post-6 post-7 post-5 post-5"
+            "post-8 post-9 post-10 post-10"
+            "post-11 post-12 post-10 post-10"
+            ". . . ."
+            ". . . .";
+        }
+
+        .post-0 { grid-area: post-0; }
+        .post-1 { grid-area: post-1; }
+        .post-2 { grid-area: post-2; }
+        .post-3 { grid-area: post-3; }
+        .post-4 { grid-area: post-4; }
+        .post-5 { grid-area: post-5; }
+        .post-6 { grid-area: post-6; }
+        .post-7 { grid-area: post-7; }
+        .post-8 { grid-area: post-8; }
+        .post-9 { grid-area: post-9; }
+        .post-10 { grid-area: post-10; }
+        .post-11 { grid-area: post-11; }
+        .post-12 { grid-area: post-12; }
+    }
+    @media only screen and (max-width: 576px) {
+        .page-width .dirtea-blog-collection {
+            display: grid;
+            grid-template-columns: 1fr 1fr !important;
+            grid-template-rows: auto;
+            grid-gap: var(--dirtea-blogpost-gap-mobile);
+            grid-auto-flow: row;
+            grid-template-areas:
+                "post-0 post-0"
+                "post-0 post-0"
+                "post-1 post-2"
+                "post-1 post-2"
+                "post-3 post-3"
+                "post-4 post-4"
+                "post-5 post-5"
+                "post-6 post-6"
+                ". .";
+        }
+
+        .post-0 { grid-area: post-0; }
+        .post-1 { grid-area: post-1; }
+        .post-2 { grid-area: post-2; }
+        .post-3 { grid-area: post-3; margin-top: 20px; }
+        .post-3 .dirtea-blog-post { min-height: 110px; }
+        .post-3 .dirtea-blog-post .blog-details { top: 0px; right: 0px; width: 70%; height: 100%; padding: 0 10px; }
+        .post-3 .dirtea-blog-post .blog-thumbnail { width: 30%; }
+        .post-4 { grid-area: post-4; }
+        .post-4 .dirtea-blog-post { min-height: 110px; }
+        .post-4 .dirtea-blog-post .blog-details { top: 0px; right: 0px; width: 70%; height: 100%; padding: 0 10px; }
+        .post-4 .dirtea-blog-post .blog-thumbnail { width: 30%; }
+        .post-5 { grid-area: post-5; }
+        .post-5 .dirtea-blog-post { min-height: 110px; }
+        .post-5 .dirtea-blog-post .blog-details { top: 0px; right: 0px; width: 70%; height: 100%; padding: 0 10px; }
+        .post-5 .dirtea-blog-post .blog-thumbnail { width: 30%; }
+        .post-6 { grid-area: post-6; margin-bottom: 20px; }
+        .post-6 .dirtea-blog-post { min-height: 110px; }
+        .post-6 .dirtea-blog-post .blog-details { top: 0px; right: 0px; width: 70%; height: 100%; padding: 0 10px; }
+        .post-6 .dirtea-blog-post .blog-thumbnail { width: 30%; }
+
+    }
+
+{% endif %}
+
+</style>

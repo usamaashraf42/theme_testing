@@ -1,0 +1,532 @@
+{% for block in section.blocks %}
+{% if block.settings.image != blank %}
+  <style>
+    .hero--{{ section.id }} {
+      background-position: {{ block.settings.alignment }};
+    }
+  </style>
+{% endif %}
+{% endfor %}
+
+{% if section.settings.show_overlay %}
+{% for block in section.blocks %}
+  <style>
+    .hero--{{ block.id }}.hero__overlay::before {
+      background: linear-gradient(100.08deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .hero--{{ block.id }} .hero__overlay-title--overlay,
+    .hero--{{ block.id }} .mega-subtitle {
+      color: {{ section.settings.overlay_text }};
+    }
+  </style>
+{% endfor %}
+{% endif %}
+<div class="slideshow-outer banner-small">
+  <div class="Slideshowsmall">
+    {% for block in section.blocks %}
+    <div class="slide-item">
+      <div class="hero ggg hero--{{ block.id }} hero--medium {% if section.settings.show_overlay %} hero__overlay{% endif %} lazyload" data-bgset="{% include 'bgset', image: block.settings.image %}" data-section-id="{{ block.id }}" data-section-type="hero">
+        <div class="hero__inner" style="opacity:0; display:none" >
+          <div class="page-width text-center">
+            <div class="page-width page-width-small inner-container-{{ block.settings.position }}">
+              {% if block.settings.smalltitle != blank %}
+              <div class="hero__overlay-title subtitle separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %}" data-aos="fade-up" data-aos-once="true">{{ block.settings.smalltitle | escape }}</div>
+              {% endif %}
+              {% if block.settings.title != blank %}
+              <h2 class=" hero__overlay-title separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %} slideTitle" data-aos="fade-up" data-aos-once="true">{{ block.settings.title | escape }}</h2>
+              {% endif %}
+              {% if block.settings.text != blank %}
+              <div class="rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %}" data-aos="fade-up" data-aos-once="true">{{ block.settings.text }}</div>
+              {% endif %}
+              {% if block.settings.button_label != blank %}
+              <a href="{{ block.settings.button_link }}" class="btn{% if block.settings.use_second_button %} btn--secondary{% endif %} hero__btn" data-aos="fade-up" data-aos-once="true">
+                {{ block.settings.button_label }}
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="slide-over Slideshowsmall {% if section.settings.show_overlay %} hero__overlay{% endif %}" >
+    {% for block in section.blocks %}
+    <div class="hero hero--{{ block.id }} lazyloaded">
+      <div class="hero__inner">
+      <div class="page-width text-center">
+        <div class="page-width page-width-small inner-container-{{ block.settings.position }}">
+          {% if block.settings.smalltitle != blank %}
+          <div class="hero__overlay-title subtitle separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %}" >{{ block.settings.smalltitle | escape }}</div>
+          {% endif %}
+          {% if block.settings.title != blank %}
+          <h2 class=" hero__overlay-title separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %} slideTitle" >{{ block.settings.title | escape }}</h2>
+          {% endif %}
+          {% if block.settings.text != blank %}
+          <div class="rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %}" >{{ block.settings.text }}</div>
+          {% endif %}
+          {% if block.settings.button_label != blank %}
+          <a href="{{ block.settings.button_link }}" class="btn{% if block.settings.use_second_button %} btn--secondary{% endif %} hero__btn" >
+            {{ block.settings.button_label }}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Banner",
+    "settings": [
+    {
+      "type": "header",
+      "content": {
+        "cs": "Překryv",
+        "da": "Overlejring",
+        "de": "Überlagerung",
+        "en": "Overlay",
+        "es": "Superposición",
+        "fi": "Peitto",
+        "fr": "Superposition",
+        "it": "Sovrapposizione",
+        "ja": "オーバーレイ",
+        "ko": "오버레이",
+        "nb": "Overlegg",
+        "nl": "Overlay",
+        "pl": "Nakładka",
+        "pt-BR": "Sobreposição",
+        "pt-PT": "Sobreposição",
+        "sv": "Överlagring",
+        "th": "การวางซ้อน",
+        "tr": "Yer paylaşımı",
+        "vi": "Lớp phủ",
+        "zh-CN": "叠加",
+        "zh-TW": "疊加層"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": {
+        "cs": "Zobrazit překryv",
+        "da": "Vis overlejring",
+        "de": "Überlagerung anzeigen",
+        "en": "Show overlay",
+        "es": "Mostrar superposición",
+        "fi": "Näytä peittokuva",
+        "fr": "Afficher la superposition",
+        "it": "Mostra sovrapposizione",
+        "ja": "オーバーレイを表示する",
+        "ko": "오버레이 표시",
+        "nb": "Vis overlegg",
+        "nl": "Overlay weergeven",
+        "pl": "Pokaż nakładkę",
+        "pt-BR": "Exibir sobreposição",
+        "pt-PT": "Mostrar sobreposição",
+        "sv": "Visa överlagring",
+        "th": "แสดงการวางซ้อน",
+        "tr": "Yer paylaşımını göster",
+        "vi": "Hiển thị lớp phủ",
+        "zh-CN": "显示叠加",
+        "zh-TW": "顯示疊加層"
+      },
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": {
+        "cs": "Barva překryvu",
+        "da": "Farve på overlejring",
+        "de": "Überlagerungsfarbe",
+        "en": "Overlay Color",
+        "es": "Color de superposición",
+        "fi": "Värikerros",
+        "fr": "Couleur de superposition",
+        "it": "Colore sovrapposizione",
+        "ja": "オーバーレイの色",
+        "ko": "오버레이 색상",
+        "nb": "Overleggsfarge",
+        "nl": "Kleur van overlay",
+        "pl": "Kolor nakładki",
+        "pt-BR": "Cor de sobreposição",
+        "pt-PT": "Cor de sobreposição",
+        "sv": "Överlagringsfärg",
+        "th": "สีซ้อนทับ",
+        "tr": "Yer Paylaşımı Rengi",
+        "vi": "Màu lớp phủ",
+        "zh-CN": "叠加颜色",
+        "zh-TW": "疊加層顏色"
+      },
+      "default": "#242424"
+    },
+    {
+      "type": "color",
+      "id": "overlay_text",
+      "label": {
+        "cs": "Barva textu",
+        "da": "Tekstfarve",
+        "de": "Textfarbe",
+        "en": "Text color",
+        "es": "Color de la fuente",
+        "fi": "Tekstin väri",
+        "fr": "Couleur du texte",
+        "it": "Colore del testo",
+        "ja": "テキストの配色",
+        "ko": "텍스트 색상",
+        "nb": "Tekstfarge",
+        "nl": "Tekstkleur",
+        "pl": "Kolor tekstu",
+        "pt-BR": "Cor do texto",
+        "pt-PT": "Cor do texto",
+        "sv": "Textfärg",
+        "th": "สีข้อความ",
+        "tr": "Metin rengi",
+        "vi": "Màu chữ",
+        "zh-CN": "文本颜色",
+        "zh-TW": "文字顏色"
+      },
+      "default": "#ffffff"
+    }
+],
+"blocks"  : [
+{
+"type" : "slide",
+"name" : "Slide",
+"settings" : [
+{
+"type" : "image_picker",
+"id" : "image",
+"label" : "Slide Image"
+},
+{
+"type" : "text",
+"id" : "smalltitle",
+"label" : "Small Title",
+"default" : "Our range"
+},
+{
+"type" : "text",
+"id" : "title",
+"label" : "Slide Title"
+},
+{
+"type" : "text",
+"id" : "text",
+"label" : "Slide SubTitle"
+},
+{
+"type" : "url",
+"id" : "button_link",
+"label" : "Button Link"
+},
+{
+"type" : "text",
+"id" : "button_label",
+"label" : "Button Text"
+},
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": {
+        "cs": "Zarovnání obrázku",
+        "da": "Justering af billede",
+        "de": "Fotoausrichtung",
+        "en": "Image alignment",
+        "es": "Alineación de imagen",
+        "fi": "Kuvan tasaus",
+        "fr": "Alignement de l'image",
+        "it": "Allineamento immagine",
+        "ja": "画像アラインメント",
+        "ko": "이미지 정렬",
+        "nb": "Bildejustering",
+        "nl": "Afbeelding uitlijnen",
+        "pl": "Wyrównanie obrazu",
+        "pt-BR": "Alinhamento da imagem",
+        "pt-PT": "Alinhamento da imagem",
+        "sv": "Bildjustering",
+        "th": "การจัดวางรูปภาพ",
+        "tr": "Görsel hizalaması",
+        "vi": "Căn chỉnh hình ảnh",
+        "zh-CN": "图片对齐方式",
+        "zh-TW": "圖片對齊"
+      },
+      "default": "center center",
+      "options": [
+        {
+          "label": {
+            "cs": "Nahoře doleva",
+            "da": "Øverst til venstre",
+            "de": "Oben links",
+            "en": "Top left",
+            "es": "Superior izquierda",
+            "fi": "Ylhäällä vasemmalla",
+            "fr": "En haut à gauche",
+            "it": "In alto a sinistra",
+            "ja": "左上",
+            "ko": "왼쪽 상단",
+            "nb": "Øverst til venstre",
+            "nl": "Linksboven",
+            "pl": "Na górze po lewej",
+            "pt-BR": "Superior esquerdo",
+            "pt-PT": "Canto superior esquerdo",
+            "sv": "Överst till vänster",
+            "th": "ซ้ายบน",
+            "tr": "Üst sol",
+            "vi": "Trên cùng bên trái",
+            "zh-CN": "左上方",
+            "zh-TW": "左上角"
+          },
+          "value": "top left"
+        },
+        {
+          "label": {
+            "cs": "Nahoře na střed",
+            "da": "Øverst i midten",
+            "de": "Oben Mitte",
+            "en": "Top center",
+            "es": "Superior centrada",
+            "fi": "Keskellä ylhäällä",
+            "fr": "En haut au centre",
+            "it": "In alto al centro",
+            "ja": "中央上",
+            "ko": "맨 위 중간",
+            "nb": "Toppsentrert",
+            "nl": "Midden boven",
+            "pl": "Na górze na środku",
+            "pt-BR": "Superior centro",
+            "pt-PT": "Superior centro",
+            "sv": "Längst upp i mitten",
+            "th": "กลางบน",
+            "tr": "Üst orta",
+            "vi": "Trên cùng ở giữa",
+            "zh-CN": "顶部居中",
+            "zh-TW": "中央上方"
+          },
+          "value": "top center"
+        },
+        {
+          "label": {
+            "cs": "Nahoře doprava",
+            "da": "Øverst til højre",
+            "de": "Oben rechts",
+            "en": "Top right",
+            "es": "Superior derecha",
+            "fi": "Ylhäällä oikealla",
+            "fr": "En haut à droite",
+            "it": "In alto a destra",
+            "ja": "右上",
+            "ko": "오른쪽 상단",
+            "nb": "Øverst til høyre",
+            "nl": "Rechtsboven",
+            "pl": "Na górze po prawej",
+            "pt-BR": "Superior direito",
+            "pt-PT": "Canto superior direito",
+            "sv": "Överst till höger",
+            "th": "ขวาบน",
+            "tr": "Üst sağ",
+            "vi": "Trên cùng bên phải",
+            "zh-CN": "右上方",
+            "zh-TW": "右上角"
+          },
+          "value": "top right"
+        },
+        {
+          "label": {
+            "cs": "Uprostřed doleva",
+            "da": "Midt på til venstre",
+            "de": "Mitte links",
+            "en": "Middle left",
+            "es": "Al medio a la izquierda",
+            "fi": "Keskellä vasemmalla",
+            "fr": "Au milieu à gauche",
+            "it": "In mezzo a sinistra",
+            "ja": "中央部左側",
+            "ko": "왼쪽 중간",
+            "nb": "Midt til venstre",
+            "nl": "Links midden",
+            "pl": "Na środku po lewej",
+            "pt-BR": "Meio esquerdo",
+            "pt-PT": "Intermédio à esquerda",
+            "sv": "Mitten till vänster",
+            "th": "ซ้ายกลาง",
+            "tr": "Orta sol",
+            "vi": "Ở giữa bên trái",
+            "zh-CN": "中间居左",
+            "zh-TW": "中央左方"
+          },
+          "value": "center left"
+        },
+        {
+          "label": {
+            "cs": "Uprostřed na střed",
+            "da": "Midt på centreret",
+            "de": "Mitte mittig",
+            "en": "Middle center",
+            "es": "Centrada en el medio",
+            "fi": "Keskellä keskellä",
+            "fr": "Centrée au milieu",
+            "it": "In mezzo al centro",
+            "ja": "中心",
+            "ko": "가운데 중간",
+            "nb": "Midt i senter",
+            "nl": "Centraal midden",
+            "pl": "Na środku",
+            "pt-BR": "Meio centro",
+            "pt-PT": "Intermédio ao centro",
+            "sv": "Mitten centrerat",
+            "th": "กึ่งกลาง",
+            "tr": "Orta kısmın ortası",
+            "vi": "Chính giữa",
+            "zh-CN": "中间居中",
+            "zh-TW": "正中央"
+          },
+          "value": "center center"
+        },
+        {
+          "label": {
+            "cs": "Uprostřed doprava",
+            "da": "Midt på til højre",
+            "de": "Mitte rechts",
+            "en": "Middle right",
+            "es": "Centrado a la derecha",
+            "fi": "Keskellä oikealla",
+            "fr": "Au milieu à droite",
+            "it": "In centro a destra",
+            "ja": "中央部右側",
+            "ko": "오른쪽 중간",
+            "nb": "Midt til høyre",
+            "nl": "Rechts midden",
+            "pl": "Na środku po prawej",
+            "pt-BR": "Meio direito",
+            "pt-PT": "Intermédio à direita",
+            "sv": "Mitten till höger",
+            "th": "ขวากลาง",
+            "tr": "Orta sağ",
+            "vi": "Ở giữa bên phải",
+            "zh-CN": "中间居右",
+            "zh-TW": "中央右方"
+          },
+          "value": "center right"
+        },
+        {
+          "label": {
+            "cs": "Dole doleva",
+            "da": "Nederst til venstre",
+            "de": "Unten links",
+            "en": "Bottom left",
+            "es": "Inferior izquierda",
+            "fi": "Alhaalla vasemmalla",
+            "fr": "En bas à gauche",
+            "it": "In basso a sinistra",
+            "ja": "左下",
+            "ko": "왼쪽 하단",
+            "nb": "Nederst til venstre",
+            "nl": "Linksonder",
+            "pl": "Na dole po lewej",
+            "pt-BR": "Inferior esquerdo",
+            "pt-PT": "Canto inferior esquerdo",
+            "sv": "Nere till vänster",
+            "th": "ซ้ายล่าง",
+            "tr": "Alt sol",
+            "vi": "Dưới cùng bên trái",
+            "zh-CN": "左下方",
+            "zh-TW": "左下角"
+          },
+          "value": "bottom left"
+        },
+        {
+          "label": {
+            "cs": "Dole na střed",
+            "da": "Nederst i midten",
+            "de": "Unten mittig",
+            "en": "Bottom center",
+            "es": "Inferior centrada",
+            "fi": "Keskellä alhaalla",
+            "fr": "En bas au centre",
+            "it": "In basso al centro",
+            "ja": "中央下",
+            "ko": "맨아래 중간",
+            "nb": "Bunnsentrert",
+            "nl": "Middenonder",
+            "pl": "Na dole na środku",
+            "pt-BR": "Inferior centro",
+            "pt-PT": "Inferior centro",
+            "sv": "Längst ner i mitten",
+            "th": "กลางล่าง",
+            "tr": "Alt orta",
+            "vi": "Dưới cùng ở giữa",
+            "zh-CN": "底部居中",
+            "zh-TW": "中央下方"
+          },
+          "value": "bottom center"
+        },
+        {
+          "label": {
+            "cs": "Dole doprava",
+            "da": "Nederst til højre",
+            "de": "Unten rechts",
+            "en": "Bottom right",
+            "es": "Inferior derecha",
+            "fi": "Alhaalla oikealla",
+            "fr": "En bas à droite",
+            "it": "In basso a destra",
+            "ja": "右下",
+            "ko": "오른쪽 아래",
+            "nb": "Nederst til høyre",
+            "nl": "Rechtsonder",
+            "pl": "Na dole po prawej",
+            "pt-BR": "Inferior direito",
+            "pt-PT": "Canto inferior direito",
+            "sv": "Nere till höger",
+            "th": "ขวาล่าง",
+            "tr": "Alt sağ",
+            "vi": "Dưới cùng bên phải",
+            "zh-CN": "右下方",
+            "zh-TW": "右下角"
+          },
+          "value": "bottom right"
+        }
+      ]
+    },
+{
+"type" : "select",
+"id" : "position",
+"label" : "Text Position",
+"default" : "center",
+"options" : [
+{
+"label" : "Left",
+"value" : "left"
+},
+{
+"label" : "Center",
+"value" : "center"
+},
+{
+"label" : "Right",
+"value" : "right"
+}
+]
+}
+]
+}
+],
+"presets" : [
+{
+"name" : "Banner 2",
+"category" : "Image"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

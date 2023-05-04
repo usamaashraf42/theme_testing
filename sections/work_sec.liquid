@@ -1,0 +1,126 @@
+<div class="work_sec page-width--no-gutter">
+  <div class="grid one-whole">
+    <div class="grid__item medium-up--one-half work_left" {% for block in section.blocks %}{% if block.settings.blocks != 'product' %}{%- assign pro = all_products[block.settings.product] -%}{% if product.handle == pro.handle %}style="background-color:{{ block.settings.color }};"{% endif %}{% endif %}{% endfor %}>
+      <div class="product_left_cont">
+      <div class="page-width small-width text-center">
+        <h2>{{ section.settings.wr_title1 }}</h2>
+        <div class="grid grid--uniform ">
+          {% for block in section.blocks %}
+            {% if block.type == 'Points' %}
+              <div class="grid__item medium-up--one-half small--one-half" data-aos-once="true" data-aos-delay="{{ forloop.index }}00" data-aos="fade-up">
+                <div class="blocks">
+                  <div class="img-pad"> <img src="{{ block.settings.wimage | img_url : '150x150' }}"/></div>
+                  <h3>{{ block.settings.wtitle }}</h3>
+                  <p>{{ block.settings.wsbtitle }}</p>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="grid__item medium-up--one-half work_rgt" {% if product.metafields.my_fields.modules_bg_colors != blank %}style="background-color:{{ product.metafields.my_fields.modules_bg_colors }};"{% endif %}>
+      <div class="product_right_cont">
+        <h2 data-aos-once="true" data-aos-delay="300" data-aos="fade-up">{{ product.metafields.my_fields.video_subtitle }}</h2>
+        {% if section.settings.video_url %}
+        <video width="320" height="240" controls>
+          <source src="{{ section.settings.video_url }}" type="video/mp4">
+        </video>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Work Sec",
+    "settings": [
+    {
+    "type" : "text",
+    "id" : "wr_title1",
+    "label" : "Title",
+    "default" : "Find what works for you"
+    },
+    {
+    "type" : "text",
+    "id" : "video_url",
+    "label" : "Video",
+    "default" : "video_url"
+    },
+    {
+    "type" : "text",
+    "id" : "wr_title",
+    "label" : "Title"
+    },
+      {
+    "type" : "text",
+    "id" : "wr_sbtitle",
+    "label" : "Sub Title"
+    },
+     {
+      "type" : "image_picker",
+      "id" : "wrimage",
+      "label" : "Image"
+      },
+      {
+      "type" : "image_picker",
+      "id" : "strimage",
+      "label" : "Star Image"
+      },
+    {
+    "type" : "text",
+    "id" : "ern_sbtitle",
+    "label" : "Sub Title"
+    }
+],
+    "blocks" : [
+    {
+    "type" : "Points",
+    "name" : "Points",
+    "settings" : [
+      	{
+      "type" : "image_picker",
+      "id" : "wimage",
+      "label" : "Image"
+      },
+    {
+    "type" : "text",
+    "id" : "wtitle",
+    "label" : "Title"
+    },
+    {
+    "type" : "text",
+    "id" : "wsbtitle",
+    "label" : "Title"
+    }
+    ]
+  },
+  {
+  "type" : "product",
+  "name" : "Product",
+  "settings" : [
+  {
+  "type" : "product",
+  "id" : "product",
+  "label" : "Product"
+  },
+  {
+  "type" : "color",
+  "id" : "color",
+  "label" : "Product"
+  }
+  ]
+  }
+  ]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

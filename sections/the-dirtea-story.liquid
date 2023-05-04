@@ -1,0 +1,147 @@
+<div class="dirtea-story-container">
+  <div class="dirtea-story-image-container desktop-only">
+    {{ section.settings.background_image | image_url: width: 1585 | image_tag: sizes: '(min-width:1600px) 100vw, (min-width: 750px) 100vw, 100vw' }}
+  </div>
+  <div class="dirtea-story-image-container mobile-only">
+    {{ section.settings.mobile_background_image | image_url: width: 750 | image_tag: sizes: '(min-width:1600px) 100vw, (min-width: 750px) 100vw, 100vw' }}
+  </div>
+  <div class="dirtea-story-text-container">
+    <div class="dirtea-story-text-title dirtea-section-title">{{ section.settings.title_text }}</div>
+    <div class="dirtea-story-text-body">{{ section.settings.body_text }}</div>
+    <a class="dirtea-story-text-cta btn-dirtea-light" href="{{ section.settings.cta_url }}">{{ section.settings.cta_label }}</a>
+  </div>
+</div>
+
+{% style %}
+
+  .dirtea-story-container {
+    max-height: 1100px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 769px) {
+    .dirtea-story-container {
+        overflow: hidden;
+        max-height: 650px;
+    }
+
+    .dirtea-story-image-container img {
+    width: 100%;
+    height: auto;
+  }
+  }
+
+  .dirtea-story-text-title {
+    color: var(--off-black);
+    font-family: "Manifold Regular";
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    margin-bottom: 15px;
+  }
+
+  .dirtea-story-text-body {
+    color: var(--off-black);
+    font-family: "Roc Grotesk Light";
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 1.14px;
+    line-height: 26px;
+    margin-bottom: 35px;
+  }
+
+  @media (max-width: 769px) {
+    .dirtea-story-text-body {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+  }
+
+  .dirtea-story-image-container img {
+    width: 100%;
+    height: auto;
+  }
+
+  .dirtea-story-image-container {
+    display: flex;
+  }
+
+  .dirtea-story-text-container {
+    position: absolute;
+    margin-top: -650px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    max-width: 412px;
+  }
+
+  @media (min-width: 769px) {
+    .dirtea-story-text-container {
+        margin-top: -35vw;
+    }
+  }
+
+  .dirtea-story-text-cta {
+    background: #ffffff;
+    border-radius: 25px;
+    padding: 15px 100px;
+    font-family: "Manifold";
+    color: var(--off-black);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+    width: 100%;
+    max-width: 250px;
+    text-decoration: none;
+
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "The DIRTEA Story",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Desktop Background Image"
+      }, 
+      {
+        "type": "image_picker",
+        "id": "mobile_background_image",
+        "label": "Mobile Background Image"
+      }, 
+      {
+        "type": "text",
+        "id": "title_text",
+        "label": "Title",
+        "default": "The DIRTEA Story"
+      }, 
+      {
+        "type": "richtext",
+        "id": "body_text",
+        "label": "Body Text"
+      }, 
+      {
+        "type": "text",
+        "id": "cta_label",
+        "label": "CTA Label",
+        "default": "READ MORE"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      }
+    ],
+    "presets": [
+      {
+        "name": "The DIRTEA Story",
+        "category": "Black Friday"
+      }
+    ]
+  }
+{% endschema %}

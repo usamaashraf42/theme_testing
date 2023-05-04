@@ -1,0 +1,20 @@
+<div id="myModal" class="modal_main">
+  <!-- Modal content -->
+  <div class="modal-contentt">
+    <span class="close">&times;</span>
+    <div class="pro_main">
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.pop_btn span').click(function(){
+   $('.modal_main').addClass('active');
+    $(this).parent().parent().children('.hidden_data').children('div.move_data').appendTo(".modal-contentt .pro_main");
+  });
+  $('span.close').click(function(){
+    $('.modal_main.active .pro_main .move_data').remove();
+    $('.modal_main').removeClass('active');
+  });
+  </script>

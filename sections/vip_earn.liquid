@@ -1,0 +1,94 @@
+<div class="vip_earn text-center" data-aos="fade-up">
+  <div class="page-width">
+    <p class="subtitle">{{ section.settings.vip_sb_title }}</p>
+    <h2 class="title">{{ section.settings.vip_title }}</h2>
+    <p class="below-subtitle">{{ section.settings.vip_desc }}</p>
+    <div class="vip_slider">
+      {% for block in section.blocks %}
+      <div class="points text-left {% if forloop.first %}points-head{% endif %}">
+        <div class="top-title">
+          <h3>{{ block.settings.ern_title }}</h3>
+          {% if block.settings.ern_sbtitle != blank %}
+          <div>{{ block.settings.ern_sbtitle }}</div>
+          {% endif %}
+        </div>
+        <p>{{ block.settings.row1_txt }}</p>
+        <p>{{ block.settings.row2_txt }}</p>
+        <p class="over-table">{{ block.settings.row3_txt }}</p>
+        <p class="over-table">{{ block.settings.row4_txt }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "VIPs earn",
+    "class" : "vip-table",
+    "settings": [
+    {
+    "type" : "text",
+    "id" : "vip_sb_title",
+    "label" : "Sub Title"
+    },
+    {
+    "type" : "text",
+    "id" : "vip_title",
+    "label" : "Title"
+    },
+    {
+    "type" : "text",
+    "id" : "vip_desc",
+    "label" : "Desc"
+    }
+],
+    "blocks" : [
+    {
+    "type" : "Points",
+    "name" : "Points",
+    "settings" : [
+    {
+    "type" : "text",
+    "id" : "ern_title",
+    "label" : "Title"
+    },
+    {
+    "type" : "text",
+    "id" : "ern_sbtitle",
+    "label" : "Sub Title"
+    },
+    {
+    "type" : "text",
+    "id" : "row1_txt",
+    "label" : "Row 1"
+    },
+    {
+    "type" : "text",
+    "id" : "row2_txt",
+    "label" : "Row 2"
+    },
+    {
+    "type" : "text",
+    "id" : "row3_txt",
+    "label" : "Row 3"
+    },
+    {
+    "type" : "text",
+    "id" : "row4_txt",
+    "label" : "Row 4"
+    }
+    ]
+  }
+  ]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

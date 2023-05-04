@@ -1,0 +1,131 @@
+<div class="testimonials-section-container">
+    <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+            <div class="testimonial-container swiper-slide">
+                <div class="testimonial-lhs">
+                    <img src="{{ block.settings.testimonial_image | image_url}}"/>
+                </div>
+                <div class="testimonial-rhs">
+                    <div>
+                        {% render 'green-star' %}
+                        {% render 'green-star' %}
+                        {% render 'green-star' %}
+                        {% render 'green-star' %}
+                        {% render 'green-star' %}
+                    </div>
+                    <div>“{{ block.settings.quote }}”</div>
+                    <div>{{ block.settings.author }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .testimonials-section-container {
+        background-color: var(--mid-grey);
+    }
+
+    .testimonial-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    .testimonial-lhs {
+        height: 180px;
+        width: 345px;
+        overflow: hidden;
+    }
+
+    .testimonial-lhs img {
+        width: 100%;
+        min-width: 150px;
+    }
+
+    .testimonial-rhs {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: left;
+        padding: 20px;
+    }
+
+    .testimonial-rhs div {
+        margin-bottom: 10px;
+    }
+
+    .testimonial-rhs div:first-child {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .testimonial-rhs div:nth-child(2){
+        color: #252525;
+        font-family: "Manifold Regular";
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 22px;
+    }
+
+    .testimonial-rhs div:nth-child(3){
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 22px;
+    }
+</style>
+
+{% javascript %}
+    var swiper = new Swiper(".testimonials-section-container", {
+        slidesPerView: 1,
+        loop: true,
+        breakpoints: {
+            769: {
+                slidesPerView: 3
+            }
+        }
+      });
+    
+    {% endjavascript %}
+
+{% schema %}
+{
+    "name": "Testimonials",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "testimonial",
+            "name": "Testimonial",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "testimonial_image",
+                    "label": "Author Image"
+                },
+                {
+                    "type": "text",
+                    "id": "quote",
+                    "label": "Testimonial Quote",
+                    "default": "I add DIRTEA's Cordyceps to my pre gym drink and have felt added energy and boost when training"
+                },
+                {
+                    "type": "text",
+                    "id": "author",
+                    "label": "Author Name",
+                    "default": "David Gandy"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Testimonials",
+            "category": "Jan"
+        }
+    ]
+}    
+{% endschema %}

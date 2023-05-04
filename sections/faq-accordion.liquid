@@ -1,0 +1,167 @@
+<div class="faq-accordion-container">
+    <div class="faq-accordion-title dirtea-section-title">{{ section.settings.accordion_title }}</div>
+    {% for block in section.blocks%}
+        <button class="accordion">
+            <span>{{ block.settings.accordion_question }}</span>
+            <span class="plusButton" style="width: 30px;"><img src="{{ '23_02__accordion-plus.svg' | asset_url }}"/></span>
+            <span class="minusButton hidden-button" style="width: 30px"><img src="{{ '23_02__accordion-minus.svg' | asset_url }}"/></span> 
+        </button>
+        <div class="panel">
+            {{ block.settings.accordion_answer }}
+        </div>
+    {% endfor %}
+    <a class="faq-accordion-cta btn-dirtea-light" href="{{ section.settings.faq_url }}">
+        ALL FAQS
+    </a>
+</div>
+
+<script>
+
+let accordionButtons = document.querySelectorAll('.accordion')
+let accordionPanels = document.querySelectorAll('.panel')
+
+let allPluses = document.querySelectorAll('.plusButton')
+let allMinuses = document.querySelectorAll('.minusButton')
+
+for (let i = 0; i < accordionButtons.length; i++) {
+  accordionButtons[i].addEventListener('click', () => {
+    accordionPanels[i].classList.toggle('visible')
+    allPluses[i].classList.toggle('hidden-button')
+    allMinuses[i].classList.toggle('hidden-button')
+  })
+}
+</script>
+
+<style>
+    .hidden-button {
+      display: none;
+    }
+    
+    .faq-accordion-container {
+      background-color: var(--light-grey);
+      padding: 80px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 769px) {
+      .faq-accordion-container {
+        padding: 80px 26vw;
+      }
+    }
+
+    .faq-accordion-title {
+        color: var(--off-black);
+        font-family: "Manifold Regular";
+        font-size: 34px;
+        letter-spacing: 1.06px;
+        line-height: 49px;
+        margin-bottom: 15px;
+    }
+
+    .accordion {
+      background-color: transparent;
+      color: var(--off-black);
+      cursor: pointer;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-family: "Manifold Regular";
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 1.14px;
+      line-height: 26px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0px;
+    }
+    
+    .panel {
+      opacity: 0;
+      background-color: transparent;
+      overflow: hidden;
+      color: var(--off-black);
+      font-family: "Manifold Regular";
+      font-size: 16px;
+      letter-spacing: 1.14px;
+      line-height: 22px;
+      text-align: left;
+      width: 100%;
+      height: 0px;
+    }
+
+    .panel.visible {
+      transition: all 1s;  
+      opacity: 1;
+      height: auto;
+    }
+
+    .faq-accordion-cta {
+        margin: auto;
+        background: #ffffff;
+        border-radius: 25px;
+        font-family: "Manifold";
+        color: var(--off-black);
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 17px;
+        text-decoration: none;
+        text-align: center;
+        padding: 15px 100px;
+        margin-top: 40px
+    }
+
+    .plusButton img {
+      min-width: 30px
+    }
+    </style>
+
+    {% schema %}
+    {
+      "name": "FAQ Accordion",
+      "settings": [
+        {
+            "type": "text",
+            "id": "accordion_title",
+            "default": "You got questions, we got answers.",
+            "label": "Accordion Title"
+        },
+        {
+          "type": "url",
+          "id": "faq_url",
+          "label": "All FAQS Button URL"
+        }
+      ],
+      "blocks": [
+        {
+            "type": "question",
+            "name": "Question",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "accordion_question",
+                    "default": "Question title?",
+                    "label": "Question Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "accordion_answer",
+                    "default": "<p>Question answer</p>",
+                    "label": "Question Answer"
+                }
+            ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "FAQ Accordion",
+          "category": "Black Friday"
+        }
+      ]
+    }
+  {% endschema %}

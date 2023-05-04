@@ -1,0 +1,149 @@
+<div class="card card-2 ccritical-clear" id="Card-{{ product.id }}" data-animate>
+
+  <div class="card__info text-center">
+    <div class="title">{{ block.settings.title }}</div>
+  </div>
+  <a href="{{ product.url }}" class="card__wrapper{% if section.settings.show_spacing %} card__wrapper--padding{% endif %} text-center no-height">
+
+    <div class="image-outer">
+    {% if product.featured_media %}
+      {% include 'card-image-1', type: product.featured_media.preview_image, grid_style: grid_style %}
+    {% endif %}
+    </div>
+
+    {% comment %}
+    <div class="card__info{% if grid_style == 'grid' %} card__info--aligned{% endif %}">
+      {% if section.settings.show_vendor %}
+        <div class="card__brand">{{ product.vendor }}</div>
+      {% endif %}
+
+      <h3 class="card__name h4">{{ product.title }}</h3>
+
+      {% if product.available %}
+        <div class="card__price">
+          {%- assign variant = product.selected_or_first_available_variant %}
+          {% if product.compare_at_price > product.price %}
+            {% comment %}
+              Product is on sale
+            {% endcomment %}
+            {% if product.price_varies %}
+              {% assign sale_price = product.price | money_without_trailing_zeros %}
+              <span class="visually-hidden"> {{ 'products.product.price' | t }} </span>
+              {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+            {% else %}
+              <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+              <span class="card__price--sale">{{ product.price | money_without_trailing_zeros }}</span>
+
+              <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+              <span class="card__price--regular-strike">
+                <span class="card__price--regular">{{ product.compare_at_price | money_without_trailing_zeros }}</span>
+              </span>
+              {%- if variant.available and variant.unit_price_measurement -%}
+                {% include 'product-unit-price', variant: variant %}
+              {% endif %}
+            {% endif %}
+
+          {% else %}
+            {% comment %}
+              Not on sale, but could still have varying prices
+            {% endcomment %}
+            {% if product.price_varies %}
+              {% assign price = product.price | money_without_trailing_zeros %}
+              {{ 'products.product.from_text_html' | t: price: price }}
+            {% else %}
+              {{ product.price | money_without_trailing_zeros }}
+              {%- if variant.available and variant.unit_price_measurement -%}
+                {% include 'product-unit-price', variant: variant %}
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="card__availability">
+          {{ 'products.product.sold_out' | t }}
+        </div>
+      {% endif %}
+    </div>
+    {% if product.compare_at_price > product.price %}
+      {% assign sale_text_length = 'products.product.on_sale' | t | size %}
+      <span class="card__badge{% if sale_text_length > 6 %} card__badge--large{% endif %}">
+        {{ 'products.product.on_sale' | t }}
+      </span>
+    {% endif %}
+    {% endcomment %}
+
+  </a>
+
+  <div class="card__info text-center">
+    {% assign sub_title = block.settings.sub_title %}
+    <div class="product-chart text-center">
+      {% if sub_title != blank %}<h6>{{ sub_title }}</h6>{% endif %}
+      {% if block.settings.image != blank %}
+      {{ block.settings.image }}
+      {% else %}
+      {{ 'image' | placeholder_svg_tag }}
+      {% endif %}
+    </div>
+
+  </div>
+<div class="card__info_price text-center">
+  <span class="full-price">{{ product.price | money | replace: 'GBP', ''}}</span>
+  <!-- {% capture discount %}
+    {{ product.price | times: 15 | divided_by: 100 }}
+  {% endcapture %} -->
+  <!-- <span class="discount">
+    {% assign discountedPrice = product.price | minus: discount | minus: 1 %}
+    {{ discountedPrice | money }}
+  </span> -->
+  <!-- <div class="subscribe-and-save">
+    Subscribe & save 20%
+  </div> -->
+</div>
+  <div class="btn-outer text-center">
+    {% form 'product', product, data-productid: product.id, class:'product-form' %}
+    <input class="hide" type="hidden" hidden name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+    <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+
+    <div class="hide hidden" hide hidden>
+      {% for group in product.selling_plan_groups %}
+
+      <input type="radio" name="selling_plan" data-plan-name="" value="onetime">
+      {% for selling_plan in group.selling_plans %}
+      <input type="radio" name="selling_plan" data-plan-name="{{ selling_plan.name }}" value="{{ selling_plan.id }}">
+      {% endfor %}
+      {% endfor %}
+    </div>
+
+    {% if product.metafields.custom.pre_order %}
+    {% else %}
+          <button type="autoship_submit" class="collsubmit btn btn--secondary btn-collection add_btn visible">Subscribe & Save 15%</button>
+    {% endif %}
+    <button type="normal_addtocart" class="collsubmit btn add_btn btn-collection-addtocart visible outline">
+      {% if product.metafields.custom.pre_order %}
+        PRE-ORDER
+      {% else %}
+         BUY NOW
+      {% endif %}
+    </button>
+
+    <!-- <div class="toggle">
+      <span class="align-center-label">Subscribe & save</span>
+      <label class="switch">
+        <input class="toggle-on-off" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+      <span class="align-center-label">One time purchase</span>
+    </div> -->
+  {% endform %}
+    <!--a href="{{ product.url | within: collection }}" class="btn">
+      {{ 'ADD TO CART' }}
+      {% comment %}{{ 'Shop' }} {{ block.settings.title }}{% endcomment %}
+    </a--></div>
+</div>
+
+<script>
+  console.log('All containers -->', document.querySelectorAll('.btn-outer'), document.querySelectorAll('.btn-outer')[0].getElementsByClassName('.rc-container'), document.querySelectorAll('.rc-container'))
+  window.addEventListener('load', function () {
+  console.log('page load -->', 2)
+})
+</script>

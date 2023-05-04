@@ -1,0 +1,201 @@
+<div id="{{section.settings.da-store | handleize | downcase}}">
+  <div class="da_store">
+    <div class="da_store_bb">
+      {% if section.settings.da_store_heading != blank %}
+      <div class="da_store_heading_{{section.id}}">
+        <h2>{{section.settings.da_store_heading}}</h2>
+      </div>
+      {% endif %}
+      <div class="da_store_content_{{section.id}}">
+        {% for block in section.blocks %}
+        {% if block.type == "select_content" %}
+        <div class="da_se_content_data_e_{{section.id}}">
+          <div class="da_se_content_data_{{section.id}}">
+            <a href="{{block.settings.da_store_content_url}}">
+              {% if block.settings.da_store_content_img != blank %}
+              <div class="da_se_content_img_{{section.id}}">
+                <img src="{{block.settings.da_store_content_img | img_url:"master" }}">
+              </div>
+              {% endif %}
+              {% if block.settings.da_store_content_title != blank %}
+              <div class="da_se_content_title_{{section.id}}">
+                <h3>{{block.settings.da_store_content_title}}</h3>
+              </div>
+              {% endif %}
+            </a>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .da_store {
+    width: 100%;
+    padding: 0px 70px;
+  }
+
+  .da_store_bb {
+    width: 100%;
+    border-bottom: 1px solid rgba(18, 18, 18, 0.1);
+    padding: 30px 0px 10px;
+  }
+
+  .da_store_heading_{{section.id}} {
+    width: 100%;
+    padding: 0px 0px 10px;
+  }
+
+  .da_store_heading_{{section.id}} h2 {
+    margin: 0px;
+    color: rgb(37, 37, 37);
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 30px;
+  }
+
+  .da_store_content_{{section.id}} {
+    width: 100%;
+  }
+
+  .da_se_content_data_e_{{section.id}} {
+    width: 100%;
+    padding: 10px 0px;
+  }
+
+  .da_se_content_data_{{section.id}} {
+    width: 100%;
+    background-color: rgba(18, 18, 18, 0.1);
+    border-radius: 10px;
+  }
+
+  .da_se_content_data_{{section.id}} a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .da_se_content_img_{{section.id}} {
+    width: 23%;
+  }
+
+  .da_se_content_img_{{section.id}} img {
+    width: 100%;
+    display: block;
+    border-radius: 10px 0px 0px 10px;
+  }
+
+  .da_se_content_title_{{section.id}} {
+    width: 77%;
+    padding: 0px 20px;
+  }
+
+  .da_se_content_title_{{section.id}} h3 {
+    margin: 0px;
+    color: rgb(37, 37, 37);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    line-height: 26px;
+  }
+
+  @media (max-width: 768px){
+    .da_store {
+      padding: 0px 50px;
+    }
+
+    .da_store_heading_{{section.id}} h2 {
+      font-size: 27px;
+      line-height: 27px;
+    }
+
+    .da_se_content_title_{{section.id}} h3 {
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+
+  @media (max-width: 490px){
+    .da_store {
+      padding: 0px 20px;
+    }
+
+    .da_store_heading_{{section.id}} h2 {
+      font-size: 25px;
+      line-height: 25px;
+    }
+
+    .da_se_content_img_{{section.id}} {
+      width: 25%;
+    }
+
+    .da_se_content_title_{{section.id}} {
+      width: 75%;
+      padding: 0px 15px;
+    }
+
+    .da_se_content_title_{{section.id}} h3 {
+      font-size: 17px;
+      line-height: 21px;
+    }
+  }
+  
+</style>
+
+{% schema %}
+  {
+    "name": "DA Store",
+    "settings": [
+    {
+    "type": "text",
+    "id": "da-store",
+    "label": "Section ID"
+    },
+    {
+    "type": "text",
+    "id": "da_store_heading",
+    "label": "Heading",
+    "default": "Blogs"
+    }
+    ],
+    "blocks": [
+    {
+    "type": "select_content",
+    "name": "Content",
+    "settings": [
+    {
+    "type": "url",
+    "id": "da_store_content_url",
+    "label": "URL"
+    },
+    {
+    "type": "image_picker",
+    "id": "da_store_content_img",
+    "label": "Image"
+    },
+    {
+    "type": "textarea",
+    "id": "da_store_content_title",
+    "label": "Title",
+    "default": "Turkey Tail - The Immunity Mushroom"
+    }
+    ]
+    }
+    ],
+    "presets": [
+    {
+    "name": "DA Store",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

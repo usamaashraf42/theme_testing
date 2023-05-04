@@ -1,0 +1,418 @@
+<div class="quality-mushrooms-container">
+    <div class="quality-mushrooms-title dirtea-section-title">{{ section.settings.title }}</div>
+    <div class="quality-mushrooms-benefits-container desktop-only">
+        <div class="quality-mushrooms-benefit-container">
+            <div class="quality-mushrooms-benefit-title">
+                <div><img src="{{ 'tick_image.PNG' | asset_img_url }}"/></div>
+                <div>{{ section.settings.benefit_one_title }}</div>
+            </div>
+            <div class="quality-mushrooms-benefit-body">
+                {{ section.settings.benefit_one_body }}
+            </div>
+        </div>
+        <div class="quality-mushrooms-benefit-container">
+            <div class="quality-mushrooms-benefit-title">
+                <div><img src="{{ 'tick_image.PNG' | asset_img_url }}"/></div>
+                <div>{{ section.settings.benefit_two_title }}</div>
+            </div>
+            <div class="quality-mushrooms-benefit-body">
+                {{ section.settings.benefit_two_body }}
+            </div>
+        </div>
+        <div class="quality-mushrooms-benefit-container">
+            <div class="quality-mushrooms-benefit-title">
+                <div><img src="{{ 'tick_image.PNG' | asset_img_url }}"/></div>
+                <div>{{ section.settings.benefit_third_title }}</div>
+            </div>
+            <div class="quality-mushrooms-benefit-body">
+                {{ section.settings.benefit_third_body }}
+            </div>
+        </div>
+    </div>
+    <div class="mobile-only">
+
+
+        <div class="quality-mushroom-accordion">
+
+                <button class="accordion-btn" data-panel-status="hidden" data-mushroom-benefit="1">
+                    <span>{{ section.settings.benefit_one_title }}</span>
+                    <span class="plusButton" style="width: 30px;"><img style="min-width: 30px;" src="{{ '23_02__accordion-plus.svg' | asset_url }}"/></span>
+                    <span class="minusButton hidden-button" style="width: 30px"><img img style="min-width: 30px;" src="{{ '23_02__accordion-minus.svg' | asset_url }}"/></span> 
+                </button>
+                <div class="mushroom-panel" data-mushroom-benefit="1">
+                    {{ section.settings.benefit_one_body}}
+                </div>
+
+
+                <button class="accordion-btn" data-panel-status="hidden" data-mushroom-benefit="2">
+                    <span>{{ section.settings.benefit_two_title }}</span>
+                    <span class="plusButton" style="width: 30px;"><img style="min-width: 30px;" src="{{ '23_02__accordion-plus.svg' | asset_url }}"/></span>
+                    <span class="minusButton hidden-button" style="width: 30px"><img img style="min-width: 30px;" src="{{ '23_02__accordion-minus.svg' | asset_url }}"/></span> 
+                </button>
+                <div class="mushroom-panel" data-mushroom-benefit="2">
+                    {{ section.settings.benefit_two_body}}
+                </div>
+
+
+                <button class="accordion-btn" data-panel-status="hidden" data-mushroom-benefit="3">
+                    <span>{{ section.settings.benefit_third_title }}</span>
+                    <span class="plusButton" style="width: 30px;"><img style="min-width: 30px;" src="{{ '23_02__accordion-plus.svg' | asset_url }}"/></span>
+                    <span class="minusButton hidden-button" style="width: 30px"><img img style="min-width: 30px;" src="{{ '23_02__accordion-minus.svg' | asset_url }}"/></span> 
+                </button>
+                <div class="mushroom-panel" data-mushroom-benefit="3">
+                    {{ section.settings.benefit_third_body}}
+                </div>
+
+        </div>
+
+
+        {% comment %}
+        <div class="quality-mushroom-panel-container" data-panel-status="hidden">
+            <div class="quality-mushroom-top-bar quality-mushrooms-accordion">
+                <div class="quality-mushroom-benefit-title">{{ section.settings.benefit_one_title }}</div>
+                <span class="quality-mushrooms-plusButton" style="width: 30px;"><img src="{{ '23_02__accordion-plus.svg' | asset_url }}"/></span>
+                <span class="quality-mushrooms-minusButton hidden-button" style="width: 30px"><img src="{{ '23_02__accordion-minus.svg' | asset_url }}"/></span> 
+            </div>
+            <div class="quality-mushrooms-panel">
+                {{  section.settings.benefit_one_body }}
+            </div>
+        </div>
+
+        <div class="quality-mushroom-panel-container" data-panel-status="hidden">
+            <div class="quality-mushroom-top-bar quality-mushrooms-accordion">
+                <div class="quality-mushroom-benefit-title">{{ section.settings.benefit_two_title }}</div>
+                <span class="quality-mushrooms-plusButton" style="width: 30px;"><img src="{{ '23_02__accordion-plus.svg' | asset_url }}"/></span>
+                <span class="quality-mushrooms-minusButton hidden-button" style="width: 30px"><img src="{{ '23_02__accordion-minus.svg' | asset_url }}"/></span> 
+            </div>
+            <div class="quality-mushrooms-panel">
+                {{  section.settings.benefit_two_body }}
+            </div>
+        </div>
+
+        <div class="quality-mushroom-panel-container" data-panel-status="hidden">
+            <div class="quality-mushroom-top-bar quality-mushrooms-accordion">
+                <div class="quality-mushroom-benefit-title">{{ section.settings.benefit_third_title }}</div>
+                <span class="quality-mushrooms-plusButton" style="width: 30px;"><img src="{{ '23_02__accordion-plus.svg' | asset_url }}"/></span>
+                <span class="quality-mushrooms-minusButton hidden-button" style="width: 30px"><img src="{{ '23_02__accordion-minus.svg' | asset_url }}"/></span> 
+            </div>
+            <div class="quality-mushrooms-panel">
+                {{  section.settings.benefit_third_body }}
+            </div>
+        </div>
+        {% endcomment %}
+
+    </div>
+
+
+    {% comment %}
+        <button class="quality-mushrooms-accordion">
+            <span>{{ section.settings.benefit_one_title }}</span>
+            <span class="quality-mushrooms-plusButton"><img src="{{ 'minus-mushroom-accordion.png' | asset_img_url }}"/></span>
+            <span class="quality-mushrooms-minusButton hidden-button"><img src="{{ 'plus-mushroom-accordion.png' | asset_img_url }}"/></span> 
+        </button>
+        <div class="quality-mushrooms-panel">
+            {{  section.settings.benefit_one_body }}
+        </div>
+        <button class="quality-mushrooms-accordion">
+            <span>{{ section.settings.benefit_two_title }}</span>
+            <span class="quality-mushrooms-plusButton"><img src="{{ 'minus-mushroom-accordion.png' | asset_img_url }}"/></span>
+            <span class="quality-mushrooms-minusButton hidden-button">{% render 'icon-tick' %}</span> 
+        </button>
+        <div class="quality-mushrooms-panel">
+            {{  section.settings.benefit_two_body }}
+        </div>
+        <button class="quality-mushrooms-accordion">
+            <span>{{ section.settings.benefit_third_title }}</span>
+            <span class="quality-mushrooms-plusButton"><img src="{{ 'minus-mushroom-accordion.png' | asset_img_url }}"/></span>
+            <span class="quality-mushrooms-minusButton hidden-button">{% render 'icon-tick' %}</span> 
+        </button>
+        <div class="quality-mushrooms-panel">
+            {{  section.settings.benefit_third_body }}
+        </div>
+    </div>
+    <div class="quality-mushrooms-label-container">
+        <div class="quality-mushrooms-label">Lion's Mane Mushroom</div>
+        <div class="quality-mushrooms-label">Lion's Mane Mushroom Powder</div>
+    </div>
+    {% endcomment %}
+</div>
+
+
+<script>
+try {
+
+    clickAreas = document.querySelectorAll(".quality-mushroom-accordion button.accordion-btn")
+
+    clickAreas.forEach(function (item, idx) {
+        item.addEventListener("click", function(e){
+            e.preventDefault()
+
+            panel = document.querySelector(".mushroom-panel[data-mushroom-benefit='" + item.dataset.mushroomBenefit + "']")
+
+            if( item.dataset.panelStatus == "hidden"){
+                item.dataset.panelStatus = "visible"
+                panel.style.opacity = '1'
+                panel.style.height = 'auto'
+            } else {
+                item.dataset.panelStatus = "hidden"
+                panel.style.opacity = '0'
+                panel.style.height = '0px'
+            }
+
+        })
+    })
+
+} catch(err) {console.log(err)}
+
+</script>
+
+{% comment %}
+<script>
+
+    let accordionQualityMushroomButtons = document.querySelectorAll('.quality-mushrooms-accordion')
+    let accordionQualityMushroomPanels = document.querySelectorAll('.quality-mushrooms-panel')
+    
+    let allQualityMushroomPluses = document.querySelectorAll('.quality-mushrooms-plusButton')
+    let allQualityMushroomMinuses = document.querySelectorAll('.quality-mushrooms-minusButton')
+
+    for (let i = 0; i < accordionQualityMushroomButtons.length; i++) {
+        accordionQualityMushroomButtons[i].addEventListener('click', () => {
+            console.log('clicked!')
+            if (accordionQualityMushroomPanels[i].classList.contains('visible')) {
+                accordionQualityMushroomPanels[i].classList.remove('visible')
+            } else {
+                accordionQualityMushroomPanels.forEach(function (element) {element.classList.remove('visible')})
+                accordionQualityMushroomPanels[i].classList.toggle('visible') 
+            }
+
+            /*if (accordionQualityMushroomPanels[i].classList.contains('visible')) {
+                allQualityMushroomPluses.forEach(function (element) {element.classList.remove('hidden-button')})
+                allQualityMushroomMinuses.forEach(function (element) {element.classList.add('hidden-button')})
+
+                allQualityMushroomPluses.classList.add('hidden-button')
+                allQualityMushroomMinuses.classList.remove('hidden-button')
+            }*/
+        })
+    }
+
+    accordionQualityMushroomButtons[0].click()
+    
+    </script>
+{% endcomment %}
+{% style %}
+
+.quality-mushrooms-container {
+    color: #252525;
+    font-family: "Manifold Regular";
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 80px;
+    background-image: url('https://cdn.shopify.com/s/files/1/0502/4782/7656/files/Image_2x_66fd7d0a-d5f8-47e8-8cc2-276537b270d0.png?v=1670867525');
+    background-position: bottom;
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-color: #e0d7d0;
+    min-height: max(62vw, 770px);
+}
+@media (max-width: 769px) {
+    .quality-mushrooms-container {
+        background-image: url('https://cdn.shopify.com/s/files/1/0502/4782/7656/files/Image_2x_66fd7d0a-d5f8-47e8-8cc2-276537b270d0.png?v=1670867525');
+    }
+    
+}
+
+
+.quality-mushrooms-bg-image img {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 769px) {
+    .quality-mushrooms-bg-image {
+        max-height: 700px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    
+}
+
+.quality-mushrooms-title {
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    padding-top: 40px;
+    max-width: 770px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+@media (min-width: 769px) {
+    .quality-mushrooms-title {
+        padding-top: 80px;
+    }
+}
+
+.quality-mushrooms-benefits-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 20px;
+    padding: 0 60px;
+    margin-top: 60px;
+}
+
+.quality-mushrooms-benefit-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: 393px
+}
+
+.quality-mushrooms-benefit-title {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    line-height: 35px;
+}
+
+.quality-mushrooms-benefit-title svg {
+    width: 21px;
+    height: 21px;
+    margin-right: 10px;
+}
+
+.quality-mushrooms-benefit-title svg rect {
+    fill: transparent;
+}
+
+.quality-mushrooms-benefit-body {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+}
+
+.quality-mushrooms-label-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    z-index: 0;
+}
+
+@media (min-width: 769px) {
+    .quality-mushrooms-label-container {
+        padding-top: 53vw;
+        width: 100%;
+        padding-left: 19vw;
+        padding-right: 33vw;
+    }
+}
+
+.quality-mushrooms-label {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+}
+.quality-mushroom-panel-container{
+    padding: 0 25px;
+
+}
+.quality-mushrooms-accordion {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    color: var(--off-black);
+}
+
+.quality-mushrooms-panel {
+    opacity: 0;
+    height: 0px;
+    background-color: transparent;
+    width: 100%;
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-bottom: 30px;
+}
+
+.quality-mushrooms-panel.visible {
+    transition: all 1s;  
+    opacity: 1;
+    height: auto;
+    margin-bottom: 30px;
+    padding-left: 25px;
+  }
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Quality Mushrooms",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Section Title",
+            "default": "DIRTEA is made from the purest and highest quality mushroom extracts"
+        },
+        {
+            "type": "text",
+            "id": "benefit_one_title",
+            "label": "Benefit One Title Text",
+            "default": "Organic Mushrooms"
+        },
+        {
+            "type": "textarea",
+            "id": "benefit_one_body",
+            "label": "Benefit One Body Text",
+            "default": "<p>We grow Organic Mushrooms. We extract active compounds from the fruiting body (i.e. the mushroom). We don't use fillers, grain, rice or mycellial mass.</p>"
+        },
+        {
+            "type": "text",
+            "id": "benefit_two_title",
+            "label": "Benefit Two Title Text",
+            "default": "Dual Extraction"
+        },
+        {
+            "type": "textarea",
+            "id": "benefit_two_body",
+            "label": "Benefit Two Body Text",
+            "default": "<p>When we do this we use a dual-extraction process to optimise the amount of active compounds. A combination of hot water and enthanol. The liquid containing compounds is then turned into a fine dry powder... so you can easily add to hot water, coffee, smoothie etc.</p>"
+        },
+        {
+            "type": "text",
+            "id": "benefit_third_title",
+            "label": "Benefit Third Title Text",
+            "default": "Third Party Tested"
+        },
+        {
+            "type": "textarea",
+            "id": "benefit_third_body",
+            "label": "Benefit Third Body Text",
+            "default": "<p>Then third party tested for heavy metals, toxicans etc. and also active compounds. Then it is packaged up and sent to you!</p>"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Quality Mushrooms"
+        }
+    ]
+}
+{% endschema %}

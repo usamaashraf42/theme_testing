@@ -1,0 +1,183 @@
+<div class="what-is-dirtea-container" {% if section.settings.custom_colour %}style="background-image: linear-gradient(to {% if section.settings.gradient_direction %} left {% else %} right {% endif %}, {{ section.settings.colour_one }}, {{ section.settings.colour_two }}) !important"{% endif %}>
+  <div class="what-is-dirtea-lhs">
+    <div class="what-is-dirtea-title dirtea-section-title">{{ section.settings.title_text }}</div>
+    <div class="what-is-dirtea-body">{{ section.settings.body_text }}</div>
+    <div class="what-is-dirtea-icon-blocks-container">
+      <div class="what-is-dirtea-icon-container">
+        {% for block in section.blocks %}
+          <div class="what-is-dirtea-icon">
+            <span><img src="{{ '23_02__tick-grey.svg' | asset_url }}" /></span>
+            <span>{{ block.settings.icon_text }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="what-is-dirtea-rhs">
+    {% comment %}
+    <img src="{{ '23_02__what-is-dirtea@2x.png' | asset_url }}">
+    <video
+      style="width: 100%; height: 100%; clip-path: inset(1px 1px);"
+      src="https://cdn.shopify.com/videos/c/o/v/368803414ae040f5b9f913848c40cbf9.mp4"
+      autoplay
+      playsinline
+      muted
+      loop
+      style="pointer-events: none;"></video>
+    {% endcomment %}
+  </div>
+</div>
+
+{% style %}
+
+  .what-is-dirtea-container {
+    display: flex;
+    padding: 80px 100px;
+    justify-content: center;
+}
+
+.what-is-dirtea-icon-container {
+    display: flex;
+    flex-direction: column;
+}
+
+
+  .what-is-dirtea-lhs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--off-black);
+    max-width: 476px;
+  }
+
+  .what-is-dirtea-rhs {
+    width: 100%;
+    min-height: 300px;
+    max-width: 498px;
+    /*background: url("{{ '23_02__what-is-dirtea@2x.png' | asset_url }}");*/
+    background-image: url('https://cdn.shopify.com/s/files/1/0502/4782/7656/files/1-dirtea-world__2_-removebg-preview_800x.png?v=1675848767');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  @media only screen and (min-width: 576px) {
+    .what-is-dirtea-rhs {
+      margin-left: 60px;
+    }
+  }
+
+
+  .what-is-dirtea-title {
+    font-size: 32px;
+    letter-spacing: 1px;
+    line-height: 46px;
+    margin-bottom: 10px;
+  }
+
+  .what-is-dirtea-body {
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+  }
+
+  .what-is-dirtea-icon-blocks-container {
+    margin-top: 20px;
+  }
+
+
+  .what-is-dirtea-icon {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: var(--off-black);
+  }
+
+  .what-is-dirtea-icon span:first-child {
+    width: 20px;
+    margin-right: 8px;
+  }
+
+@media only screen and (max-width: 576px) {
+    .what-is-dirtea-container {
+        padding: 80px 20px;
+        flex-direction: column-reverse;
+    }
+    .what-is-dirtea-lhs {
+        padding-top: 20px;
+    }
+}
+
+
+
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "What is DIRTEA?",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title_text",
+        "default": "What is DIRTEA?",
+        "label": "What is DIRTEA Title Text"
+      },
+      {
+        "type": "textarea",
+        "id": "body_text",
+        "default": "<p>We make the purest and most potent functional mushroom extract powders, coffees and cacao super blends around, proven to improve your health, wellbeing and lifestyle when consumed daily.</p><p>Ready to drink, just add to hot water or add to your coffee or shake!</p>",
+        "label": "What is DIRTEA Body Text"
+      },
+      {
+        "type": "text",
+        "id": "sub_text",
+        "default": "Ready to drink, just add to hot water or add to your coffee or shake!",
+        "label": "Last sentence"
+      },
+      {
+        "type": "checkbox",
+        "id": "custom_colour",
+        "label": "Do you want to make your own gradient background?",
+        "default": false
+      }, {
+        "type": "checkbox",
+        "id": "gradient_direction",
+        "label": "Gradient left to right? (uncheck for right to left)",
+        "default": true
+      }, {
+        "type": "color",
+        "id": "colour_one",
+        "label": "Gradient starting colour"
+      }, {
+        "type": "color",
+        "id": "colour_two",
+        "label": "Gradient ending colour"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Icon",
+        "name": "DIRTEA Icon",
+        "settings": [
+          {
+            "type": "text",
+            "id": "icon_text",
+            "label": "Icon Text",
+            "default": "All Day Energy - no jitters or crashes"
+          }, {
+            "type": "checkbox",
+            "id": "two_lines",
+            "label": "Two lines on mobile?",
+            "default": false
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "What is DIRTEA?",
+        "category": "Black Friday"
+      }
+    ]
+  }
+{% endschema %}

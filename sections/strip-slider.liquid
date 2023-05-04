@@ -1,0 +1,115 @@
+<div class="ticker-wrap-two">
+  <div class="ticker-two ticker-part-1">
+    <div class="ticker__item-two">ORGANIC</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">3RD PARTY TESTED</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">ANTIOXIDANTS</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">VEGAN</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">DUAL EXTRACTION MUSHROOMS</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">KETO</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">DAIRY FREE</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">NON GMO</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">ORGANIC</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">3RD PARTY TESTED</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">ANTIOXIDANTS</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">VEGAN</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">DUAL EXTRACTION MUSHROOMS</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">KETO</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">DAIRY FREE</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+    <div class="ticker__item-two">NON GMO</div>
+    <div class="ticker__item-two ticker-spacer">.</div>
+  </div>
+</div>
+    
+    <style>
+    
+    @keyframes ticker {
+      0% {
+        transform: translate3d(0%, 0, 0);
+        visibility: visible;
+      }
+      98% {
+        transform: translate3d(-110%, 0, 0);
+        visibility: visible;
+      }
+      99% {
+        transform: translate3d(-110%, 0, 0);
+        visibility: hidden;
+      }
+      100% {
+        transform: translate3d(100%, 0, 0);
+        visibility: hidden;
+      }
+    }
+    
+    .ticker-wrap-two {
+      margin: auto;
+      overflow: hidden;
+      height: 4rem;
+      padding: 10px 0 10px 0;
+      box-sizing: content-box;
+      width: 100%;
+      margin-top: -50px;
+    }
+    .ticker-two .ticker-spacer {
+        font-weight: bold;
+        font-size: 24px;
+        top: -3px;
+        position: relative;
+    }
+    
+    .ticker-two {
+    
+    display: inline-block;
+    height: 4rem;
+    line-height: 38px;  
+    white-space: nowrap;
+    /*padding-right: 100%;*/
+    box-sizing: content-box;
+    background-color: transparent;
+    
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-name: ticker;
+    animation-duration: 45000ms;
+    
+    }
+    
+    .ticker__item-two {
+    display: inline-block;
+    padding: 0 2rem;
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.44px;
+    line-height: 17px;
+    }
+    
+    </style>
+
+  {% schema %}
+{
+    "name": "Black Friday Ticker",
+    "settings": [],
+    "presets": [
+    {
+        "name": "Black Friday Ticker",
+        "category": "Black Friday"
+    }]
+}
+{% endschema %}

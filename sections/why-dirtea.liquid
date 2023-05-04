@@ -1,0 +1,80 @@
+<div class="page-width">
+  <div class="featured-collection__heading grid text-center">
+    <div class="grid__item medium-up--ten-twelfths medium-up--push-one-twelfth">      
+      <h5>{{ section.settings.title }}</h5>      
+      <h2>{{ section.settings.subtitle }}</h2>      
+    </div>
+  </div>
+  <div class="about-dirtrea">
+    {% for block in section.blocks %}
+    <div class="dirtrea-inner text-center {% if block.settings.show_mob %}dirtea_icon_mob icon_order_{{ block.settings.order_icon }} {% endif %} ">
+      <div class="dirtreaimg"><img src="{{ block.settings.image | img_url : '124x124' }}"/></div>
+      <h4>{{ block.settings.title }}</h4>
+      <p>{{ block.settings.subtitle | newline_to_br }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Why Dirtea",
+    "class" : "index-section--image-with-text whydirtea",
+    "settings": [
+{
+"type" : "text",
+"id" : "title",
+"label" : "Title"
+},
+{
+"type" : "textarea",
+"id" : "subtitle",
+"label" : "SubTitle"
+}
+],
+"blocks" : [
+{
+"type" : "image",
+"name" : "Block",
+"settings" : [
+{
+"type" : "image_picker",
+"id" : "image",
+"label" : "Image"
+},
+{
+  "type" : "checkbox",
+  "id" : "show_mob",
+  "label" : "Check To See This On Mobile (3 Only)"
+  },
+  {
+    "type" : "text",
+    "id" : "order_icon",
+    "label" : "Choose The Order For This Icon (1,2 or 3)"
+    },
+{
+"type" : "text",
+"id" : "title",
+"label" : "Title"
+},
+{
+"type" : "textarea",
+"id" : "subtitle",
+"label" : "SubTitle"
+}
+]
+}
+],
+"presets" : [
+{
+"name" : "Why Dirtea",
+"category" : "Image"
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

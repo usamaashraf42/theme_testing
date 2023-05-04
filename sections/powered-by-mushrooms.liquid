@@ -1,0 +1,90 @@
+<div class="powered-by-mushrooms-container">
+  <div class="powered-by-mushrooms-image-container desktop-only">{{ section.settings.image_bg | image_url: width: 2250 | image_tag: sizes: '(min-width:1600px) 100vw, (min-width: 750px) 100vw, calc(100vw)' }}</div>
+  <div class="powered-by-mushrooms-image-container mobile-only">{{ section.settings.image_bg_mobile | image_url: width: 490 | image_tag: sizes: '(min-width:1600px) 100vw, (min-width: 750px) 100vw, calc(100vw)' }}</div>
+  <div class="powered-by-mushrooms-text-container">
+    <div class="powered-by-mushrooms-text-icon"><img src="{{ 'icon-mushroom.png' | asset_img_url}}"/></div>
+    <div class="powered-by-mushrooms-text">
+      {{ section.settings.main_text }}
+    </div>
+  </div>
+</div>
+
+{% style %}
+
+  .powered-by-mushrooms-container {
+    height: 405px;
+    overflow: hidden;
+  }
+
+  @media(min-width: 769px) {
+    .powered-by-mushrooms-container {
+      height: 540px;
+      overflow: hidden;
+    }
+  }
+
+  .powered-by-mushrooms-text-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -43vh;
+    display: flex;
+    flex-direction: column;
+
+    color: #FFFFFF;
+    font-family: "Manifold Regular";
+    font-size: 42px;
+    letter-spacing: 1.05px;
+    line-height: 50px;
+    text-align: center;
+  }
+
+  @media(min-width: 769px) {
+    .powered-by-mushrooms-text-container {
+      margin-top: -45vw;
+    }
+  }
+
+  .powered-by-mushrooms-image-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+
+  .powered-by-mushrooms-image-container img {
+    width: 100%;
+    height: auto;
+  }
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Powered By Mushrooms",
+    "settings": [
+      {
+        "type": "text",
+        "id": "main_text",
+        "label": "Main Text",
+        "default": "Powered by mushrooms"
+      }, 
+      {
+        "type": "image_picker",
+        "id": "image_bg",
+        "label": "Background Image Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_bg_mobile",
+        "label": "Background Image Mobile"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Powered By Mushrooms",
+        "category": "Black Friday"
+      }
+    ]
+  }
+{% endschema %}

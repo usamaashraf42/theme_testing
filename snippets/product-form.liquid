@@ -1,0 +1,144 @@
+<script>
+  var buyButton = document.querySelector('.js-open-tray');
+  if(buyButton) {
+    console.log('buy button');
+    buyButton.addEventListener('click', function(){
+      console.log('clicked');
+      document.querySelector('body').classList.add('drawer--active');
+    });
+  }
+</script>
+
+<style>
+    .work_left{
+      background: {{ product.metafields.my_fields.modules_bg_colors }} !important;
+    }
+  .work_rgt{
+  	background: {{ product.metafields.my_fields.modules_bg_colors }} !important;
+  }
+  
+</style>
+
+{% unless current_variant.available %}
+{% assign button_text = 'products.product.sold_out' | t %}
+{% else %}
+{% assign button_text = 'products.product.add_to_cart' | t %}
+{% endunless %}
+
+<form id="add-item-form" action="/cart/add" data-productid="{{ product.variants.first.id }}" class='product-form' method="post">
+  {% comment %}
+<div class="custom_product_subscription">
+  <div class="subscription_plan subsc_plans active">
+    <h5>AUTO-SHIP <span class="price"></span></h5>
+    <p>Save 15% + Free Shipping</p>
+  </div>
+  <div class="basic_plan subsc_plans">
+    <h5>ONE-TIME PURCHASE <span class="price recharge-inner-most-price">{{ product.price }}</span></h5>
+  </div>
+</div>
+{% endcomment %}
+
+{% unless product.has_only_default_variant %}
+{% for option in product.options_with_values %}
+<div style="display:none;" class="product-form__item supports-js">
+
+  {% if option.name != 'default' %}
+  <label class="single-option-selector__label{% unless section.settings.show_variant_labels %} single-option-selector__label--hidden{% endunless %}" for="{{ option.name | escape }}">{{ option.name }}</label>
+  {% endif %}
+
+  <select id="{{ option.name | escape }}" name="{{ option.name | escape }}" class="single-option-selector" data-option-input>
+    {% for value in option.values %}
+    {% assign safeValue = value | replace: '"', '&quot;' %}
+    <option value="{{ safeValue }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% endfor %}
+{% endunless %}
+
+<select name="id" data-productid="{{ product.id }}" class="product-form__master-select supports-no-js" data-master-select>
+  {% for variant in product.variants %}
+  {% if variant.available %}
+
+  {% comment %}
+  Note: if you use option_selection.js, your select tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
+  {% endcomment %}
+  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+  {% else %}
+  <option disabled="disabled">
+    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+  </option>
+  {% endif %}
+  {% endfor %}
+</select>
+<!--{% if product.available and product.variants.size > 1 %}
+{% render 'swatch' with 'Color' as swatch %}
+{% endif %}-->
+  
+  {% if product.available and product.variants.size > 1 %}
+  {% for option in product.options %}
+    {% include 'swatch' with option %}
+  {% endfor %}
+{% endif %}
+
+  
+
+
+<div class="product-form-col">
+  {% if section.settings.show_quantity_selector %}
+  <div class="product-form__item product-form__item--quantity">
+    <label for="Quantity">Qty</label>
+    <span class="quantity-minus-button sub">–</span>
+    <input type="text" id="Quantity" readonly name="quantity" min="1" value="1" class="product-form__input">
+    <span class="quantity-plus-button add">+</span>
+  </div>
+
+  {% endif %}
+
+  <button id="AddToCart" class="btn btn--to-secondary btn--full product__add-to-cart-button js-open-tray{% if section.settings.enable_payment_button and current_variant.available and product.selling_plan_groups == empty %} shopify-payment-btn btn--secondary{% endif %}"
+          data-cart-submit
+          type="submit" name="add"
+          {% unless current_variant.available %} disabled="true"{% endunless %}
+          aria-label="{{ button_text }}"
+          {% if product.metafields.custom.pre_order %} style="background: green" {% endif %}
+          >
+    <span class="primary-text" aria-hidden="false" data-cart-primary-submit-text>
+      {% if product.metafields.custom.pre_order %}
+        PRE-ORDER
+      {% else %}
+        {{ button_text }}
+      {% endif %}
+    </span>
+    <span class="secondary-text" aria-hidden=true data-cart-secondary-submit-text>{{ 'products.product.view_cart' | t }}</span>
+  </button>
+</div>
+<div style="margin-top: 20px; color: red; font-size: 18px">{{ product.metafields.custom.site_wide_shipping_delay_message }}</div>
+<p class="product__notification text-small text-center" data-cart-notification></p>
+{% if section.settings.enable_payment_button and current_variant.available %}
+{{ form | payment_button }}
+{% endif %}
+
+  
+{{ form | payment_terms }}
+  
+  <!-- Add the scientific studies at the end of product description with a H4 for the "scientific studies" title -->
+<div class="beefup scientificstudies">
+    <h2 class="beefup__head">Scientific studies</h2>
+    <div class="beefup__body"></div>
+</div>
+  
+<ul class="product-tag-list">
+  <li><img src="https://cdn.shopify.com/s/files/1/0502/4782/7656/files/Dirtea_Icons_V2_3RD_PARTY_TESTED_BLUE_21c2e0f9-020c-43a6-9aa8-72f21bebd955.png?v=1632771242"/></li>
+  <li><img src="https://cdn.shopify.com/s/files/1/0502/4782/7656/files/Dirtea_Icons_V2_ORGANIC_FEDERATION_BLUE.png?v=1632773384"/></li>
+  <li><img src="https://cdn.shopify.com/s/files/1/0502/4782/7656/files/Dirtea_Icons_V2_DUEL-EXTRACT_BLUE.png?v=1632771242"/></li>
+</ul>
+  
+  
+  <p class="video_url">{{ product.metafields.my_fields.video | file_url }}</p>
+  <!--
+	ORGANIC/ GLUTEN FREE/ NON GMO/ VEGAN/ CAFFEINE FREE
+-->
+</form>
+
+

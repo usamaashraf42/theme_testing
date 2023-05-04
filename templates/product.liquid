@@ -1,0 +1,171 @@
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/product-template-new
+{% endcomment %}
+{% comment  %}
+{% section 'product-template' %}
+{% section 'work_sec' %}
+{% section 'featured-collection-singleproduct' %}
+{% section 'pro_recipes' %}
+{% section 'pro_section_recipes' %}
+{% section 'trustpilot-review-slider' %}
+{% endcomment  %}
+
+
+
+
+{% section '23_02__product-header' %}
+{% comment %}{% section 'product-template-new' %}{% endcomment %}
+
+
+{% if product.id == 7489427013887 %}
+{% section '23_03__cacao-ingredients-comparison' %}
+{% endif %}
+
+
+{% if product.metafields.custom.ingredients_ticker %}
+{% section '23_03__product-ingredients-ticker' %}
+{% endif %}
+
+{% if product.id == 7489427013887 %}
+{% section '23_03__product-meet-the-ingredients' %}
+{% endif %}
+
+{% comment %}
+{% if product.id == 7489427013887 %}
+{% section '23_03__product-evolution-of-mushroom-cacao' %}
+{% endif %}
+{% endcomment %}
+
+
+{% if product.metafields.custom.howto_dirtea_video_row%}
+{% section 'how-to-dirtea-product-pages' %}
+{% section '23_02__add-coffee-product-pages' %}
+{% endif %}
+
+{% if product.metafields.custom.meet_the_mushroom_items.value %}
+{% section 'meet-the-mushroom' %}
+{% endif %}
+
+
+<div class="tolstoy-custom-title dirtea-section-title bg-mid-grey text-center pt-40">
+    Mushrooms 101
+</div>
+{% section 'tolstoy-ig' %}
+
+{% section 'quality-mushrooms' %} 
+
+<div class="shopify-section bg-mid-grey dirtea-product-page dirtea-product-page-related-products">
+</div>
+
+{% if product.metafields.custom.short_name %}
+{% section 'pdp-icon-strip' %}
+{% endif %}
+
+
+{% if product.metafields.shopify--discovery--product_recommendation.complementary_products %}
+{% section 'product-page-related-products-carousel' %}
+{% endif %}
+
+
+{% comment %}
+{% section 'faq-accordion' %} 
+{% endcomment %}
+
+<div class="shopify-section bg-mid-grey dirtea-product-page dirtea-product-page-reviews">
+</div>
+
+
+
+
+
+<!--div class="Reviews_sec">
+  <div class="page-width text-center width-small">
+    <h4>Read our</h4>
+
+    {% comment %}Start automatically added Judge.me widget{% endcomment %}
+    <div class="page-width">
+      <div data-oke-reviews-widget></div>
+    </div>
+    {% comment %}End automatically added Judge.me widget{% endcomment %}
+  </div>
+</div-->
+
+
+
+
+{% comment %}
+<style>
+  html, body {
+    position:relative;
+    overflow-x:hidden;
+  }
+</style>
+<script>
+  window.theme = window.theme || {};
+  window.theme.strings = window.theme.strings || {};
+
+  // Override default values of theme.strings for each template.
+  // Values are used by JavaScript only; Liquid must be updated separately
+  window.theme.strings.addToCart = {{ 'products.product.add_to_cart' | t | json }};
+  window.theme.strings.soldOut = {{ 'products.product.sold_out' | t | json }};
+  window.theme.strings.unavailable = {{ 'products.product.unavailable' | t | json }};
+</script>
+
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+  var classname = document.getElementsByClassName("product__add-to-cart-button");
+  var addToCart = function() {
+  _learnq.push(['track', 'Added to Cart', item]);
+  };   for (var i = 0; i < classname.length; i++) {
+  classname[i].addEventListener('click', addToCart, false);
+  }
+  </script> 
+{% endcomment %}
+
+{% if product.metafields.loox.num_reviews %}
+<script id="looxSchemaJson" type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Product",
+	"@id": {{ canonical_url | json }},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "{{ product.metafields.loox.avg_rating }}",
+		"reviewCount": "{{ product.metafields.loox.num_reviews }}"
+	},
+	"name": {{ product.title | json }}
+}
+</script>
+{% endif %}
+
+
+	<div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>

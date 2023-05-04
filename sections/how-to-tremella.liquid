@@ -1,0 +1,171 @@
+<div class="how-to-tremella-container">
+    <div class="how-to-tremella-title">{{ section.settings.title_text }}</div>
+    <div class="how-to-tremella-card-row">
+      {% for block in section.blocks %}
+        <div class="how-to-tremella-card">
+          <div class="how-to-tremella-card-video">
+            {{ block.settings.card_video | video_tag: autoplay: true,  loop: true}}
+          </div>
+          <div class="how-to-tremella-card-text">{{ block.settings.card_text }}</div>
+        </div>
+      {% endfor %}
+    </div>
+    <!-- Slider main container -->
+    <div class="how-to-tremella-swiper mobile-only">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        {% for block in section.blocks %}
+          <div class="swiper-slide how-to-tremella-card" style="max-width: 350px">
+            <div class="how-to-tremella-card-video">
+              {{ block.settings.card_video | video_tag: autoplay: true,  loop: true}}
+            </div>
+            <div class="how-to-tremella-card-text">{{ block.settings.card_text }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+  
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  
+  {% javascript %}
+    const swiper = new Swiper('.how-to-tremella-swiper', { // Optional parameters
+      direction: 'horizontal',
+      loop: true,
+      slidesPerView: 1.2
+  
+    });
+  {% endjavascript %}
+  
+  {% style %}
+  
+    .swiper {
+      width: 100%;
+      height: auto;
+    }
+  
+    .swiper-slide {
+      display: flex;
+      flex-direction: column;
+      background: transparent;
+    }
+  
+    @media(min-width: 769px) {
+      .mobile-only {
+        display: none;
+      }
+    }
+  
+    .how-to-tremella-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 80px 0;
+      background: #EBEADE;
+    }
+  
+    .how-to-tremella-title {
+      color: #252525;
+      font-family: "Manifold Regular";
+      font-size: 34px;
+      letter-spacing: 1.06px;
+      line-height: 49px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+  
+    .how-to-tremella-card-row {
+      display: none;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+  
+    @media(min-width: 769px) {
+      .how-to-tremella-card-row {
+        display: flex;
+      }
+  
+      .how-to-tremella-container {
+        padding: 80px;
+      }
+    }
+  
+    .how-to-tremella-card-image img {
+      border-radius: 10px;
+    }
+  
+    .how-to-tremella-card-video video {
+      width: 280px;
+      border-radius: 10px;
+    }
+  
+    @media(min-width: 900px) {
+      .how-to-tremella-card-video video {
+        width: 200px;
+      }
+    }
+  
+  
+    @media(min-width: 1200px) {
+      .how-to-tremella-card-video video {
+        width: 280px;
+      }
+    }
+  
+  
+    .how-to-tremella-card-text {
+      color: #252525;
+      font-family: "Manifold Regular";
+      font-size: 24px;
+      letter-spacing: 0.65px;
+      line-height: 35px;
+      text-align: center;
+      max-width: 280px;
+    }
+  {% endstyle %}
+  
+  {% schema %}
+    {
+      "name": "How to Tremella",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title_text",
+          "label": "Title",
+          "default": "How to Tremella"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "card",
+          "name": "How To Card",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "card_image",
+              "label": "Card Image"
+            }, {
+              "type": "text",
+              "id": "card_text",
+              "label": "Card Text"
+            }, {
+              "type": "video",
+              "id": "card_video",
+              "label": "Card Video"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "How to Tremella",
+          "category": "Black Friday"
+        }
+      ]
+    }
+  {% endschema %}

@@ -1,0 +1,136 @@
+<div class="jan-bundles-products-container">
+    {% for block in section.blocks %}
+        <div class="jan-bundles-products-card">
+            <div class="jan-bundles-products-image"><img src="{{ block.settings.product.featured_image | image_url }}"/></div>
+            <div class="jan-bundles-products-title">{{ block.settings.product.title }}</div>
+            <div class="jan-bundles-products-subtitle">{{ block.settings.subtitle}}</div>
+            <div class="jan-bundles-products-reviews">
+                <!-- <div class="jan-bundles-products-star-container">
+                    {% render 'green-star' %}
+                    {% render 'green-star' %}
+                    {% render 'green-star' %}
+                    {% render 'green-star' %}
+                    {% render 'green-star' %}
+                    <div style="margin-left: 10px; margin-top: 5px;">{{ block.settings.number_reviews }} REVIEWS</div>
+                </div> -->
+            </div>
+            {% form 'product', block.settings.product, class:'product-form' %}
+                <input class="hide" type="hidden" hidden name="id" value="{{ block.settings.product.variants.first.id }}" />
+                <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+                <button type="autoship_submit" class="collsubmit add_btn jan-bundles-products-cta">
+                    ONE TIME PURCHASE {{ block.settings.product.price | money }}
+                </button>
+        {% endform %}
+        </div>
+    {% endfor %}
+</div>
+
+<style>
+    .jan-bundles-products-container {
+        background-color: #F2F3F2;
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        font-family: 'Manifold Regular';
+        color: #252525;
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+
+    @media (min-width: 769px) {
+        .jan-bundles-products-container {
+            grid-template-columns: repeat(3,1fr);
+        }
+    }
+
+    .jan-bundles-products-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: center;
+    }
+
+    .jan-bundles-products-image img {
+        width: 400px;
+    }
+
+    .jan-bundles-products-title {
+        font-size: 24px;
+        letter-spacing: 0;
+        line-height: 29px;
+        margin-top: 20px;
+    }
+
+    .jan-bundles-products-subtitle {
+        font-family: 'Manifold';
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 22px;
+        margin-top: 5px;
+        min-height: 45px;
+        max-width: 380px;
+    }
+    .jan-bundles-products-reviews {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        line-height: 16px;
+        margin-top: 20px;
+    }
+    .jan-bundles-products-star-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        text-decoration: underline;
+    }
+    .jan-bundles-products-cta {
+        background-color: #000000;
+        color: #ffffff;
+        width: 280px;
+        margin: auto;
+        border-radius: 25px;
+        padding: 15px;
+        margin-bottom: 80px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+</style>
+
+{% schema %}
+{
+    "name": "Jan Bundles Products",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "Product",
+            "name": "Product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "text",
+                    "id": "subtitle",
+                    "label": "Product Subtitle"
+                },
+                {
+                    "type": "number",
+                    "id": "number_reviews",
+                    "label": "Number of Reviews",
+                    "default": 64
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Jan Bundles Products",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

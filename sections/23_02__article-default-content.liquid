@@ -1,0 +1,26 @@
+{% if article.metafields.custom.hero_image %}
+    {% assign heroImage = article.metafields.custom.hero_image %}
+{% elsif article.image %}
+    {% assign heroImage = article.image %}
+{% endif %}
+
+{% if heroImage %}
+<div class="static-page-hero {{ article.handle }}"
+    style="background-image: url('{{ heroImage | img_url: '800x' }}'); {% if article.metafields.global.hero_img_y_offset %} background-position-y: {{ article.metafields.global.hero_img_y_offset }};{% endif %}"
+></div>
+{% endif %}
+
+
+<div class="page-width dirtea-content-page">
+  <header class="section-header text-center">
+    {% if article.tags %}<h3 class="section-header__subtitle">{{ article.tags[0] }}</h3>{% endif %}
+    <h1 class="section-header__title">{{ article.title }}</h1>
+  </header>
+  <div class="grid static-page-content">
+    <div class="grid__item medium-up--four-fifths medium-up--push-one-tenth">
+      <div class="rte">
+        {{ article.content }}
+      </div>
+    </div>
+  </div>
+</div>

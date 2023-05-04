@@ -1,0 +1,49 @@
+<div class="add-coffee-container bg-light-grey">
+    <div class="desktop-only add-coffee-image" style="margin-bottom: -9px">
+        <img src="https://cdn.shopify.com/s/files/1/0502/4782/7656/files/Image_2x_3c46a055-d4e8-4c85-9313-15ef7083a66a.png?v=1672005209"/>
+    </div>
+    <div class="mobile-only add-coffee-image">
+        <img src="//cdn.shopify.com/s/files/1/0502/4782/7656/files/Image_2x_536b8d24-201a-4ec4-af5a-522677367623.png?v=1670343443&amp;width=750" alt="" srcset="//cdn.shopify.com/s/files/1/0502/4782/7656/files/Image_2x_536b8d24-201a-4ec4-af5a-522677367623.png?v=1670343443&amp;width=352 352w" width="750" height="942" sizes="(min-width:1600px) 100vw, (min-width: 750px) 100vw, 100vw">
+    </div>
+
+    <div class="add-coffee-text-container">
+        Or, add to your favourite coffee, matcha, chocolate drink or shake
+    </div>
+</div>
+
+{% style %}
+.add-coffee-container {
+    padding: 60px 40px;
+}
+.add-coffee-image img {
+    width: 100vw;
+    height: auto;
+    min-height: 190px;
+    border-radius: 10px;
+}
+
+.add-coffee-text-container {
+    position: absolute;
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    line-height: 35px;
+    text-align: center;
+    width: 80%;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: -94vw;
+}
+
+@media (min-width: 769px) {
+    .add-coffee-text-container {
+        width: 40%;
+        text-align: center;
+        margin-top: -9vw;
+    }
+}
+
+{% endstyle %}

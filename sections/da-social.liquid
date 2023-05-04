@@ -1,0 +1,118 @@
+<div id="da-social">
+  <div class="da_social">
+    {% for block in section.blocks %}
+    {% if block.type == "select_social_link" %}
+    <div class="da_social_data">
+      <a href="{{ block.settings.da_social_url }}">
+        {% if block.settings.da_social_icon != blank and block.settings.da_social_img != blank %}
+        {{block.settings.da_social_icon}}
+        {% elsif block.settings.da_social_icon != blank and block.settings.da_social_img == blank %}
+        {{block.settings.da_social_icon}}
+        {% elsif block.settings.da_social_icon == blank and block.settings.da_social_img == blank %}
+        {{block.settings.da_social_icon}}
+        {% else block.settings.da_social_icon == blank and block.settings.da_social_img != blank %}
+        <img src="{{block.settings.da_social_img | img_url: "master"}}">
+        {% endif %}
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .da_social {
+    width: 100%;
+    max-width: 530px;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 50px;
+  }
+
+  .da_social_data {
+    padding: 0px 20px;
+  }
+
+  .da_social_data a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .da_social_data svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .da_social_data svg path {
+    fill: rgb(37, 37, 37);
+  }
+
+  @media (max-width: 768px){
+    .da_social {
+      padding: 20px 30px;
+    }
+  }
+
+  @media (max-width: 490px){
+    .da_social {
+      max-width: 100%;
+      padding: 20px 10px;
+    }
+
+    .da_social_data {
+      padding: 0px 10px;
+    }
+
+    .da_social_data svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  
+</style>
+
+{% schema %}
+  {
+    "name": "DA Social",
+    "settings": [],
+    "blocks": [
+    {
+    "type": "select_social_link",
+    "name": "Social Link",
+    "settings": [
+    {
+    "type": "url",
+    "id": "da_social_url",
+    "label": "URL"
+    },
+    {
+    "type": "textarea",
+    "id": "da_social_icon",
+    "label": "Icon"
+    },
+    {
+    "type": "image_picker",
+    "id": "da_social_img",
+    "label": "Image"
+    }
+    ]
+    }
+    ],
+    "presets": [
+    {
+    "name": "DA Social",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

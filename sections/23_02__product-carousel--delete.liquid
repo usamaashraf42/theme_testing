@@ -1,0 +1,508 @@
+<div class="subscription-product-two-carousel-container">
+    <div class="subscription-product-two-carousel-title dirtea-section-title">{{ section.settings.title }}</div>
+    <div class="subscriptions-slider-two">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+
+                {% for product in block.settings.product.metafields.custom.subscription_products.value %}
+                    {% if forloop.index == 1 %}
+                        {% assign three_month_product = product %}
+                    {% endif  %}
+                    {% if forloop.index == 2 %}
+                        {% assign six_month_product = product %}
+                    {% endif  %}
+                    {% if forloop.index == 3 %}
+                        {% assign twelve_month_product = product %}
+                    {% endif  %}
+                {% endfor  %}
+
+                {% assign three_month_price = three_month_product.price  | divided_by: 3 | money%}
+                {% assign six_month_price = six_month_product.price  | divided_by: 6 | money%}
+                {% assign twelve_month_price = twelve_month_product.price  | divided_by: 12 | money%}
+                {% assign discounted_price = block.settings.product.price | times: 85 | divided_by: 100 %}
+                
+                <div class="subscription-product-two-card-container swiper-slide">
+                    <div class="subscription-product-two-card-image"><a href="{{ block.settings.product.url }}"><img src="{{ block.settings.product_image | image_url}}"/></a></div>
+                    <div class="subscription-product-two-card-title">
+                        {% if block.settings.fake_title %}
+                            {{ block.settings.fake_title_text }}
+                        {% else %}
+                            {{ block.settings.product.title }}
+                        {% endif %}
+                    </div>
+                    <div class="subscription-product-two-card-subtitle">{{ block.settings.product_subtitle }}</div>
+                    <div class="subscription-product-two-card-reviews-container">
+                        {% for i in (1..5) %}
+                            {% render 'green-star' %}
+                        {% endfor %}
+                        <span>{{ block.settings.review_count }} Reviews</span>
+                    </div>
+                    {% form 'product', block.settings.product, class:'product-form' %}
+                        <input class="hide" type="hidden" hidden name="id" value="{{ block.settings.product.variants.first.id }}" />
+                        <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+
+                        {% comment %}
+                        <button type="autoship_submit" class="collsubmit add_btn subscription-product-two-card-one-time-cta">
+                            ONE TIME PURHCASE {{ block.settings.product.price | money }}
+                        </button>
+                        {% endcomment %}
+                        <a href="#" class="btn mb-15 mw-282 dirtea-add-to-cart-btn btn-dirtea-secondary" onclick="addProductToCartOnClick(event);" data-product-variant-id="{{ block.settings.product.selected_or_first_available_variant.id }}">One time purchase {{ block.settings.product.price | money }}</a>
+
+                    {% endform %}
+
+                    {% comment %}
+                    <div class="subscription-product-two-card-subscription-cta">
+                        SUBSCRIBE & SAVE 15% {{ discounted_price | money }}
+                    </div>
+                    {% endcomment %}
+                    {% if block.settings.product.metafields.custom.subscription_products.value %}
+                    <a href="{{ block.settings.product.url }}" class="btn bg-off-black color-white border-none mw-282 btn-dirtea-primary">Save when you subscribe</a>
+                    {% endif %}
+                    <div class="subscription-product-two-card-product-form">
+                        <div class="subscription-product-two-card-product-form-option">
+                            <div class="subscription-product-two-card-product-form-option-radio-button filled-radio-button-two" {% if block.settings.product.handle contains 'chaga' %}style="border: 1px solid #DE8C59 !important; background: #DE8C59"{% elsif block.settings.product.handle contains 'mane' %}style="border: 1px solid #DCC7B7 !important; background: #DCC7B7" {% elsif block.settings.product.handle contains 'cordyceps' %}style="border: 1px solid #FED880 !important; background: #FED880"{% elsif block.settings.product.handle contains 'reishi' %}style="border: 1px solid #C26E60 !important; background: #C26E60"{% elsif block.settings.product.handle contains 'turkey' %}style="border 1px solid: #A9D3DD!important; background: #A9D3DD"{% elsif block.settings.product.handle contains 'tremella' %}style="border: 1px solid #E3B6C1 !important; background: #E3B6C1"{% elsif block.settings.product.handle contains 'coffee' %}style="background-color: #b88358; border: 1px solid #b88358 !important"{% elsif block.settings.product.handle contains 'cacao' %}style="background-color:#998293; border: 1px solid #998293 !important"{% endif %}></div>
+                            <div style="width: 100%;">
+                                <div class="subscription-product-two-card-product-form-option-first-line">
+                                    <div>3 MONTH PLAN</div>
+                                    <div>{{ three_month_price }}<span style="font-weight: normal">/mo</span></div>
+                                </div>
+                                <div class="subscription-product-two-card-product-form-option-second-line">
+                                    <div>Pay {{three_month_product.price | money}} Upfront</div>
+                                    <div
+                                    {% if block.settings.product.handle contains 'chaga' %}
+                                        style="background-color: #DE8C59 !important;"
+                                    {% elsif block.settings.product.handle contains 'mane' %}
+                                        style="background-color: #DCC7B7 !important;"
+                                    {% elsif block.settings.product.handle contains 'cordyceps' %}
+                                        style="background-color: #FED880 !important;"
+                                    {% elsif block.settings.product.handle contains 'reishi' %}
+                                        style="background-color: #C26E60 !important;"
+                                    {% elsif block.settings.product.handle contains 'turkey' %}
+                                        style="background-color: #A9D3DD!important;"
+                                    {% elsif block.settings.product.handle contains 'tremella' %}
+                                        style="background-color: #E3B6C1 !important;"
+                                    {% elsif block.settings.product.handle contains 'coffee' %}
+                                        style="background-color: #b88358 !important;"
+                                    {% elsif block.settings.product.handle contains 'cacao' %}
+                                        style="background-color:#998293 !important"
+                                    {% endif %}
+                                    >SAVE 15%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subscription-product-two-card-product-form-option">
+                            <div class="subscription-product-two-card-product-form-option-radio-button filled-radio-button-two"  {% if block.settings.product.handle contains 'chaga' %}style="border: 1px solid #DE8C59 !important; background: #DE8C59"{% elsif block.settings.product.handle contains 'mane' %}style="border: 1px solid #DCC7B7 !important; background: #DCC7B7" {% elsif block.settings.product.handle contains 'cordyceps' %}style="border: 1px solid #FED880 !important; background: #FED880"{% elsif block.settings.product.handle contains 'reishi' %}style="border: 1px solid #C26E60 !important; background: #C26E60"{% elsif block.settings.product.handle contains 'turkey' %}style="border 1px solid: #A9D3DD!important; background: #A9D3DD"{% elsif block.settings.product.handle contains 'tremella' %}style="border: 1px solid #E3B6C1 !important; background: #E3B6C1"{% elsif block.settings.product.handle contains 'coffee' %}style="background-color: #b88358; border: 1px solid #b88358 !important"{% elsif block.settings.product.handle contains 'cacao' %}style="background-color:#998293; border: 1px solid #998293 !important"{% endif %}></div>
+                            <div style="width: 100%;">
+                                <div class="subscription-product-two-card-product-form-option-first-line">
+                                    <div>6 MONTH PLAN</div>
+                                    <div>{{ six_month_price }}<span style="font-weight: normal">/mo</span></div>
+                                </div>
+                                <div class="subscription-product-two-card-product-form-option-second-line">
+                                    <div>Pay {{six_month_product.price | money}}  Upfront</div>
+                                    <div
+                                    {% if block.settings.product.handle contains 'chaga' %}
+                                        style="background-color: #DE8C59 !important;"
+                                    {% elsif block.settings.product.handle contains 'mane' %}
+                                        style="background-color: #DCC7B7 !important;"
+                                    {% elsif block.settings.product.handle contains 'cordyceps' %}
+                                        style="background-color: #FED880 !important;"
+                                    {% elsif block.settings.product.handle contains 'reishi' %}
+                                        style="background-color: #C26E60 !important;"
+                                    {% elsif block.settings.product.handle contains 'turkey' %}
+                                        style="background-color: #A9D3DD!important;"
+                                    {% elsif block.settings.product.handle contains 'tremella' %}
+                                        style="background-color: #E3B6C1 !important;"
+                                    {% elsif block.settings.product.handle contains 'coffee' %}
+                                        style="background-color: #b88358 !important;"
+                                    {% elsif block.settings.product.handle contains 'cacao' %}
+                                        style="background-color:#998293 !important"
+                                    {% endif %}
+                                    >SAVE 20%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subscription-product-two-card-product-form-option">
+                            <div class="subscription-product-two-card-product-form-option-radio-button filled-radio-button-two"  {% if block.settings.product.handle contains 'chaga' %}style="border: 1px solid #DE8C59 !important; background: #DE8C59"{% elsif block.settings.product.handle contains 'mane' %}style="border: 1px solid #DCC7B7 !important; background: #DCC7B7" {% elsif block.settings.product.handle contains 'cordyceps' %}style="border: 1px solid #FED880 !important; background: #FED880"{% elsif block.settings.product.handle contains 'reishi' %}style="border: 1px solid #C26E60 !important; background: #C26E60"{% elsif block.settings.product.handle contains 'turkey' %}style="border 1px solid: #A9D3DD!important; background: #A9D3DD"{% elsif block.settings.product.handle contains 'tremella' %}style="border: 1px solid #E3B6C1 !important; background: #E3B6C1"{% elsif block.settings.product.handle contains 'coffee' %}style="background-color: #b88358; border: 1px solid #b88358"{% elsif block.settings.product.handle contains 'cacao' %}style="background-color:#998293; border: 1px solid #998293"{% endif %}></div>
+                            <div style="width: 100%;">
+                                <div class="subscription-product-two-card-product-form-option-first-line">
+                                    <div>12 MONTH PLAN</div>
+                                    <div>{{ twelve_month_price }}<span style="font-weight: normal">/mo</span></div>
+                                </div>
+                                <div class="subscription-product-two-card-product-form-option-second-line">
+                                    <div>Pay {{twelve_month_product.price | money}}  Upfront</div>
+                                    <div
+                                    {% if block.settings.product.handle contains 'chaga' %}
+                                        style="background-color: #DE8C59 !important;"
+                                    {% elsif block.settings.product.handle contains 'mane' %}
+                                        style="background-color: #DCC7B7 !important;"
+                                    {% elsif block.settings.product.handle contains 'cordyceps' %}
+                                        style="background-color: #FED880 !important;"
+                                    {% elsif block.settings.product.handle contains 'reishi' %}
+                                        style="background-color: #C26E60 !important;"
+                                    {% elsif block.settings.product.handle contains 'turkey' %}
+                                        style="background-color: #A9D3DD!important;"
+                                    {% elsif block.settings.product.handle contains 'tremella' %}
+                                        style="background-color: #E3B6C1 !important;"
+                                    {% elsif block.settings.product.handle contains 'coffee' %}
+                                        style="background-color: #b88358 !important;"
+                                    {% elsif block.settings.product.handle contains 'cacao' %}
+                                        style="background-color:#998293 !important"
+                                    {% endif %}
+                                    >SAVE 25%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subscription-product-two-form show-product-form">
+                            {% form 'product', three_month_product, class:'product-form' %}
+                                <input class="hide" type="hidden" hidden name="id" value="{{ three_month_product.variants.first.id }}" />
+                                <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+                                <button type="autoship_submit" class="collsubmit add_btn subscription-product-two-card-add-to-cart-cta" {% if block.settings.product.handle contains 'chaga' %}style="background-color: #DE8C59 !important;"{% elsif block.settings.product.handle contains 'mane' %}style="background-color: #DCC7B7 !important;"{% elsif block.settings.product.handle contains 'cordyceps' %}style="background-color: #FED880 !important;"{% elsif block.settings.product.handle contains 'reishi' %}style="background-color: #C26E60 !important;"{% elsif block.settings.product.handle contains 'turkey' %}style="background-color: #A9D3DD!important;"{% elsif block.settings.product.handle contains 'tremella' %}style="background-color: #E3B6C1 !important;"{% elsif block.settings.product.handle contains 'coffee' %}style="background-color: #b88358 !important;"{% elsif block.settings.product.handle contains 'cacao' %}style="background-color:#998293 !important"{% endif %}>
+                                    ADD TO CART
+                                </button>
+                            {% endform %}
+                        </div>
+                        <div class="subscription-product-two-form">
+                            {% form 'product', six_month_product, class:'product-form' %}
+                                <input class="hide" type="hidden" hidden name="id" value="{{ six_month_product.variants.first.id }}" />
+                                <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+                                <button type="autoship_submit" class="collsubmit add_btn subscription-product-two-card-add-to-cart-cta" {% if block.settings.product.handle contains 'chaga' %}style="background-color: #DE8C59 !important;"{% elsif block.settings.product.handle contains 'mane' %}style="background-color: #DCC7B7 !important;"{% elsif block.settings.product.handle contains 'cordyceps' %}style="background-color: #FED880 !important;"{% elsif block.settings.product.handle contains 'reishi' %}style="background-color: #C26E60 !important;"{% elsif block.settings.product.handle contains 'turkey' %}style="background-color: #A9D3DD!important;"{% elsif block.settings.product.handle contains 'tremella' %}style="background-color: #E3B6C1 !important;"{% elsif block.settings.product.handle contains 'coffee' %}style="background-color: #b88358 !important;"{% elsif block.settings.product.handle contains 'cacao' %}style="background-color:#998293 !important"{% endif %}>
+                                    ADD TO CART
+                                </button>
+                            {% endform %}
+                        </div>
+                        <div class="subscription-product-two-form">
+                            {% form 'product', twelve_month_product, class:'product-form' %}
+                                <input class="hide" type="hidden" hidden name="id" value="{{ twelve_month_product.variants.first.id }}" />
+                                <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+                                <button type="autoship_submit" class="collsubmit add_btn subscription-product-two-card-add-to-cart-cta" {% if block.settings.product.handle contains 'chaga' %}style="background-color: #DE8C59 !important;"{% elsif block.settings.product.handle contains 'mane' %}style="background-color: #DCC7B7 !important;"{% elsif block.settings.product.handle contains 'cordyceps' %}style="background-color: #FED880 !important;"{% elsif block.settings.product.handle contains 'reishi' %}style="background-color: #C26E60 !important;"{% elsif block.settings.product.handle contains 'turkey' %}style="background-color: #A9D3DD!important;"{% elsif block.settings.product.handle contains 'tremella' %}style="background-color: #E3B6C1 !important;"{% elsif block.settings.product.handle contains 'coffee' %}style="background-color: #b88358 !important;"{% elsif block.settings.product.handle contains 'cacao' %}style="background-color:#998293 !important"{% endif %}>
+                                    ADD TO CART
+                                </button>
+                            {% endform %}
+                        </div>
+
+                        <div class="subscription-product-two-card-cancel-cta">CANCEL</div> 
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="subscription-product-two-card-one-time-cta" style="margin-top: 60px;background: #000000; color: #ffffff; text-align: center;"><a href="{{ section.settings.collection_link }}">SHOP THE FULL COLLECTION</a></div>
+    </div>
+    <div class="subscription-product-two-carousel-buttons-container">
+        <div class="swiper-subscription-button-two-prev" style="margin-left: 20px">
+            {% render 'icon-left-arrow-carousel' %}
+        </div>
+        <div class="swiper-subscription-button-two-next" style="margin-right: 20px">
+            {% render 'icon-left-arrow-carousel' %}
+        </div>
+    </div>
+</div>
+
+
+
+{% javascript %}
+
+// Slider
+
+const swiper = new Swiper('.subscriptions-slider-two', {
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1,  
+    breakpoints: {
+        769: {
+            slidesPerView: 4
+        }
+    },      
+    navigation: {
+        nextEl: ".swiper-subscription-button-two-next",
+        prevEl: ".swiper-subscription-button-two-prev"
+    }
+
+  });
+
+// Hide/Show Product Form for 3,6,12 Month Subscriptions
+let subscribeButtons = document.querySelectorAll('.subscription-product-two-card-subscription-cta')
+let cancelButtons = document.querySelectorAll('.subscription-product-two-card-cancel-cta')
+let productForms =  document.querySelectorAll('.subscription-product-two-card-product-form')
+
+for (let i = 0; i < subscribeButtons.length; i++) {
+    subscribeButtons[i].addEventListener('click', () => {
+        productForms[i].classList.toggle('show-product-form')
+        subscribeButtons[i].style.display = 'none'
+    })
+}
+
+for (let i = 0; i < cancelButtons.length; i++) {
+    cancelButtons[i].addEventListener('click', () => {
+        productForms[i].classList.toggle('show-product-form')
+        subscribeButtons[i].style.display = 'block'
+    })
+}
+
+// Select Different Subscription Options
+let allSubscriptionOptions = document.querySelectorAll('.subscription-product-two-card-product-form-option')
+let allSubscriptionRadios = document.querySelectorAll('.subscription-product-two-card-product-form-option-radio-button')
+let allAddCartButtons = document.querySelectorAll('.subscription-product-two-form')
+
+for (let i = 0; i < allSubscriptionOptions.length; i++) {
+    allSubscriptionOptions[i].addEventListener('click', () => {
+        allSubscriptionRadios.forEach(function(element) {element.classList.add('filled-radio-button-two')})
+        allSubscriptionRadios[i].classList.toggle('filled-radio-button-two')
+
+        allAddCartButtons.forEach(function(element) {element.classList.remove('show-product-form')})
+        allAddCartButtons[i].classList.add('show-product-form')
+    })
+}
+
+
+{% endjavascript %}
+
+{% style %}
+
+.subscription-product-two-carousel-container {
+    background: var(--light-grey);
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.subscription-product-two-carousel-title {
+    font-family: "Manifold";
+    letter-spacing: 0;
+    line-height: 41px;
+    text-align: center;
+    margin-bottom: 45px;
+    padding: 0 15px;
+}
+
+.subscription-product-two-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    font-family: 'Manifold Regular';
+    color: #252525;
+    width: 300px
+}
+
+.subscription-product-two-card-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subscription-product-two-card-image img {
+    max-width: 230px;
+    margin-left: 60px;
+}
+
+.subscription-product-two-card-title {
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: 29px;
+    margin-top: 20px;
+}
+
+.subscription-product-two-card-subtitle {
+    font-family: 'Manifold';
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-top: 5px;
+}
+
+.subscription-product-two-card-reviews-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 16px;
+    margin-top: 20px;
+}
+
+.subscription-product-two-card-reviews-container span {
+    margin-left: 5px;
+}
+
+.subscription-product-two-card-one-time-cta {
+    background-color: #ffffff;
+    font-size: 12px;
+    color: #252525;
+    width: 280px;
+    margin: auto;
+    border-radius: 25px;
+    border: none;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subscription-product-two-card-one-time-cta a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.subscription-product-two-card-subscription-cta {
+    background-color: #000000;
+    font-size: 12px;
+    color: #ffffff;
+    width: 280px;
+    margin: auto;
+    border-radius: 25px;
+    padding: 15px;
+    margin-bottom: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subscription-product-two-card-product-form {
+    display: none;
+}
+
+.show-product-form {
+    display: block;
+}
+
+.subscription-product-two-carousel-buttons-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -410px;
+    z-index: 1;
+}
+
+.swiper-subscription-button-two-next {
+    cursor: pointer;
+}
+
+.swiper-subscription-button-two-next {
+    transform: scale(-1, 1);
+    cursor: pointer;
+}
+
+.subscription-product-two-card-add-to-cart-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 280px;
+    border-radius: 25px;
+    border: none;
+    background-color: #DE8C59;
+
+    color: #FFFFFF;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 14px;
+    cursor: pointer;
+}
+
+.subscription-product-two-card-cancel-cta {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-decoration: underline;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.subscription-product-two-card-product-form-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 280px;
+}
+
+.subscription-product-two-card-product-form-option-radio-button {
+    width: 22px;
+    height: 20px;
+    border-radius: 50px;
+    border: 1px solid #DE8C59;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.filled-radio-button-two {
+    background: #FFFFFF !important;
+}
+
+.subscription-product-two-card-product-form-option-first-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.subscription-product-two-card-product-form-option-second-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.subscription-product-two-card-product-form-option-second-line div:nth-child(2) {
+    color: #FFFFFF;
+    background-color: #DE8C59;
+    font-size: 10px;
+    border-radius: 30px;
+    padding: 2px 8px;
+}
+
+.show-product-form {
+    display: block !important;
+}
+
+.subscription-product-two-form {
+    display: none;
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Dirtea Product Carousel",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Carousel Title",
+            "default": "Which DIRTEA is right for you?"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "Product",
+            "name": "Product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

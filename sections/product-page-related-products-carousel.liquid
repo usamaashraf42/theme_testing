@@ -1,0 +1,427 @@
+<div class="subscription-product-carousel-container">
+    <div class="subscription-product-carousel-title dirtea-section-title">Related products</div>
+    <div class="subscriptions-slider">
+        <div class="swiper-wrapper">
+            {% for related_product in product.metafields.shopify--discovery--product_recommendation.complementary_products.value %}
+
+                <div class="subscription-product-card-container swiper-slide">
+                    <div class="subscription-product-card-image" style="background-image: url('{{ related_product.metafields.my_fields.transparentimage | img_url: '400x' }}');">
+                        <a href="{{ related_product.url }}">
+                            <img src="{{ related_product.metafields.my_fields.transparentimage | img_url: '400x' }}"/>
+                        </a>
+                    </div>
+                    <div class="subscription-product-card-title">
+                        {% if related_product.metafields.custom.short_name %}
+                            {{ related_product.metafields.custom.short_name }}
+                        {% else %}
+                            {{ related_product.title }}
+                        {% endif %}
+                    </div>
+                    <div class="subscription-product-card-subtitle">{{ related_product.metafields.custom.purpose }}</div>
+                    <div class="subscription-product-card-reviews-container">
+                       <div class="loox-rating"
+                            data-id="{{ related_product.id }}"
+                            data-rating="{{ related_product.metafields.loox.avg_rating }}"
+                            data-raters="{{ related_product.metafields.loox.num_reviews }}"
+                        ></div><span>Reviews</span>
+                    </div>
+
+                    <a href="#" class="btn mb-15 mw-282 dirtea-add-to-cart-btn btn-dirtea-secondary" onclick="addProductToCartOnClick(event);" data-product-variant-id="{{ related_product.selected_or_first_available_variant.id }}">One time purchase {{ related_product.price | money }}</a>
+
+					{% if related_product.price !='' %}
+
+                    {% for subscription_product in related_product.metafields.custom.subscription_products.value %}
+                        {% if subscription_product.title != "" %}
+                            {% assign show_subscription_option = true %}
+                            {% break %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if show_subscription_option %}
+                    <a href="#" class="btn bg-off-black color-white border-none mw-282 mt-20 btn-dirtea-primary" onclick="openSubscriptionOptionsModal(event);" data-product-variant-id="{{ related_product.selected_or_first_available_variant.id }}">Subscribe &amp; save up to 40%</a>
+                    {% endif %}
+                    {% assign show_subscription_option = false %}
+
+					{% endif %}
+
+
+                </div>
+            {% endfor %}
+        </div>
+        {% if section.settings.collection_link %}
+        <div class="subscription-product-card-one-time-cta btn-dirtea-primary" style="margin-top: 60px; background: var(--off-black); color: #ffffff; text-align: center;"><a href="{{ section.settings.collection_link }}">SHOP THE FULL COLLECTION</a></div>
+        {% endif %}
+    </div>
+
+    {% for related_product in product.metafields.shopify--discovery--product_recommendation.complementary_products.value %}
+        {% if related_product.metafields.custom.subscription_products%}
+        {% include '23_02__subscription-selector-modal', selected_product: related_product %}
+        {% endif %}
+    {% endfor %}
+
+
+    <div class="subscription-product-carousel-buttons-container">
+        <div class="swiper-subscription-button-prev" style="margin-left: 20px">
+            {% render 'icon-left-arrow-carousel' %}
+        </div>
+        <div class="swiper-subscription-button-next" style="margin-right: 20px">
+            {% render 'icon-left-arrow-carousel' %}
+        </div>
+    </div>
+</div>
+
+{% javascript %}
+// Slider
+
+const swiper = new Swiper('.subscriptions-slider', {
+    direction: 'horizontal',
+    loop: true,
+    slidesPerView: 1,  
+    breakpoints: {
+        769: {
+            slidesPerView: 4
+        }
+    },      
+    navigation: {
+        nextEl: ".swiper-subscription-button-next",
+        prevEl: ".swiper-subscription-button-prev"
+    }
+
+  });
+
+// Hide/Show Product Form for 3,6,12 Month Subscriptions
+let subscribeButtons = document.querySelectorAll('.subscription-product-card-subscription-cta')
+let cancelButtons = document.querySelectorAll('.subscription-product-card-cancel-cta')
+let productForms =  document.querySelectorAll('.subscription-product-card-product-form')
+
+for (let i = 0; i < subscribeButtons.length; i++) {
+    subscribeButtons[i].addEventListener('click', () => {
+        productForms[i].classList.toggle('show-product-form')
+        subscribeButtons[i].style.display = 'none'
+    })
+}
+
+for (let i = 0; i < cancelButtons.length; i++) {
+    cancelButtons[i].addEventListener('click', () => {
+        productForms[i].classList.toggle('show-product-form')
+        subscribeButtons[i].style.display = 'block'
+    })
+}
+
+// Select Different Subscription Options
+let allSubscriptionOptions = document.querySelectorAll('.subscription-product-card-product-form-option')
+let allSubscriptionRadios = document.querySelectorAll('.subscription-product-card-product-form-option-radio-button')
+let allAddCartButtons = document.querySelectorAll('.subscription-product-form')
+
+for (let i = 0; i < allSubscriptionOptions.length; i++) {
+    allSubscriptionOptions[i].addEventListener('click', () => {
+        allSubscriptionRadios.forEach(function(element) {element.classList.add('filled-radio-button')})
+        allSubscriptionRadios[i].classList.toggle('filled-radio-button')
+
+        allAddCartButtons.forEach(function(element) {element.classList.remove('show-product-form')})
+        allAddCartButtons[i].classList.add('show-product-form')
+    })
+}
+
+
+{% endjavascript %}
+
+{% style %}
+
+.subscription-product-carousel-container {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    overflow: hidden;
+}
+
+.subscription-product-carousel-title {
+    font-family: "Manifold Regular";
+    letter-spacing: 0;
+    line-height: 41px;
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.subscription-product-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    font-family: 'Manifold Regular';
+    color: #252525;
+    width: 300px;
+    align-items: center;
+}
+
+.subscription-product-card-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 230px;
+    width: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.subscription-product-card-image a {
+    height: 100%;
+    width: 100%;
+}
+
+.subscription-product-card-image img {
+    max-width: 230px;
+    display: none;
+    /*margin-left: 60px;*/
+}
+
+.subscription-product-card-title {
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: 29px;
+    margin-top: 20px;
+}
+
+.subscription-product-card-subtitle {
+    font-family: 'Manifold';
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 22px;
+    margin-top: 5px;
+}
+
+.subscription-product-card-reviews-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 16px;
+    margin-top: 20px;
+}
+
+.subscription-product-card-reviews-container span {
+    margin-left: 5px;
+}
+
+.subscription-product-card-one-time-cta {
+    background-color: #ffffff;
+    font-size: 12px;
+    color: #252525;
+    width: 280px;
+    margin: auto;
+    border-radius: 25px;
+    border: none;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subscription-product-card-one-time-cta a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.subscription-product-card-subscription-cta {
+    background-color: #000000;
+    font-size: 12px;
+    color: #ffffff;
+    width: 280px;
+    margin: auto;
+    border-radius: 25px;
+    padding: 15px;
+    margin-bottom: 80px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subscription-product-card-product-form {
+    display: none;
+}
+
+.show-product-form {
+    display: block;
+}
+
+.subscription-product-carousel-buttons-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -410px;
+    z-index: 1;
+}
+
+.swiper-subscription-button-next {
+    cursor: pointer;
+}
+
+.swiper-subscription-button-next {
+    transform: scale(-1, 1);
+    cursor: pointer;
+}
+
+.subscription-product-card-add-to-cart-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 280px;
+    border-radius: 25px;
+    border: none;
+    background-color: #DE8C59;
+
+    color: #FFFFFF;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 14px;
+    cursor: pointer;
+}
+
+.subscription-product-card-cancel-cta {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-decoration: underline;
+    margin-top: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.subscription-product-card-product-form-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    width: 280px;
+}
+
+.subscription-product-card-product-form-option-radio-button {
+    width: 22px;
+    height: 20px;
+    border-radius: 50px;
+    border: 1px solid #DE8C59;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.filled-radio-button {
+    background: #FFFFFF !important;
+}
+
+.subscription-product-card-product-form-option-first-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.subscription-product-card-product-form-option-second-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    color: #252525;
+    font-size: 14px;
+    letter-spacing: 1.17px;
+    line-height: 21px;
+}
+
+.subscription-product-card-product-form-option-second-line div:nth-child(2) {
+    color: #FFFFFF;
+    background-color: #DE8C59;
+    font-size: 10px;
+    border-radius: 30px;
+    padding: 2px 8px;
+}
+
+.show-product-form {
+    display: block !important;
+}
+
+.subscription-product-form {
+    display: none;
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Subscription Carousel",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Carousel Title",
+            "default": "Which DIRTEA is right for you?"
+        },
+        {
+            "type": "url",
+            "id": "collection_link",
+            "label": "Collection Link"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "Product",
+            "name": "Product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "product_image",
+                    "label": "Product Image SRC"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "fake_title",
+                    "label": "Use a custom product title?",
+                    "default": false
+                },
+                {
+                    "type": "text",
+                    "id": "fake_title_text",
+                    "label": "Custom Title"
+                },
+                {
+                    "type": "text",
+                    "id": "product_subtitle",
+                    "label": "Product Subtitle",
+                    "default": "Product Subtitle..."
+                },
+                {
+                    "type": "number",
+                    "id": "review_count",
+                    "label": "Number of Reviews",
+                    "default": 52
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Subscription Carousel",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

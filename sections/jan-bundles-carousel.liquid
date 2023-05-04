@@ -1,0 +1,103 @@
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+
+<div style="background-color: #F7F7F7; padding-top: 80px; padding-bottom: 80px;">
+    <div class="jan-bundles-carousel-title">{{ section.settings.section_title }}</div>
+    <div class="swiper jan-bundles-swiper">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+                {% render 'jan-bundle-card' with product:block.settings.product, subtitle: block.settings.subtitle%}
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="swiper-jan-buttons-container">
+        <div class="swiper-jan-button-prev" style="height: 20px; margin-left: 20px;">
+            {% render 'icon-left-arrow-carousel' %}
+        </div>
+        <div class="swiper-jan-button-next" style="transform: rotate(180deg); height: 16px; margin-right: 20px;">
+            {% render 'icon-left-arrow-carousel' %}
+        </div>
+    </div>
+</div>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<style>
+   .swiper-jan-buttons-container {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -410px;
+    z-index: 1;
+   } 
+
+   .jan-bundles-carousel-title {
+    color: #252525;
+    font-family: "Manifold";
+    text-align: center;
+    font-size: 34px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 41px;
+    margin-bottom: 30px;
+   }
+</style>
+
+{% javascript %}
+var swiper = new Swiper(".jan-bundles-swiper", {
+    slidesPerView: 1,
+    loop: true,
+    breakpoints: {
+        769: {
+            slidesPerView: 3
+        }
+    },
+    navigation: {
+      nextEl: ".swiper-jan-button-next",
+      prevEl: ".swiper-jan-button-prev"
+    }
+  });
+
+{% endjavascript %}
+
+{% schema %}
+{
+    "name": "Jan Bundles Carousel",
+    "settings": [
+        {
+            "type": "text",
+            "id": "section_title",
+            "default": "DIRTEA Bundles & Box Sets",
+            "label": "Section Title"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "Product",
+            "name": "Product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "text",
+                    "id": "subtitle",
+                    "label": "Subtitle",
+                    "default": "Subtitle Text..."
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Jan Bundles Carousel",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

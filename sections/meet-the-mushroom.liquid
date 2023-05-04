@@ -1,0 +1,246 @@
+{% if product.handle contains 'chaga' %}
+    {% assign mushroom_type = 'chaga' %}
+{% endif %}
+
+{% if product.handle contains 'cordyceps' %}
+    {% assign mushroom_type = 'cordyceps' %}
+{% endif %}
+
+{% if product.handle contains 'reishi' %}
+    {% assign mushroom_type = 'reishi' %}
+{% endif %}
+
+{% if product.handle contains 'mane' %}
+    {% assign mushroom_type = 'lions mane' %}
+{% endif %}
+
+{% if product.handle contains 'turkey' %}
+    {% assign mushroom_type = 'turkey' %}
+{% endif %}
+
+{% if product.handle contains 'tremella' %}
+    {% assign mushroom_type = 'tremella' %}
+{% endif %}
+
+<div class="mushrooms-faq-card">
+    <div class="mushroom-faq-section-title dirtea-section-title">Meet the mushroom</div>
+
+    {% if product.metafields.custom.image_meet_the_mushroom %}
+    <div class="mushrooms-faq-image">
+        <img src="{{ product.metafields.custom.image_meet_the_mushroom | img_url: '200x' }}"/>
+    </div>
+    {% endif %}
+    {% if product.metafields.custom.short_name %}
+    <div class="mushrooms-faq-title">
+        {{ product.metafields.custom.short_name }}
+    </div>
+    {% endif %}
+    {% if product.metafields.custom.purpose %}
+    <div class="mushrooms-faq-subtitle">
+        {{ product.metafields.custom.purpose }}
+    </div>
+    {% endif %}
+    {% if product.metafields.custom.short_description %}
+    <div class="mushrooms-faq-body">
+        {{ product.metafields.custom.short_description }}
+    </div>
+    {% endif %}
+    {% if product.metafields.custom.meet_the_mushroom_items.value %}
+    <div class="mushrooms-faq-accordion">
+        {% for qa in product.metafields.custom.meet_the_mushroom_items.value %}
+            <button class="accordion-btn">
+                <span>{{ qa.question }}</span>
+                <span class="plusButton" style="width: 30px;"><img style="min-width: 30px;" src="{{ 'pdp-plus-btn.png' | asset_img_url }}"/></span>
+                <span class="minusButton hidden-button" style="width: 30px"><img img style="min-width: 30px;" src="{{ 'pdp-plus-btn.png' | asset_img_url }}"/></span> 
+            </button>
+            <div class="mushroom-panel">
+                {{ qa.answer}}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<script>
+try{
+    let accordionMushroomButtons = document.querySelectorAll('.accordion-btn')
+    let accordionMushroomPanels = document.querySelectorAll('.mushroom-panel')
+    
+    let allMushroomPluses = document.querySelectorAll('.plusButton')
+    let allMushroomMinuses = document.querySelectorAll('.minusButton')
+    
+    for (let i = 0; i < accordionMushroomButtons.length; i++) {
+        accordionMushroomButtons[i].addEventListener('click', () => {
+            accordionMushroomPanels[i].classList.toggle('visible')
+            allMushroomPluses[i].classList.toggle('hidden-button')
+            allMushroomMinuses[i].classList.toggle('hidden-button')
+        })
+    }
+} catch(err) {console.log(err)}
+
+</script>
+
+{% style %}
+
+    .mushroom-faq-section-title {
+        font-family: "Manifold";
+        letter-spacing: 0;
+        line-height: 41px;
+        text-align: center;
+        margin-top: 80px;
+        margin-bottom: 25px;
+    }
+
+    .mushrooms-faq-container {
+        background-color: #F2F3F2;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .mushrooms-faq-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 80px;
+    }
+    
+    @media (min-width: 769px) {
+        ..mushrooms-faq-container {
+            padding: 80px;
+        }
+    }
+    
+    .mushrooms-faq-title {
+        color: #252525;
+        font-family: "manifold";
+        font-size: 34px;
+        letter-spacing: 1.06px;
+        line-height: 49px;
+        text-transform: capitalize;
+        text-align: center;
+    }
+    
+    .mushrooms-faq-subtitle {
+        color: #252525;
+        font-family: "manifold";
+        font-size: 16px;
+        letter-spacing: 1.14px;
+        line-height: 22px
+    }
+    
+    .mushrooms-faq-body {
+        margin: auto;
+        margin-top: 15px;
+        margin-bottom: 40px;
+        padding: 0 20px;
+        max-width: 615px;
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 24px;
+        letter-spacing: 0;
+        line-height: 26px;
+        text-align: center;
+    }
+
+    .mushrooms-faq-image {
+        border-radius: 50%;
+        overflow: hidden;
+        width: 160px;
+        height: 160px;
+    }
+
+    .mushrooms-faq-image img {
+        width: 160px;
+        height: auto;
+    }
+    
+    .hidden-button {
+        display: none;
+      }
+    
+    .mushrooms-faq-accordion {
+        margin-top: 40px;
+        width: 100%;
+        margin: auto;
+    }
+
+    @media (min-width: 769px) {
+    .mushrooms-faq-accordion {
+        width: 45%;
+        }
+    }
+    
+      .accordion-btn {
+        margin: auto;
+        background-color: transparent;
+        color: #252525;
+        cursor: pointer;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: 1.14px;
+        line-height: 26px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0px;
+        width: 90%;
+      }
+      
+      .mushroom-panel {
+        margin: auto;
+        opacity: 0;
+        background-color: transparent;
+        overflow: hidden;
+        color: #252525;
+        font-family: "manifold";
+        font-size: 16px;
+        letter-spacing: 1.14px;
+        line-height: 22px;
+        text-align: left;
+        width: 100%;
+        height: 0px;
+        width: 90%;
+      }
+    
+      .mushroom-panel.visible {
+        transition: all 1s;  
+        opacity: 1;
+        height: auto;
+      }
+    
+      .mushrooms-faq-cta {
+        margin-top: 30px;
+        background-color: #E3B6C1;
+        color: #ffffff;
+        padding: 17px;
+        width: 280px;
+        border-radius: 25px;
+        font-family: "Manifold";
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        line-height: 17px;
+        text-align: center;
+        cursor: pointer;
+        margin: auto;
+        margin-top: 30px;
+        margin-bottom: 40px;
+      }
+
+      .how-to-dirtea-container {
+        background: #DFDCD7 !important;
+      }
+    
+    
+    {% endstyle %}

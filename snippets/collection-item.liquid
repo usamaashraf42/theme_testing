@@ -1,0 +1,134 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+
+  assign image_width = 300
+  assign image_width_2x = '600x'
+  assign image_height = 406
+  if is_carousel
+    assign image_width = 300
+    assign image_width_2x = '600x'
+    assign image_height = 350
+  endif
+
+  assign product_price = current_variant.price
+  assign product_compare_at_price = current_variant.compare_at_price
+  if product.price_varies
+    assign product_price = product.price_min
+    assign product_compare_at_price = product.compare_at_price_min
+  endif
+
+  if product_compare_at_price > product_price
+    assign savings_value = product_compare_at_price | minus: product_price | money_without_trailing_zeros
+  endif
+
+  assign preorder = false
+  for tag in product.tags
+    assign tag_downcase = tag | downcase
+    if tag_downcase contains 'preorder'
+      assign preorder = true
+      break
+    endif
+  endfor
+-%}
+
+<div class="collection-item{% if product.type == 'Gift Card' %} collection-item--gift-card{% endif %}{% if is_upsell %} collection-item--upsell{% endif %} text-center" data-collection-item>
+  {% if product.metafields.custom_fields.enable_badge == 1 and is_upsell == blank %}
+    <span class="collection-item__badge">
+      {% if product.metafields.custom_fields.enable_badge_image == 1 %}
+        <img src="{{ product.metafields.custom_fields.badge_image }}" alt="{{ product.metafields.custom_fields.badge_image_alt }}" width="80" height="80" loading="lazy">
+      {% else %}
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M45.7837 0.0245747C55.9546 0.240916 66.9515 1.25509 73.8071 8.74497C80.4767 16.0317 79.0259 26.8119 79.3256 36.6698C79.6404 47.0282 81.9851 58.1923 75.5577 66.3392C68.6092 75.1467 57.0224 79.4896 45.7837 79.185C34.8057 78.8875 25.6202 72.2294 17.5862 64.7682C9.16251 56.9452 0.214415 48.1423 0.00430924 36.6698C-0.20811 25.071 7.46192 14.7919 16.5379 7.52682C24.6964 0.996197 35.3214 -0.197967 45.7837 0.0245747Z" fill="{{ product.metafields.custom_fields.badge_color | default: '#FFD100' }}"/>
+        </svg>
+
+        <span class="collection-item__badge-text">
+          {{ product.metafields.custom_fields.badge_text | replace: '[savings]', savings_value }}
+        </span>
+      {% endif %}
+    </span>
+  {% endif %}
+
+  {% if product.featured_image != blank %}
+    <a href="{{ product.url }}"
+      title="{{ product.title }} - {{ product.price | money }}"
+      aria-label="{{ product.title }} - {{ product.price | money }}"
+      class="collection-item__image">
+      {% if product.images[1] != blank and product.featured_image.aspect_ratio == product.images[1].aspect_ratio and product.type != 'Gift Card' and is_upsell == blank %}
+        <div class="collection-item__secondary-image">
+          <img src="{{ product.images[1] | img_url: image_width_2x }}" alt="{{ product.images[1].alt }}" width="{{ image_width }}" height="{{ image_height }}" loading="lazy">
+        </div>
+      {% endif %}
+
+      {% render 'responsive-image' with
+        image: product.featured_image,
+        max_width: image_width,
+        max_height: image_height,
+        wrapper_class: 'collection-item__primary-image'
+      %}
+    </a>
+  {% endif %}
+
+  <div class="collection-item__content">
+    <h3 class="h4">
+      <a href="{{ product.url }}" title="{{ product.title }} - {{ product.price | money }}" aria-label="{{ product.title }} - {{ product.price | money }}">{{ product.title }}</a>
+    </h3>
+
+    <p>
+      {% if product.price_varies %}
+        {{ 'products.product.price_varies' | t }}
+      {% endif %}
+
+      {% if product_compare_at_price > product_price %}
+        <s>{{ product_compare_at_price | money_with_currency }}</s>
+        <span class="sale">{{ product_price | money_with_currency }}</span>
+      {% else %}
+        {{ product_price | money_with_currency }}
+      {% endif %}
+    </p>
+
+    {% unless is_upsell %}
+      <span class="collection-item__rating" data-bazaarvoice-ratings>
+          <span class="rating-summary-wrapper" data-bv-show="inline_rating" data-bv-product-id="{{ product.id }}" data-bv-redirect-url="{{ product.url }}" data-bv-seo="false">
+            {% if product.metafields.bazaarvoice.reviews-aggregate-ratings %}
+              {{ product.metafields.bazaarvoice.reviews-aggregate-ratings }}
+            {% endif %}
+          </span>
+      </span>
+    {% endunless %}
+
+    <div class="collection-item__action">
+      {% if product.has_only_default_variant %}
+        <form action="{{ routes.cart_add_url }}"
+          method="post"
+          enctype="multipart/form-data"
+          data-product-form>
+
+          <input type="hidden" name="id" value="{{ current_variant.id }}" data-product-select/>
+
+          {% if preorder %}
+            <a href="{{ product.url }}" title="Preorder {{ product.title }}" class="btn btn--outline" aria-label="Preorder {{ product.title }}">{{ 'products.product.preorder' | t }}</a>
+          {% elsif product.available == false %}
+            <button type="button" class="btn btn--outline" disabled aria-label="Sold out">{{ 'products.product.sold_out' | t }}</button>
+          {% else %}
+            <button type="submit" class="btn btn--outline" data-product-submit aria-label="Add to cart">{{ 'products.product.add_to_cart' | t }}</button>
+          {% endif %}
+        </form>
+      {% else %}
+        <button type="button" class="btn btn--outline"
+          data-modal-open="modal-quickview"
+          data-quickview-trigger="{{ product.handle }}"
+          aria-label="Open Quickview">
+          {{ 'products.product.add_to_cart' | t }}
+          {% if product.metafields.custom.maximum_cart_quantity < 1 %}
+            disabled 
+          {% else %}
+            enabled
+          {% endif %}
+        </button>
+        <script type="application/json" data-product-json>
+          {{ product | json }}
+        </script>
+      {% endif %}
+    </div>
+  </div>
+</div>

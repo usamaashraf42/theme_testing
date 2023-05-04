@@ -1,0 +1,165 @@
+<div class="swiper-slide product-carousel-card-container">
+  <div class="bundle-tier">BRONZE</div>
+  <div class="product-carousel-card-image-container">
+    <div class="discount-star-container">
+      <div class="discount-star-text">
+        15% OFF
+      </div>
+      {% render 'discount-star' %}
+    </div>
+    <a  href="/collections/bundles"><img src="https://cdn.shopify.com/s/files/1/0502/4782/7656/files/ezgif.com-gif-maker_24.gif?v=1668160587" style="height: 350px; height: 350px"/></a>
+  </div>
+  <div class="product-carousel-card-title">STORE WIDE</div>
+  <div class="product-carousel-card-subtitle">SAVE 15% ON ORDERS OVER £50</div>
+  <div class="product-carousel-card-price-container" {% if thirdProduct == true %} style="margin-bottom: 45px"{% endif %}>
+
+  </div>
+
+  <div>
+    {% comment %}
+    <form method="post" action="/cart/add">
+
+    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+  
+    <input style="display: none" min="1" type="number" id="quantity" name="quantity" value="1"/>
+  
+    <input class="buy-now-cta" type="submit" value="SHOP BUNDLE" class="btn" {% if productNumber == 1 or  productNumber == 4 %} style="background: #DE8C59; border: 1px solid #DE8C59;" {% elsif  productNumber == 3 or  productNumber == 6 %} style="background: #FED880; border: 1px solid #FED880; color: #012169;" {% endif %}/>
+
+    </form>
+    {% endcomment %}
+    <a href="https://www.dirteaworld.com/collections/all" class="buy-now-cta" style="background: #DE8C59; border: 1px solid #DE8C59;" >SHOP NOW</a>
+  </div>
+</div>
+
+{% style %}
+  .discount-star-container {
+    background: transparent;
+    position: absolute;
+    right: 0px;
+    top: 60px;
+  }
+
+  .bundle-tier {
+    color: #012169;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 46px;
+    text-align: center;
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .discount-star-container svg {
+    background: transparent;
+  }
+
+  .discount-star-text {
+    position: absolute;
+    top: 30px;
+    left: 39px;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.8px;
+    line-height: 26px;
+    text-align: center;
+    max-width: 20px;
+  }
+  
+  .product-carousel-card-container {
+    display: flex;
+    height: 100%;
+    min-height: 415px;
+    flex-direction: column;
+    background: transparent !important;
+  }  
+
+  .product-carousel-card-image-container {
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .product-carousel-card-image-container-two {
+    overflow: hidden;
+    border-radius: 15px;
+    display: none
+  }
+
+  .product-carousel-card-title {
+    color: #012169;
+    padding-top: 20px;
+    font-size: 21px;
+    letter-spacing: 0.57px;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  .product-carousel-card-subtitle {
+    color: #012169;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 22px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold
+  }
+
+  .product-carousel-card-price-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 26px;
+    color: #012169;
+    margin-bottom: 40px
+  }
+
+  .product-carousel-card-price-before {
+    text-decoration: line-through;
+    margin-right: 5px;
+  }
+
+  .product-carousel-card-price-after {
+    margin-right: 5px;
+    font-weight: bold;
+    color: red
+  }
+
+  .buy-now-cta {
+    border: 1px solid #012169;
+    border-radius: 25px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 17px;
+    background: #012169;
+    color: white;
+    transition: 0.5s;
+    min-width: 280px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-decoration: none;
+    -webkit-appearance: textfield;
+  }
+
+  .buy-now-cta:hover {
+    background: transparent !important;
+    color: #012169 !important;
+    transition: 0.5s;
+  }
+
+  /* 
+  Code for second image on hover
+  .product-carousel-card-container:hover .product-carousel-card-image-container {
+    display: none
+  }
+
+  .product-carousel-card-container:hover .product-carousel-card-image-container-two {
+    display: block 
+  } */
+{% endstyle %}

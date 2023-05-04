@@ -1,0 +1,12 @@
+{% assign bg_class = "bg-mid-grey" %}
+
+{% if blog.handle contains "recipe" %}
+    {% assign section_title = "Shop the Recipe" %}
+{% else %}
+    {% assign section_title = "Related products" %}
+{% endif %}
+
+{% assign product_list = article.metafields.custom.related_products.value %}
+{% assign limit = 3 %}
+
+{% include '23_02__product-carousel' %}

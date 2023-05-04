@@ -1,0 +1,133 @@
+<!-- Link Swiper's CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+
+{% style %}
+
+.heroSwiper {
+    margin: 0px
+}
+
+.swiper-slide-body-container {
+    position: absolute;
+    padding-bottom: 175px
+}
+
+.swiper-slide-title {
+    color: #012169;
+    font-size: 40px;
+    letter-spacing: 1px;
+    line-height: 58px;
+    text-align: center;
+    margin-bottom: 15px
+}
+
+.swiper-slide-body {
+    color: #012169;
+    font-size: 21px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 26px;
+    text-align: center;
+    margin-bottom: 20px
+}
+
+.hero-new-cta {
+    border: 1px solid #012169;
+    border-radius: 25px;
+    padding: 10px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 17px;
+    background: #012169;
+    color: white;
+    transition: 0.5s;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    min-width: 245px;
+    text-decoration: none;
+  }
+
+  .hero-new-cta:hover {
+    background: transparent;
+    color: #012169;
+    transition: 0.5s;
+  }
+
+  .swiper-slide-custom img {
+    min-height: 600px
+  }
+
+{% endstyle %}
+
+<div class="new-hero">
+    <div class="swiper heroSwiper" style="width: 100% !important;">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %} 
+                <div class="swiper-slide swiper-slide-custom">
+                    {{ block.settings.hero_image | image_url: width: 1200 | image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}
+                    <div class="swiper-slide-body-container">
+                        <div class="swiper-slide-title">{{ block.settings.hero_slide_title }}</div>
+                        <div class="swiper-slide-body">{{ block.settings.hero_slide_body }}</div>
+                        <div><a class="hero-new-cta" href="{{ block.settings.hero_slide_cta_link }}">{{ block.settings.hero_slide_cta_label }}</a></div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+</div>
+
+ <!-- Swiper JS -->
+ <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+{% schema %}
+{
+    "name": "Hero Section",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "hero_image",
+            "name": "Hero Slide Image",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "hero_image",
+                    "label": "Hero Image"
+                },
+                {
+                    "type": "text",
+                    "id": "hero_slide_title",
+                    "label": "Slide Title",
+                    "default": "Title Placeholder..."
+                },
+                {
+                    "type": "text",
+                    "id": "hero_slide_body",
+                    "label": "Slide Body",
+                    "default": "Body Placeholder..."
+                },
+                {
+                    "type": "text",
+                    "id": "hero_slide_cta_label",
+                    "label": "Slide CTA Label",
+                    "default": "SHOP NOW"
+                },
+                {
+                    "type": "url",
+                    "id": "hero_slide_cta_link",
+                    "label": "Slide CTA Link"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}
+
+{% javascript %}
+        var swiper = new Swiper(".heroSwiper", {
+        slidesPerView: 1,
+        pagination: {
+            el: ".swiper-pagination",
+          },
+      });
+{% endjavascript %}

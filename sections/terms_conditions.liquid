@@ -1,0 +1,79 @@
+<div class="page-width">
+  <div class="why_mushr_bnr cmn_bnr section-header-image lazyload" data-bgset="{% include 'bgset', image: section.settings.bg_img %}"></div>
+</div>
+<div class="page-width">
+  <div class="grid text-center">
+    <div class="grid__item">
+      <header class="section-header">
+        <div class="section-header__title collection__title">{{ section.settings.mushr_title }}</div>
+        <div class="section-header__description">{{ page.title }}</div>
+
+        <div class="collection-dropdowns">
+          <label class="medium-up--hide drop_label"></label>
+          <div class="dropdowns-inner">
+            <a href="{{ section.settings.nav1_lnk }}"><u>{{ section.settings.nav1 }}</u></a>
+            <a href="{{ section.settings.nav2_lnk }}">{{ section.settings.nav2 }}</a>
+          </div>
+        </div>
+      </header>
+    </div>
+  </div>
+</div>
+<div class="page-width small-width">
+  <div class="rte">
+    {{ section.settings.mushr_cnt }}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Terms Conditions",
+    "class" : "pagemushroom",
+    "settings": [
+      {
+        "id": "bg_img",
+       "type": "image_picker",
+        "label":"Image"
+      },
+      {
+        "id": "mushr_title",
+        "type": "text",
+        "label": "Title",
+        "default" : "Legal"
+      },
+      {
+        "id": "nav1",
+        "type": "text",
+        "label": "Nav 1"
+      },
+      {
+        "id": "nav1_lnk",
+        "type": "url",
+        "label": "Link"
+      },
+      {
+        "id": "nav2",
+        "type": "text",
+        "label": "Nav 2"
+      },
+      {
+      "id": "nav2_lnk",
+      "type": "url",
+      "label": "Link"
+      },
+      {
+        "id": "mushr_cnt",
+        "type": "html",
+        "label": "Content"
+      }
+
+
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

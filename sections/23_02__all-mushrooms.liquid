@@ -1,0 +1,183 @@
+<div class="section-all-mushrooms bg-mid-grey desktop-only">
+    <div class="mushrooms-wrapper">
+        {% for block in section.blocks %}
+        <div class="mushroom-wrapper-item text-center">
+            <div class="mushroom-item-title text-center">{{ block.settings.mushroom_name }}</div>
+            <div class="mushroom-item-image"><img src="{{ block.settings.mushroom_image | img_url: "200x" }}"></div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+.section-all-mushrooms {
+    background-image: url('{{ '23_02__mushroom-row-bg.jpg' | asset_url }}');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.mushrooms-wrapper-rolling {
+}
+
+.mushrooms-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 40px;
+    padding: 20px 0;
+}
+
+
+@media (max-width: 769px) {
+    .mushrooms-wrapper {
+        display: grid;
+        column-gap: 0;
+        padding: 20px 0;
+        grid-template-columns: 50% 50%;
+    }
+    .mushroom-item-image {width: auto !important;}
+}
+
+
+.mushroom-wrapper-item { max-width: 180px; }
+.mushroom-item-title {
+    font-size: 24px;
+    color: var(--off-black);
+}
+.mushroom-item-image {
+    width: max(calc(100vw/8), 150px);
+}
+</style>
+
+
+{% comment %}
+<div class="all-mushrooms-container desktop-only">
+    <div class="all-mushrooms-image-container">
+        <img src="{{ section.settings.mushroom_image | image_url: width: 2880 }}"/>
+    </div>
+    <div class="all-mushrooms-text-container">
+        <div>Lion's Mane</div>
+        <div>Reishi</div>
+        <div>Cordyceps</div>
+        <div>Chaga</div>
+        <div>Tremella</div>
+        <div>Turkey Tail</div>
+    </div>
+</div>
+
+<div class="all-mushrooms-swiper mobile-only">
+    <div class="swiper-wrapper" style="z-index: 0;">
+        {% for block in section.blocks %}
+            <div class="all-mushrooms-single-container swiper-slide">
+                <div>{{ block.settings.mushroom_name }}</div>
+                <img src="{{ block.settings.mushroom_image | image_url }}"/>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    const allMushroomsSwiper = new Swiper('.all-mushrooms-swiper', {
+        direction: 'horizontal',
+        loop: true,
+        slidesPerView: 1
+    });
+</script>
+
+<style>
+    .all-mushrooms-image-container {
+        height: 190px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+    }
+    .all-mushrooms-single-container {
+        width: 100%;
+    }
+    .all-mushrooms-single-container div {
+        position: absolute;
+        color: #252525;
+        font-family: "Manifold";
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 29px;
+        text-align: center;
+        margin-top: -215px;
+    }
+    .all-mushrooms-single-container img {
+        width: 100%;
+    }
+    .all-mushrooms-text-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: absolute;
+        width: 95%;
+        left:0;
+        right:0;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top: -15vw;
+        color: #252525;
+        font-family: "Manifold Regular";
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 29px;
+        text-align: center;
+    }
+    @media (min-width: 1200px) {
+        .all-mushrooms-text-container {
+            margin-top: -13vw;
+        }
+    }
+    @media (min-width: 1600px) {
+        .all-mushrooms-text-container {
+            margin-top: -10vw;
+        }
+    }
+</style>
+
+
+{% endcomment %}
+{% schema %}
+{
+    "name": "All Mushrooms (new)",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "mushroom_image",
+            "label": "Mushroom Image"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "mushroom",
+            "name": "Mushroom",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "mushroom_image",
+                    "label": "Mushroom Image"
+                },
+                {
+                    "type": "text",
+                    "id": "mushroom_name",
+                    "label": "Mushroom Name",
+                    "default": "Chaga"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "All Mushrooms",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

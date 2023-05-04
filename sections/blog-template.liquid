@@ -1,0 +1,260 @@
+{%- assign limit = section.settings.articles | times: section.settings.rows -%}
+
+<div class="blog-template" data-section-id="{{ section.id }}" data-section-type="blog-template">
+  {% paginate blog.articles by 16 %}
+  <div class="page-width">
+    <div class="why_mushr_bnr cmn_bnr section-header-image lazyload" data-bgset="{% include 'bgset', image: section.settings.bg_img %}"></div>
+  </div>
+
+  <div class="page-width">
+    <div class="grid text-center">
+      <div class="grid__item">
+        <header class="section-header">
+          <!-- <div class="section-header__title collection__title">{{ page_title }}</div> -->
+          <div class="section-header__description">{{ page_title }}</div>          
+
+          <div class="collection-dropdowns">
+            <label class="medium-up--hide drop_label"></label>
+            <div class="dropdowns-inner">
+              {% for tag in blog.all_tags %}
+              {% if current_tags contains tag %}
+              <u>{{ tag }}</u>
+              {% else %}
+              {{ tag | link_to_tag: tag }}
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </header>
+      </div>
+    </div>
+
+
+
+      {%- assign desktopColumns = section.settings.articles -%}
+      {%- assign mobileColumns = '1' -%}
+
+      {%- capture gridClasses -%}
+        {% if desktopColumns == '4' %}medium-up--one-quarter {% else %}medium-up--one-half {% endif %}
+        {% if mobileColumns == '2' %}small--one-half {% endif %}
+      {%- endcapture -%}
+
+        <div class="grid--uniform grid blog-space blog-space1">
+          {% for article in blog.articles limit:3 %}
+          <div class="card-list__column {% if blog.articles.size == 1 %}card-list__column--center{% endif %} grid__item {% if forloop.first %} medium-up--one-half small--one-whole{% else %} medium-up--one-quarter small--one-half{% endif %}">
+            {% include 'article-card-2' %}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="grid--uniform grid blog-space">
+          <div class="grid--uniform grid__item one-half small--one-whole">
+            <div class="grid--uniform grid blog-space blog-space-row">
+              {% for article in blog.articles offset:3 limit:4 %}
+              <div class="card-list__column {% if blog.articles.size == 1 %}card-list__column--center{% endif %} grid__item  small--one-whole  medium-up--one-half">
+                {% include 'article-card-2' %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="grid--uniform grid__item one-half small--one-whole">
+            <div class="grid--uniform grid blog-space">
+            {% for article in blog.articles offset:7 limit:1 %}
+            <div class="card-list__column {% if blog.articles.size == 1 %}card-list__column--center{% endif %} grid__item grid__item-single">
+              {% include 'article-card-2' %}
+            </div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="grid--uniform grid blog-space blog-space1">
+          {% for article in blog.articles offset:8 limit:3 %}
+          <div class="card-list__column {% if blog.articles.size == 1 %}card-list__column--center{% endif %} grid__item  {% if forloop.first %} medium-up--one-half small--one-half{% elsif forloop.last %} medium-up--one-quarter small--one-whole {% else %} medium-up--one-quarter small--one-half{% endif %}">
+            {% include 'article-card-2' %}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="grid--uniform grid blog-space">
+          <div class="grid--uniform grid__item one-half small--one-whole">
+            <div class="grid--uniform grid blog-space blog-space-row">
+              {% for article in blog.articles offset:11 limit:4 %}
+              <div class="card-list__column {% if blog.articles.size == 1 %}card-list__column--center{% endif %} grid__item  small--one-whole  medium-up--one-half">
+                {% include 'article-card-2' %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="grid--uniform grid__item one-half small--one-whole">
+            <div class="grid--uniform grid blog-space">
+              {% for article in blog.articles offset:15 limit:1 %}
+              <div class="card-list__column {% if blog.articles.size == 1 %}card-list__column--center{% endif %} grid__item grid__item-single">
+                {% include 'article-card-2' %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+      {% if blog.articles.size == 0 %}
+        <p class="text-center">{{ 'blogs.article.no_matches' | t }}</p>
+      {% endif %}
+
+      {% if paginate.pages > 1 %}
+        <div class="card-list__sub-actions">
+          {% include 'pagination' %}
+        </div>
+      {% endif %}
+    </div>
+
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+  "name": {
+    "cs": "Blog",
+    "da": "Blog",
+    "de": "Blog",
+    "en": "Blog",
+    "es": "Blog",
+    "fi": "Blogi",
+    "fr": "Blog",
+    "it": "Blog",
+    "ja": "ブログ",
+    "ko": "블로그",
+    "nb": "Blogg",
+    "nl": "Blog",
+    "pl": "Blog",
+    "pt-BR": "Blog",
+    "pt-PT": "Blogue",
+    "sv": "Blogg",
+    "th": "บล็อก",
+    "tr": "Blog",
+    "vi": "Blog",
+    "zh-CN": "博客",
+    "zh-TW": "網誌"
+  },
+  "settings": [
+      {
+        "id": "bg_img",
+       "type": "image_picker",
+        "label":"Blog Banner"
+      },
+    {
+        "id": "mushr_title",
+        "type": "text",
+        "label": "Title",
+        "default" : "Behold, your best creation yet"
+      },
+    {
+      "type": "select",
+      "id": "grid_style",
+      "label": {
+        "cs": "Styl mřížky",
+        "da": "Gittertypografi",
+        "de": "Rasterstil",
+        "en": "Grid style",
+        "es": "Estilo de cuadrícula",
+        "fi": "Ruudukkotyyli",
+        "fr": "Style de grille",
+        "it": "Stile griglia",
+        "ja": "グリッドスタイル",
+        "ko": "그리드 스타일",
+        "nb": "Rutenettstil",
+        "nl": "Rasterstijl",
+        "pl": "Styl siatki",
+        "pt-BR": "Estilo da grade",
+        "pt-PT": "Estilo da grelha",
+        "sv": "Rutnätsstil",
+        "th": "รูปแบบกริด",
+        "tr": "Izgara stili",
+        "vi": "Kiểu lưới",
+        "zh-CN": "网格样式",
+        "zh-TW": "網格樣式"
+      },
+      "default": "collage",
+      "options": [
+        {
+          "value": "collage",
+          "label": {
+            "cs": "Koláž",
+            "da": "Collage",
+            "de": "Collage",
+            "en": "Collage",
+            "es": "Collage",
+            "fi": "Kollaasi",
+            "fr": "Collage",
+            "it": "Collage",
+            "ja": "コラージュ",
+            "ko": "콜라주",
+            "nb": "Fotomontasje",
+            "nl": "Collage",
+            "pl": "Kolaż",
+            "pt-BR": "Colagem",
+            "pt-PT": "Colagem",
+            "sv": "Kollage",
+            "th": "ภาพตัดแปะ",
+            "tr": "Kolaj",
+            "vi": "Ghép",
+            "zh-CN": "拼贴画",
+            "zh-TW": "拼貼"
+          }
+        },
+        {
+          "value": "grid",
+          "label": {
+            "cs": "Mřížka",
+            "da": "Gitter",
+            "de": "Raster",
+            "en": "Grid",
+            "es": "Cuadrícula",
+            "fi": "Ruudukko",
+            "fr": "Grille",
+            "it": "Griglia",
+            "ja": "グリッド",
+            "ko": "그리드",
+            "nb": "Rutenett",
+            "nl": "Grid",
+            "pl": "Siatka",
+            "pt-BR": "Grade",
+            "pt-PT": "Grelha",
+            "sv": "Rutnät",
+            "th": "กริด",
+            "tr": "Izgara",
+            "vi": "Lưới",
+            "zh-CN": "网格",
+            "zh-TW": "網格"
+          }
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "cs": "Zobrazit datum",
+        "da": "Vis dato",
+        "de": "Datum anzeigen",
+        "en": "Show date",
+        "es": "Mostrar fecha",
+        "fi": "Näytä päivämäärä",
+        "fr": "Afficher la date",
+        "it": "Mostra data",
+        "ja": "日付を表示する",
+        "ko": "날짜 표시",
+        "nb": "Vis dato",
+        "nl": "Datum weergeven",
+        "pl": "Pokaż datę",
+        "pt-BR": "Exibir data",
+        "pt-PT": "Mostrar data",
+        "sv": "Visa datum",
+        "th": "แสดงวันที่",
+        "tr": "Tarihi göster",
+        "vi": "Hiển thị ngày",
+        "zh-CN": "显示日期",
+        "zh-TW": "顯示日期"
+      },
+      "default": false
+    }
+  ]
+}
+{% endschema %}

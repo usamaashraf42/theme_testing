@@ -1,0 +1,210 @@
+<!-- Amazon section starts -->
+<section class="amazon_like">
+  
+<div class="page-width">
+  
+  <div class="col-md-6 hide-on-mobile">
+    <div class="big-module" >
+      <div class="child-image" style="background-image:url('{{ section.settings.image1 | img_url:'master' }}')"></div>
+        
+      <h2>{{ section.settings.main_title1 }}</h2>
+      <div class="sub">{{ section.settings.sub_title1 }}</div><br/>
+      <a class="button-amazon" href="{{ section.settings.view-btn-link1 }}">{{ section.settings.view-btn1 }}</a>
+    </div>
+  </div>
+  
+  <div class="col-md-6 show-on-mobile">
+    <div class="big-module" style="background-image:url('{{ section.settings.image1_mob | img_url:'master' }}')">
+      <div class='module__mobile_container'>
+      <h2>{{ section.settings.main_title1 }}</h2>
+      <div class="sub">{{ section.settings.sub_title1 }}</div>
+    </div>
+      <a class="button-amazon" href="{{ section.settings.view-btn-link1 }}">{{ section.settings.view-btn1 }}</a>
+    </div>
+    
+  </div>
+  
+  <div class="col-md-6">
+    
+    <div class="small-module">
+      <div class="child-image" style="background-image:url('{{ section.settings.image2 | img_url:'master' }}')"></div>
+      <h2>{{ section.settings.main_title2 }}</h2>
+      <a class="button-amazon" href="{{ section.settings.view-btn-link2 }}">{{ section.settings.view-btn2 }}</a>
+    </div>
+    
+    <div class="small-module">
+      <div class="child-image" style="background-image:url('{{ section.settings.image3 | img_url:'master' }}')"></div>
+      <h2>{{ section.settings.main_title3 }}</h2>
+      <a class="button-amazon" href="{{ section.settings.view-btn-link3 }}">{{ section.settings.view-btn3 }}</a>
+    </div>
+    
+    <div class="small-module">
+      <div class="child-image" style="background-image:url('{{ section.settings.image4 | img_url:'master' }}')"></div>
+      <h2>{{ section.settings.main_title4 }}</h2>
+      <a class="button-amazon" href="{{ section.settings.view-btn-link4 }}">{{ section.settings.view-btn4 }}</a>
+    </div>
+    
+    <div class="small-module">
+      <div class="child-image" style="background-image:url('{{ section.settings.image5 | img_url:'master' }}')"></div>
+      <h2>{{ section.settings.main_title5 }}</h2>
+      <a class="button-amazon" href="{{ section.settings.view-btn-link5 }}">{{ section.settings.view-btn5 }}</a>
+    </div>
+    {% if section.settings.mobile_title6 != '' %}
+    <div class="small-module show-on-mobile" style="background-image:url('{{ section.settings.image6 | img_url:'master' }}')">
+      <h2>{{ section.settings.mobile_title6 }}</h2>
+      <a class="button-amazon" href="{{ section.settings.view-btn-link6 }}">{{ section.settings.view-btn6 }}</a>
+    </div>
+    {% endif %}
+  </div>
+ 
+</div>
+  
+</section>
+<!-- Amazon section ends -->
+{% schema %}
+{
+"name": "Amazon 'Like' Module",
+"settings": [
+    {
+      "id": "main_title1",
+      "type": "text",
+      "label": "Main Heading 1"
+    },
+	{
+      "id": "sub_title1",
+      "type": "richtext",
+      "label": "Subtitle 1"
+    },
+    {
+      "id": "image1",
+      "type": "image_picker",
+      "label": "Image Module 1"
+    },
+    {
+      "id": "image1_mob",
+      "type": "image_picker",
+      "label": "Image Module 1 Mobile Image"
+    },
+    {
+      "id": "view-btn-link1",
+      "type": "url",
+      "label": "Button URL 1"
+    },
+    {
+      "id": "view-btn1",
+      "type": "text",
+      "label": "Button Text 1"
+    },
+	{
+      "id": "main_title2",
+      "type": "text",
+      "label": "Main Heading 2"
+    },
+    {
+      "id": "view-btn-link2",
+      "type": "url",
+      "label": "Button URL 2"
+    },
+    {
+      "id": "view-btn2",
+      "type": "text",
+      "label": "Button Text 2"
+    },
+    {
+      "id": "image2",
+      "type": "image_picker",
+      "label": "Image Module 2"
+    },
+	{
+      "id": "main_title3",
+      "type": "text",
+      "label": "Main Heading 3"
+    },
+    {
+      "id": "view-btn-link3",
+      "type": "url",
+      "label": "Button URL 3"
+    },
+    {
+      "id": "view-btn3",
+      "type": "text",
+      "label": "Button Text 3"
+    },
+    {
+      "id": "image3",
+      "type": "image_picker",
+      "label": "Image Module 3"
+    },
+	{
+      "id": "main_title4",
+      "type": "text",
+      "label": "Main Heading 4"
+    },
+    {
+      "id": "view-btn-link4",
+      "type": "url",
+      "label": "Button URL 4"
+    },
+    {
+      "id": "view-btn4",
+      "type": "text",
+      "label": "Button Text 4"
+    },
+    {
+      "id": "image4",
+      "type": "image_picker",
+      "label": "Image Module 4"
+    },
+	{
+      "id": "main_title5",
+      "type": "text",
+      "label": "Main Heading 5"
+    },
+    {
+      "id": "view-btn-link5",
+      "type": "url",
+      "label": "Button URL 5"
+    },
+    {
+      "id": "image5",
+      "type": "image_picker",
+      "label": "Image Module 5"
+    },
+    {
+      "id": "view-btn5",
+      "type": "text",
+      "label": "Button Text 5"
+    },
+	{
+      "id": "mobile_title6",
+      "type": "text",
+      "label": "Mobile Heading 6"
+    },
+    {
+      "id": "view-btn-link6",
+      "type": "url",
+      "label": "Button URL 6"
+    },
+    {
+      "id": "image6",
+      "type": "image_picker",
+      "label": "Mobile Image Module 6"
+    },
+    {
+      "id": "view-btn6",
+      "type": "text",
+      "label": "Button Text 6"
+    }
+  ],
+"presets": [
+{
+"name": "Amazon 'Like' Module",
+"category": "ADVANCED LAYOUT"
+}
+]
+}
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+{% javascript %}
+{% endjavascript %}

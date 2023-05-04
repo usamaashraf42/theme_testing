@@ -1,0 +1,218 @@
+<div class="turkey-benefits-container">
+    <div class="turkey-benefits-lhs">
+        <div class="turkey-benefits-lhs-title">{{ section.settings.section_title }}</div>
+        <div class="turkey-benefits-lhs-subtitle">{{ section.settings.section_subtitle }}</div>
+        <div class="turkey-benefits-lhs-body">{{ section.settings.section_body }}</div>
+        <div class="turkey-benefits-lhs-icon-container">
+            <div class="turkey-benefits-lhs-icon-title">{{ section.settings.icons_title }}</div>
+            <div class="turkey-benefits-lhs-icon-block">
+                {% for block in section.blocks %}
+                    <div class="turkey-benefits-lhs-icon">
+                        <div style="margin-right: 8px;">{% render 'tremella-tick' %}</div>
+                        <div>{{ block.settings.benefit }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="turkey-benefits-lhs-icon-title">{{ section.settings.servings }}</div>
+            <div class="turkey-benefits-lhs-icon-title" style="font-size: 3.2rem; margin-top: 10px;">£49.99</div>
+        </div>
+        <div class="turkey-benefits-lhs-cta" onclick="addToCart()">BUY NOW</div>
+    </div>
+    <div class="turkey-benefits-rhs">
+        <img src="{{ section.settings.rhs_image | image_url: width: '2500x2500' }}"/>
+    </div>
+</div>
+
+<script>
+    function addToCart() {
+        document.querySelector('.turkey-cta').click()
+    }
+</script>
+
+{% style %}
+
+.turkey-benefits-container {
+    background: #EAE1DA;
+    font-family: "Manifold Regular";
+    color: #252525;
+    text-align: left;
+
+    display: flex;
+    flex-direction: column-reverse;
+
+}
+
+@media (min-width: 769px) {
+    .turkey-benefits-container {
+        padding: 40px 0px 80px 80px;
+        flex-direction: row-reverse;
+    }
+}
+
+.turkey-benefits-lhs {
+    padding-left: 20px;
+}
+
+@media (min-width: 769px) {
+    .turkey-benefits-lhs {
+        padding-left: unset;
+    }
+}
+
+.turkey-benefits-lhs-title {
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    margin-top: 30px;
+}
+
+.turkey-benefits-lhs-subtitle {
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    line-height: 35px;
+}
+
+.turkey-benefits-lhs-body {
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.turkey-benefits-lhs-icon-title {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1.14px;
+    line-height: 23px
+}
+
+.turkey-benefits-lhs-cta {
+    margin-top: 30px;
+    background-color: #A9D3DD;
+    color: #ffffff;
+    padding: 17px;
+    width: 280px;
+    border-radius: 25px;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+    text-align: center;
+    cursor: pointer;
+}
+
+@media (max-width: 769px) {
+    .turkey-benefits-lhs-cta {
+        margin-bottom: 40px;
+    }
+}
+
+
+.turkey-benefits-lhs-icon {
+    display: flex;
+    color: #252525;
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 28px;
+}
+
+.turkey-benefits-lhs-icon-block {
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-gap: 5px;
+    margin-bottom: 30px;
+    margin-top: 40px;
+}
+
+@media (min-width: 769px) {
+    .turkey-benefits-lhs-icon-block {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 20px;
+    grid-gap: 5px;
+    margin-bottom: 30px;
+    margin-top: 40px;
+} 
+}
+
+.turkey-benefits-rhs img {
+    width: 100%;
+    height: auto;
+}
+
+@media (min-width: 769px) {
+    .turkey-benefits-rhs {
+        
+    }
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Turkey Benefits",
+    "settings": [
+        {
+            "type": "image_picker",
+            "label": "RHS Image",
+            "id": "rhs_image"
+        },
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Title",
+            "default": "DIRTEA Turkey Tail"
+        },
+        {
+            "type": "text",
+            "id": "section_subtitle",
+            "label": "Subtitle",
+            "default": "The Immunity Mushroom"
+        },
+        {
+            "type": "textarea",
+            "id": "section_body",
+            "label": "Body Text",
+            "default": "<p>Your new daily mushroom powder for a stronger and healthier immune system, reduced inflammation and improved gut health. Working at a cellular level, Turkey Tail stimulates the release of immune-supportive polysaccharides compounds and helps nourish the good bacteria in your gut.</p>"
+        },
+        {
+            "type": "text",
+            "id": "icons_title",
+            "label": "Icon Section Title",
+            "default": "An inside-out approach to beauty"
+        },
+        {
+            "type": "text",
+            "id": "servings",
+            "label": "Serving Info",
+            "default": "Size: 60g, Servings: 30"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "icon_block",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "benefit",
+                    "label": "Benefit",
+                    "default": "Increased hydration"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Turkey Benefits",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,217 @@
+<div class="tremella-benefits-container">
+    <div class="tremella-benefits-lhs">
+        <div class="tremella-benefits-lhs-title">{{ section.settings.section_title }}</div>
+        <div class="tremella-benefits-lhs-subtitle">{{ section.settings.section_subtitle }}</div>
+        <div class="tremella-benefits-lhs-body">{{ section.settings.section_body }}</div>
+        <div class="tremella-benefits-lhs-icon-container">
+            <div class="tremella-benefits-lhs-icon-title">{{ section.settings.icons_title }}</div>
+            <div class="tremella-benefits-lhs-icon-block">
+                {% for block in section.blocks %}
+                    <div class="tremella-benefits-lhs-icon">
+                        <div style="margin-right: 8px;"><img src="{{ '23_02__tick-grey.svg' | asset_url}}"></div>
+                        <div>{{ block.settings.benefit }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="tremella-benefits-lhs-icon-title">{{ section.settings.servings }}</div>
+            <div class="tremella-benefits-lhs-icon-title" style="font-size: 3.2rem; margin-top: 10px;">£49.99</div>
+        </div>
+        <div class="tremella-benefits-lhs-cta" onclick="addToCartTwo()">BUY NOW</div>
+    </div>
+    <div class="tremella-benefits-rhs">
+        <img src="{{ section.settings.rhs_image | image_url: width: '2500x2500' }}"/>
+    </div>
+</div>
+
+<script>
+    function addToCartTwo() {
+        document.querySelector('.tremella-cta').click()
+    }
+</script>
+
+{% style %}
+
+.tremella-benefits-container {
+    background: #EAE1DA;
+    font-family: "Manifold Regular";
+    color: #252525;
+    text-align: left;
+
+    display: flex;
+    flex-direction: column-reverse;
+
+}
+
+@media (min-width: 769px) {
+    .tremella-benefits-container {
+        padding: 40px 0px 80px 80px;
+        flex-direction: row;
+    }
+}
+
+.tremella-benefits-lhs {
+    padding-left: 20px;
+}
+
+@media (min-width: 769px) {
+    .tremella-benefits-lhs {
+        padding-left: unset;
+    }
+}
+
+.tremella-benefits-lhs-title {
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    margin-top: 30px;
+}
+
+.tremella-benefits-lhs-subtitle {
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    line-height: 35px;
+}
+
+.tremella-benefits-lhs-body {
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.tremella-benefits-lhs-icon-title {
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1.14px;
+    line-height: 23px
+}
+
+.tremella-benefits-lhs-cta {
+    margin-top: 30px;
+    background-color: #E3B6C1;
+    color: #ffffff;
+    padding: 17px;
+    width: 280px;
+    border-radius: 25px;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+    text-align: center;
+    cursor: pointer;
+}
+
+@media (max-width: 769px) {
+    .tremella-benefits-lhs-cta {
+        margin-bottom: 40px;
+    }
+}
+
+.tremella-benefits-lhs-icon {
+    display: flex;
+    color: #252525;
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 28px;
+}
+
+.tremella-benefits-lhs-icon-block {
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    grid-gap: 5px;
+    margin-bottom: 30px;
+    margin-top: 40px;
+}
+
+@media (min-width: 769px) {
+    .tremella-benefits-lhs-icon-block {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 20px;
+    grid-gap: 5px;
+    margin-bottom: 30px;
+    margin-top: 40px;
+} 
+}
+
+.tremella-benefits-rhs img {
+    width: 100%;
+    height: auto;
+}
+
+@media (min-width: 769px) {
+    .tremella-benefits-rhs {
+        
+    }
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Tremella Benefits",
+    "settings": [
+        {
+            "type": "image_picker",
+            "label": "RHS Image",
+            "id": "rhs_image"
+        },
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Title",
+            "default": "DIRTEA Tremella"
+        },
+        {
+            "type": "text",
+            "id": "section_subtitle",
+            "label": "Subtitle",
+            "default": "The Beauty Mushroom"
+        },
+        {
+            "type": "textarea",
+            "id": "section_body",
+            "label": "Body Text",
+            "default": "<p>Your new daily mushroom powder for improved skin tone, elasticity, hydration, thicker hair, stronger nails, reduction in fine lines and wrinkles and getting rid of blemishes, thanks to DIRTEA Tremella’s high levels of polysaccharides and antioxidants.</p>"
+        },
+        {
+            "type": "text",
+            "id": "icons_title",
+            "label": "Icon Section Title",
+            "default": "An inside-out approach to beauty"
+        },
+        {
+            "type": "text",
+            "id": "servings",
+            "label": "Serving Info",
+            "default": "Size: 60g, Servings: 30"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "icon_block",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "benefit",
+                    "label": "Benefit",
+                    "default": "Increased hydration"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Tremella Benefits",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema %}

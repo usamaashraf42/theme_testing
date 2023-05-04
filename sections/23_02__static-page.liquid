@@ -1,0 +1,56 @@
+{% if page.metafields.custom.hero_image %}
+  <div class="static-page-hero {{ page.handle }}" style="background-image: url('{{ page.metafields.custom.hero_image | img_url: '1200x' }}'); {% if page.metafields.custom.herp_image_y_offset_in_px %} background-position-y: {{ page.metafields.custom.herp_image_y_offset_in_px }}px;{% endif %}"></div>
+{% endif %}
+
+<div class="page-width dirtea-content-page">
+  <header class="section-header text-center">
+    {% if page.metafields.custom.page_category %}
+      <h3 class="section-header__subtitle">{{ page.metafields.custom.page_category }}</h3>
+    {% endif %}
+    <h1 class="section-header__title">{{ page.title }}</h1>
+  </header>
+  {% if page.metafields.custom.page_category %}
+    <div class="dirtea-page-menu">
+      <ul>
+        {% if page.metafields.custom.page_category == "About Dirtea" %}
+          <li {% if page.handle == "why-mushrooms" %}class="active"{% endif %}>
+            <a href="/pages/why-mushrooms">Why mushrooms?</a>
+          </li>
+          <li {% if page.handle == "our-story-1" %}class="active"{% endif %}>
+            <a href="/pages/our-story-1">Our story</a>
+          </li>
+          <li {% if page.handle == "quality-ingredients" %}class="active"{% endif %}>
+            <a href="/pages/quality-ingredients">Quality ingredients</a>
+          </li>
+        {% elsif page.metafields.custom.page_category == "Legal" %}
+          <li {% if page.handle == "terms-conditions-1" %}class="active"{% endif %}>
+            <a href="/pages/terms-conditions-1">Terms & Conditions</a>
+          </li>
+          <li {% if page.handle == "privacy-cookie-notice" %}class="active"{% endif %}>
+            <a href="/pages/privacy-cookie-notice">Privacy & Cookie Notice</a>
+          </li>
+        {% elsif page.metafields.custom.page_category == "Dirtea help" %}
+          <li {% if page.handle == "faq" %}class="active"{% endif %}>
+            <a href="/pages/faq">FAQs</a>
+          </li>
+          <li {% if page.handle == "shipping-returns" %}class="active"{% endif %}>
+            <a href="/pages/shipping-returns">Shipping & returns</a>
+          </li>
+          <li {% if page.handle == "contact-us" %}class="active"{% endif %}>
+            <a href="/pages/contact-us">Contact us</a>
+          </li>
+          <li {% if page.handle == "careers" %}class="active"{% endif %}>
+            <a href="/pages/careers">Careers</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  {% endif %}
+  <div class="grid static-page-content">
+    <div class="grid__item medium-up--four-fifths medium-up--push-one-tenth">
+      <div class="rte">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+</div>

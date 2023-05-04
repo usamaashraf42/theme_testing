@@ -1,0 +1,81 @@
+<div class="reward_bnr cmn_bnr section-header-image lazyload" data-bgset="{% include 'bgset', image: section.settings.bg_img %}">
+  <div class="page-width one-whole">
+    <div class="width-small text-center">
+      <div class="">
+        <p data-aos-once="true" data-aos-delay="300" data-aos="fade-up" class="headtop" style="color:{{ section.settings.textcolor }}">{{ section.settings.sb_title }}</p>
+        <h1 data-aos-once="true" data-aos-delay="400" data-aos="fade-up" style="color:{{ section.settings.textcolor }}">{{ page.title }}</h1>
+        <p data-aos-once="true" data-aos-delay="500" data-aos="fade-up" class="subtext" style="color:{{ section.settings.textcolor }}">{{ section.settings.bnr_desc }}</p>
+      </div>
+      <div class="small--hide">
+        <div class="btn-container">
+          <a data-aos-once="true" data-aos-delay="600" data-aos="fade-up" class="btn" href="{{ section.settings.login }}">Sign in</a>
+          <a data-aos-once="true" data-aos-delay="700" data-aos="fade-up" class="btn" href="{{ section.settings.signup }}">Sign up</a>
+        </div>
+        <p class="below-title" data-aos-delay="800" data-aos="fade-up" style="color:{{ section.settings.textcolor }}">{{ section.settings.btm_txt }}</p>
+      </div>
+      <div class="medium-up--hide" data-aos-once="true" data-aos-delay="600" data-aos="fade-up">
+        <div class="btn-container">
+          <a  class="btn" href="{{ section.settings.login }}">Sign in</a>
+          <a class="btn" href="{{ section.settings.signup }}">Sign up</a>
+        </div>
+        <p class="below-title" style="color:{{ section.settings.textcolor }}">{{ section.settings.btm_txt }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Banner",
+    "class" : "pagemushroom reward-page",
+    "settings": [
+      {
+        "id": "bg_img",
+       "type": "image_picker",
+        "label":"Bg Image"
+      },
+      {
+        "id": "textcolor",
+        "type": "color",
+        "label":"Text Color",
+        "default" : "#fff"
+      },
+      {
+        "type" : "text",
+        "id" : "sb_title",
+        "label" : "Sub Heading"
+      },
+      {
+        "type" : "textarea",
+        "id" : "bnr_desc",
+        "label" : "Text",
+        "default" : "As a loyalty member, you'll earn points for exclusive rewards every time you shop."
+      },
+       {
+        "id": "login",
+        "type": "url",
+        "label": "Sign in"
+      },
+      {
+        "id": "signup",
+        "type": "url",
+        "label": "Sign up"
+      },
+      {
+        "type" : "textarea",
+        "id" : "btm_text",
+        "label" : "Text"
+      },
+      {
+        "type" : "text",
+        "id" : "btm_txt",
+        "label" : "Bottom Text"
+      }
+      ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

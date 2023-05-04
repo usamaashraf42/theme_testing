@@ -1,0 +1,32 @@
+<div class="page-width more-posts-container mt-40">
+    <h3 class="text-center dirtea-section-title">More from {{ blog.title }}</h3>
+    <div class="dirtea-blog-collection">
+        {% for more_article in blog.articles limit:10 %}
+        {% unless article.title contains more_article.title %}
+        {% if forloop.index0 <= 4 %}
+
+        {% if more_article.image %}
+        {% assign article_image = more_article.image %}
+        {% else %}
+        {% assign article_image = article.products.first %}
+        {% endif %}
+        <a href="{{ more_article.url }}" class="post-{{ forloop.index0 }}">
+            <div class="dirtea-blog-post">
+                <div class="blog-thumbnail" style="background-image: url('{{ article_image | img_url: '800x' }}')"></div>
+                <div class="blog-details">
+                    <p class="card-lead">{{ more_article.tags[0] }}</p>
+                    <p>{{ more_article.title }}</p>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+        {% endunless %}
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+.more-posts-container { margin-bottom: 100px; }
+.more-posts-container h3 { margin-bottom: 30px !important; color: var(--off-black); }
+</style>

@@ -1,0 +1,345 @@
+<div id="{{section.settings.da-collection | handleize | downcase}}">
+  <div class="da_collection_{{section.id}}">
+    <div class="da_collection_bb_{{section.id}}">
+      {% if section.settings.da_collection_heading != blank %}
+      <div class="da_collection_heading_{{section.id}}">
+        <h2>
+          {{section.settings.da_collection_heading}}
+          <div class="da_collection_arrows_{{section.id}}">
+            <div class="da_collection_arrow_{{section.id}} da_cn_arrow_prev_{{section.id}}">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 7l-5 5 5 5" stroke="#020025" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <div class="da_collection_arrow_{{section.id}} da_cn_arrow_next_{{section.id}}">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 7l5 5-5 5" stroke="#020025" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+        </h2>
+      </div>
+      {% endif %}
+      <div class="da_collection_content_{{section.id}} swiper mySwiper_{{section.id}}">
+        <div class="swiper-wrapper">
+          {%- for block in section.blocks -%}
+          <div class="da_collection_product_{{section.id}} swiper-slide">
+            <a href="{{block.settings.url}}">
+              <div class="da_cn_product_img_{{section.id}}">
+            {% if block.settings.image != blank %}
+                <img src="{{block.settings.image | img_url:"master"}}">
+            {% endif %}
+              </div>
+              <div class="da_cn_product_info_{{section.id}}">
+                <h2>{{block.settings.title}}</h2>
+                <h3>{{block.settings.price }}</h3>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .da_collection_{{section.id}} {
+    width: 100%;
+    padding: 0px 70px;
+  }
+
+  .da_collection_bb_{{section.id}} {
+    width: 100%;
+    border-bottom: 1px solid rgba(18, 18, 18, 0.1);
+    padding: 30px 0px 20px;
+  }
+
+  .da_collection_heading_{{section.id}} {
+    width: 100%;
+    padding: 0px 0px 20px;
+  }
+
+  .da_collection_heading_{{section.id}} h2 {
+    margin: 0px;
+    color: rgb(37, 37, 37);
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 30px;
+    position: relative;
+  }
+
+  .da_cn_arrow_next_{{section.id}} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    cursor: pointer;
+  }
+
+  .da_cn_arrow_prev_{{section.id}} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 40px;
+    cursor: pointer;
+  }
+
+  .da_collection_arrow_{{section.id}} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .da_collection_arrow_{{section.id}} svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .swiper-button-disabled {
+    display: none;
+  }
+
+  .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+    display: none !important;
+  }
+
+  .da_collection_product_{{section.id}} a {
+    text-decoration: none;
+  }
+
+  .da_cn_product_img_{{section.id}} {
+    width: 100%;
+    height: 150px;
+  }
+
+  .da_cn_product_img_{{section.id}} img {
+    width: 100%;
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 10px;
+  }
+
+  .da_cn_product_info_{{section.id}} {
+    width: 100%;
+  }
+
+  .da_cn_product_info_{{section.id}} h2 {
+    margin: 0px;
+    color: rgb(37, 37, 37);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 17px;
+    padding: 15px 0px 0px;
+       overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    white-space: pre-wrap;
+  }
+
+  .da_cn_product_info_{{section.id}} h3 {
+    margin: 0px;
+    color: rgb(37, 37, 37);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 17px;
+    padding: 10px 0px 0px;
+  }
+
+  @media (max-width: 768px){
+    .da_collection_{{section.id}} {
+      padding: 0px 50px;
+    }
+
+    .da_collection_heading_{{section.id}} h2 {
+      font-size: 27px;
+      line-height: 27px;
+    }
+
+    .da_cn_product_img_{{section.id}} {
+      height: 150px;
+    }
+
+    .da_cn_product_info_{{section.id}} h2 {
+      font-size: 14px;
+      line-height: 16px;
+    }
+
+    .da_cn_product_info_{{section.id}} h3 {
+      font-size: 14px;
+      line-height: 16px;
+    }
+     .da_collection_arrow_{{section.id}} {
+    display: none;
+  }
+  }
+
+  @media (max-width: 490px){
+    .da_collection_{{section.id}} {
+      padding: 0px 20px;
+    }
+
+    .da_cn_arrow_prev_{{section.id}} {
+      right: 35px;
+    }
+
+    .da_collection_heading_{{section.id}} h2 {
+      font-size: 25px;
+      line-height: 25px;
+    }
+
+    .da_cn_product_info_{{section.id}} h2 {
+      font-size: 13px;
+      line-height: 15px;
+    }
+
+    .da_cn_product_info_{{section.id}} h3 {
+      font-size: 13px;
+      line-height: 15px;
+    }
+  }
+  
+</style>
+
+<script>
+  // var swiper = new Swiper(".mySwiper_{{section.id}}", {
+  //   slidesPerView: 4,
+  //   spaceBetween: 10,
+  //   freeMode: true,
+  //   navigation: {
+  //     nextEl: ".da_cn_arrow_next_{{section.id}}",
+  //     prevEl: ".da_cn_arrow_prev_{{section.id}}",
+  //   },
+  //   pagination: {
+  //     el: ".swiper-pagination",
+  //     clickable: true,
+  //   },
+  //   breakpoints: {
+  //     320: {
+  //       slidesPerView: 2.5,
+  //     },
+  //     491: {
+  //       slidesPerView: 3.5,
+  //     },
+  //     769: {
+  //       slidesPerView: 4,
+  //     },
+  //   },
+  // });
+
+  (function() {
+
+  'use strict';
+  const breakpoint = window.matchMedia( '(max-width:768px)' );
+  let mySwiper;
+
+  const breakpointChecker = function() {
+    if ( breakpoint.matches === true ) {
+	  if ( mySwiper !== undefined ) mySwiper.destroy( true, true );
+	  return;
+      } else if ( breakpoint.matches === false ) {
+        return enableSwiper();
+      }
+
+  };
+
+  const enableSwiper = function() {   
+
+ var mySwiper = new Swiper(".mySwiper_{{section.id}}", {
+    slidesPerView: 4,
+    spaceBetween: 10,
+    freeMode: true,
+    navigation: {
+      nextEl: ".da_cn_arrow_next_{{section.id}}",
+      prevEl: ".da_cn_arrow_prev_{{section.id}}",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 2.5,
+      },
+      491: {
+        slidesPerView: 3.5,
+      },
+      769: {
+        slidesPerView: 4,
+      },
+    },
+  });
+
+  };
+
+  breakpoint.addListener(breakpointChecker);
+
+  breakpointChecker();
+
+})();
+</script>
+
+{% schema %}
+  {
+    "name": "DA Collection",
+    "settings": [
+    {
+    "type": "text",
+    "id": "da-collection",
+    "label": "Section ID"
+    },
+    {
+    "type": "text",
+    "id": "da_collection_heading",
+    "label": "Heading",
+    "default": "Shop DIRTEA"
+    }
+    ],
+    "blocks" : [
+      {
+        "type" : "block-1",
+        "name" : "Product",
+        "settings" : [
+           {
+"type" : "url",
+        "id" : "url",
+        "label" : "URL"
+        },
+        {
+"type" : "image_picker",
+        "id" : "image",
+        "label" : "Image"
+        },
+        {
+"type" : "text",
+        "id" : "title",
+        "label" : "Title",
+        "default" : "Title"
+        },
+        {
+"type" : "text",
+        "id" : "price",
+        "label" : "Price",
+        "default" : "Price"
+        }
+        ]
+      }
+    ],
+    "presets": [
+    {
+    "name": "DA Collection",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,101 @@
+        <form action="{{ routes.cart_url }}" method="post" class="dirtea-cart-form">
+
+            <div class="dirtea-cart-added-products">
+
+            {% comment %}
+                <div class="dirtea-cart-added-products-item" data-product-key="${ item.key }" data-product-price="${ item.price }">
+
+                    <div class="dirtea-cart-product-item-row">
+                        <div class="dirtea-cart-product-item-image-container">
+                            <a
+                                href="#"
+                                class="remove-product-from-cart"
+                                onclick="setQuantityToZeroOnClick(event)"
+                                data-product-variant-id="${ item.product_variant_id }"
+                                data-product-selling-plan-id="${ item.selling-plan_id }"
+    
+                            >{% render 'icon-close' %}</a>
+                            <a href="${ item.url }" class="dirtea-cart-product-item-image" style="background-image: url('https://cdn.shopify.com/s/files/1/0502/4782/7656/files/08_1_grande.png?v=1675171106');"></a>
+                        </div>
+                        <div class="dirtea-cart-item-details">
+                            <div class="dirtea-cart-title-container">
+                                <p class="dirtea-cart-product-title text-uppercase"><a href="${ item.url }" class="text-decoration-none color-off-black">MUSHROOM CACAO SUPER BLEND</a></p>
+                            </div>
+                            <div class="dirtea-cart-subscription-message-container">
+                                <p>Paid every 3 months</p>
+                                <p>Saved 20%!</p>
+                            </div>
+                            <div class="dirtea-cart-price-and-modifier-container">
+                                <p class="dirtea-cart-product-price text-center" data-product-price="${ item.price }">&pound;49.99</p>
+                                <div class="dirtea-cart-product-change-count-container">
+                                    <input class="hidden-product-item-quantity" type="hidden" type="text" name="updates[]" value="${ item.quantity }">
+                                    <div class="cart-product-item-quantity-modifier cart-product-item-quantity-decrement text-center" data-item-modifier="decrement" data-product-key="${ item.key }"><a href="#">-</a></div>
+                                    <div class="cart-product-item-quantity"><span>2</span></div>
+                                    <div class="cart-product-item-quantity-modifier cart-product-item-quantity-increment text-center" data-item-modifier="increment" data-product-key="${ item.key }"><a href="#">+</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dirtea-cart-item-subscription-upsell hide">
+                        <a href="#" class="btn btn-dirtea-secondary">Subscribe and save 15%</a>
+                    </div>
+
+                </div>
+            {% endcomment %}
+
+            </div>
+
+            <div class="dirtea-cart-total-and-checkout">
+                <div class="dirtea-cart-total">
+                    <p>Total</p>
+                    <p id="cartPriceTotal" data-total-price="">
+                        <span class="money">&pound;0.00</span>
+                    </p>
+                </div>
+
+                <div class="dirtea-cart-buttons">
+                    <input class="btn btn-dirtea-primary" type="submit" name="checkout" value="Checkout" style="width: 100%;">
+                    <a href="#" class="unstyled-button dirtea-cart-continue-shopping">Continue shopping</a>
+                </div>
+
+                <div class="dirtea-cart-upgrade-order">
+                </div>
+
+            </div>
+
+            
+            <div class="dirtea-empty-cart-message text-center">
+                <p>Your cart is empty, <a href="#" class="unstyled-button dirtea-cart-continue-shopping">continue shopping</a></p>
+            </div>
+        </form>
+
+
+        <div class="bg-mid-grey pb-20 pt-20 mt-20">
+            <h3 class="text-center text-uppercase">You might also like</h3>
+            <div class="dirtea-cart-upsell-products mt-40 pb-40">
+                {% for product in collections['cart-upsell'].products %}
+
+
+                <div class="dirtea-cart-added-products-item" data-product-key="${ item.key }" data-product-price="${ item.price }">
+
+                    <div class="dirtea-cart-product-item-row">
+                        <div class="dirtea-cart-product-item-image-container">
+                            <a href="{{ product.url }}" class="dirtea-cart-product-item-image" style="background-image: url('{{ product.metafields.my_fields.transparentimage | img_url: '800x' }}');"></a>
+                        </div>
+                        <div class="dirtea-cart-item-details">
+                            <div class="dirtea-cart-title-container">
+                                <p class="dirtea-cart-product-title text-uppercase"><a href="{{ product.url }}" class="text-decoration-none color-off-black">{{ product.metafields.custom.short_name }}</a></p>
+                            </div>
+                            <div class="dirtea-cart-subscription-message-container">
+                            </div>
+                            <div class="dirtea-cart-price-and-modifier-container">
+                                <p class="dirtea-cart-product-price text-center" data-product-price="${ item.price }">&pound;{{ product.price | money_without_currency }}</p>
+                                <a href="#" class="btn btn-dirtea-primary" onclick="addProductToCartOnClick(event, 'scrollToTopOfCart');" data-product-variant-id="{{ product.selected_or_first_available_variant.id }}">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>        

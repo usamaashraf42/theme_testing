@@ -1,0 +1,150 @@
+<div class="hero-video">
+
+  <div class="hero-text-overlay">
+    <h3 style="color: {{ section.settings.text_color }};">{{ section.settings.hero_subtitle }}</h3>
+    <h1 style="color: {{ section.settings.text_color }};">{{ section.settings.hero_title }}</h1>
+    <a
+      class="hero-slider-text-cta"
+      href="{{ section.settings.button_url }}"
+      style="background-color: {{ section.settings.button_background_color}}; color: {{ section.settings.button_text_color }};">
+      {{ section.settings.cta_label }}
+    </a>
+  </div>
+
+  <div class="show-mobile">
+    {{ section.settings.hero_video_mobile | video_tag: autoplay: true, loop: true, controls: false, muted: true, image_size: '500x' }}
+  </div>
+  <div class="show-desktop">
+    {{ section.settings.hero_video_desktop | video_tag: autoplay: true, loop: true, controls: false, muted: true, image_size: '1200x' }}
+  </div>
+
+</div>
+
+{% style %}
+  .hero-video {}
+  .announcement-hidden .hero-video {}
+
+  .transparent-header {
+    background: transparent !important;
+  }
+
+  .hero-video {
+    position: relative;
+    width: 100%;
+    background: #c5c5c5;
+  }
+
+  .hero-video video {
+    height: 70vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .hero-video .hero-text-overlay {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 10vh;
+    z-index: 100;
+  }
+  .hero-video .hero-text-overlay h1,
+  .hero-video .hero-text-overlay h3 {
+    color: white;
+    font-family: "Manifold Regular";
+    text-align: center;
+    text-shadow: 0px 1px 8px #00000094;
+  }
+  .hero-video .hero-text-overlay h1 {
+    font-size: 42px;
+    font-weight: bold;
+  }
+  .hero-video .hero-text-overlay h3 {
+    font-size: 36px;
+  }
+  .hero-slider-text-cta {
+    color: #FFFFFF;
+    font-family: "Manifold";
+    font-size: 20px;
+    padding: 7px 30px;
+    background: #000000;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+
+  @media only screen and (max-width: 576px) {
+    .hero-video .hero-text-overlay h1 {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .hero-video .hero-text-overlay h3 {
+      font-size: 25px;
+      line-height: 26px;
+      margin-bottom: 5px !important;
+    }
+    .hero-slider-text-cta {
+      font-size: 16px;
+    }
+  }
+
+{% endstyle %}
+{% schema %}
+  {
+    "name": "Hero video",
+    "settings": [
+      {
+        "type": "video",
+        "id": "hero_video_mobile",
+        "label": "Hero video mobile"
+      },
+      {
+        "type": "video",
+        "id": "hero_video_desktop",
+        "label": "Hero video desktop"
+      },
+      {
+        "type": "text",
+        "id": "hero_title",
+        "label": "Title",
+        "default": "Turkey Tail"
+      },
+      {
+        "type": "text",
+        "id": "hero_subtitle",
+        "label": "Subtitle",
+        "default": "The ultimate immunity mushroom"
+      }, {
+        "type": "text",
+        "id": "cta_label",
+        "label": "CTA Label",
+        "default": "SHOP NOW"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Colour"
+      }, {
+        "type": "color",
+        "id": "button_text_color",
+        "label": "Button Text Colour"
+      }, {
+        "type": "color",
+        "id": "button_background_color",
+        "label": "Button Background Colour"
+      }, {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button URL"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video hero",
+        "category": "Hero sections"
+      }
+    ]
+  }
+{% endschema %}

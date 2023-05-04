@@ -1,0 +1,69 @@
+<div class="subscription-hero-container desktop-only">
+    <div class="hero-tag-line-container">The DIRTEA Subscription Plan</div>
+  <img src="{{section.settings.subscription_hero_image | image_url: width:2880}}"/>
+</div>
+
+<div class="subscription-hero-container mobile-only">
+    <div class="hero-tag-line-container">The DIRTEA Subscription Plan</div>
+    <img src="{{section.settings.subscription_hero_image_mobile | image_url: width:800}}"/>
+</div>
+
+<style>
+
+html body.announcement-hidden .main-content[data-page-type="page"] {
+    padding-top: 65px !important;
+}
+
+
+.hero-tag-line-container {
+    position: absolute;
+    color: #252525;
+    font-family: "Manifold";
+    font-size: 42px;
+    letter-spacing: 0;
+    line-height: 50px;
+    text-align: center;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    width: 100%;
+    margin-top: 30vw;
+}
+
+@media (min-width: 769px){
+
+    .hero-tag-line-container{
+        margin-top: 10vw;
+    }
+}
+
+.subscription-hero-container {
+    margin-top: -65px;
+}
+
+.subscription-hero-container img {
+    width: 100%;
+    margin-bottom: -20px;
+}
+
+</style>
+
+{% schema %} { "name":"Subscription Hero", 
+"settings":[ 
+{ 
+    "type":"image_picker",
+    "id":"subscription_hero_image", 
+    "label":"Hero Image" 
+},
+{ 
+    "type":"image_picker",
+    "id":"subscription_hero_image_mobile", 
+    "label":"Hero Image Mobile" 
+}
+
+], "presets":[ {
+"name":"Subscription Hero", "category":"Jan" }
+] 
+} 
+{% endschema %}

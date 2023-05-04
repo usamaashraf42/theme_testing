@@ -1,0 +1,211 @@
+<div class="customers-talking-container">
+    <div class="customers-talking-title">{{ section.settings.section_title }}</div>
+    <div class="customers-talking-card-row desktop-only">
+        {% for block in section.blocks %}
+            <div class="customers-talking-card">
+                <div class="customers-talking-card-image">{{ block.settings.customer_image | image_url: width: 280| image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div>
+                <div class="customers-talking-card-name">{{ block.settings.customer_name }}</div>
+                <div class="customers-talking-card-ig">{{ block.settings.ig_handle }}</div>
+                <div class="customers-talking-card-job">{{ block.settings.customer_role }}</div>
+                <div class="customers-talking-card-quote">{{ block.settings.customer_quote }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="swiper customers-talking-swiper mobile-only">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="swiper-slide customers-talking-card">
+                    <div class="customers-talking-card-image">{{ block.settings.customer_image | image_url: width: 280| image_tag: sizes: '(min-width:1600px) 960px, (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw - 4rem)' }}</div>
+                    <div class="customers-talking-card-name">{{ block.settings.customer_name }}</div>
+                    <div class="customers-talking-card-ig">{{ block.settings.ig_handle }}</div>
+                    <div class="customers-talking-card-job">{{ block.settings.customer_role }}</div>
+                    <div class="customers-talking-card-quote">{{ block.settings.customer_quote }}</div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination-one"></div>
+    </div>
+</div>
+
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+      var swiper = new Swiper(".customers-talking-swiper", {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+        centeredSlides: true,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+          el: ".swiper-pagination-one",
+        },
+      });
+    </script>
+
+{% style %}
+
+.swiper {
+        width: 100%;
+        height: 100%;
+}
+
+.customers-talking-swiper {
+    margin-left: 10px;
+}
+
+.swiper-pagination-one {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.swiper-pagination-bullet-active {
+    background: #252525 !important;
+}
+
+.swiper-pagination-bullet-inactive {
+    background: #ffffff !important;
+}
+
+.customers-talking-container {
+    background: #EBEADE;
+    padding: 80px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roc Grotesk Regular';
+    color: #252525;
+}
+
+@media (min-width: 769px) {
+    .customers-talking-container {      
+        padding: 80px;
+    }
+}
+
+.customers-talking-title {
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.customers-talking-card-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.customers-talking-card {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    max-width: 340px;
+}
+
+@media (max-width: 769px) {
+    .customers-talking-card {
+        max-width: 100%;
+    }
+}
+
+.customers-talking-card-image {
+    margin-bottom: 20px;
+    border-radius: 100%;
+    overflow: hidden;
+    max-width: 280px;
+    height: 280px;
+}
+
+.customers-talking-card-name {
+    font-size: 24px;
+    letter-spacing: 0.65px;
+    line-height: 35px;
+    width: 100%;
+}
+
+.customers-talking-card-ig {
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+    font-weight: bold;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.customers-talking-card-job {
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+    margin-bottom: 10px;
+    color: gray;
+    width: 100%;
+}
+
+
+.customers-talking-card-quote {
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+}
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Customers Talking",
+    "settings": [
+        {
+            "type": "text",
+            "id": "section_title",
+            "default": "Customers talking",
+            "label": "Section Title"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "quote",
+            "name": "quote",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "customer_image",
+                    "label": "Profile Picture"
+                },
+                {
+                    "type": "text",
+                    "id": "customer_name",
+                    "label": "Customer Name",
+                    "default": "David Gandy"
+                },
+                {
+                    "type": "text",
+                    "id": "ig_handle",
+                    "label": "IG Handle",
+                    "default": "@davidgandy_official"
+                },
+                {
+                    "type": "text",
+                    "id": "customer_role",
+                    "label": "Customer Roles",
+                    "default": "Super Model, Designer, Entrepreneur"
+                },
+                {
+                    "type": "richtext",
+                    "id": "customer_quote",
+                    "label": "Customer Quote",
+                    "default": "<p>I add DIRTEA's Cordyceps to my pre gym drink and have felt added energy and boost when training. Then add Chaga powder to protein shake after to boost immune system. Prefer them to a green or fruit tea.  Incredible concept and products.</p>"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Customers Talking",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema%}

@@ -1,0 +1,56 @@
+{% assign sub_desc = block.settings.sub_desc %}
+{% assign sub_title = block.settings.sub_title %}
+{% assign oneTimePrice = product.variants[0].price | money %}
+{% assign prodDiscount = product.variants[0].price | divided_by: 100.0 | times: product.selling_plan_groups[0].selling_plans[0].price_adjustments[0].value  %}
+{% assign subSavePrice = product.variants[0].price | minus: prodDiscount  | money %}
+
+<div class="product-card card" data-animate style="opacity: 1 !important;">
+    <a href="{{ product.url }}" class="card__wrapper">
+        <div class="image-outer">
+            {% if product.featured_media %}
+                {% include 'card-image-collection', type: product.featured_media.preview_image, grid_style: grid_style %}
+            {% endif %}
+        </div>
+        <div class="product-card__info">
+            <h2 class="product-card__title">
+                {{- product.metafields['product-card']['display_title'] | default: product.title -}}
+            </h2>
+            {%- if product.metafields['product-card']['tagline'] -%}
+                <h2 class="product-card__tagline">
+                    {{- product.metafields['product-card']['tagline'] -}}
+                </h2>
+            {%- endif -%}
+        </div>
+    </a>
+
+    <div class="product-card__btns">
+        {% form 'product', product, data-productid: product.id, class:'product-form' %}
+            <input class="hide" type="hidden" hidden name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+            <button type="normal_addtocart" class="product-card__btn product-card__btn--primary btn__oneTime">One Time Purchase <span>{{ oneTimePrice }}</span></button>
+            <button type="openSellingPlans" class="product-card__btn product-card__btn--secondary">Subscribe & Save 20% <span>{{ subSavePrice }}</span></button>
+            <div class='selling_plan_selectContainer hide'>
+                {% for group in product.selling_plan_groups %}
+                    <select class='' name="selling_plan" id="selling_plan_rc">
+                        {% for selling_plan in group.selling_plans %}
+                            <option name="selling_plan" data-plan-name="{{ selling_plan.name }}" value="{{ selling_plan.id }}">{{ selling_plan.name }}</option>
+                        {% endfor %}
+                    </select>
+                {% endfor %}
+            </div>
+            <div class="subSaveContainer hide">
+                <div class="cart-quantity">
+                    <input type='button' id="qty_minus{{ forloop.index0 }}" value='-' class='qtyminus' />
+                    <input type="number" id="quantity" name="quantity" class="quantity" min="1" value="1" />
+                    <input type='button' id="qty_plus{{ forloop.index0 }}"value='+' class='qtyplus' />
+                </div>
+                <button type="autoship_submit" class="btn btn__subSave btn--secondary add_btn visible">Add to Cart</button>
+            </div>
+        {% endform %}
+
+        {% form 'product', product, data-productid: product.id, class:'product-form' %}
+            <input class="hide" type="hidden" hidden name="id" data-productid="{{ product.id }}" value="{{ product.variants.first.id }}" />
+            <input min="1" type="number" id="quantity" name="quantity" hidden value="1"/>
+            <div><input type="radio" class='hidden hide' name="selling_plan" data-plan-name="" value="onetime"></div>
+        {% endform %}
+    </div>
+</div>

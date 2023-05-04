@@ -1,0 +1,329 @@
+<div class="meet-mushrooms-new-container">
+    <div class="meet-mushrooms-new-title">{{ section.settings.section_title }}</div>
+    <div class="meet-mushrooms-new-card-container">
+        <div class="meet-mushrooms-new-card">
+            <div class="meet-mushrooms-new-image">
+                <img src="{{ section.settings.first_mushroom_image | image_url: width: '320x320' }}"/>
+            </div>
+            <div class="meet-mushrooms-new-title">
+                {{ section.settings.first_mushroom_title }}
+            </div>
+            <div class="meet-mushrooms-new-subtitle">
+                {{ section.settings.first_mushroom_subtitle }}
+            </div>
+            <div class="meet-mushrooms-new-body">
+                {{ section.settings.first_mushroom_body }}
+            </div>
+            <div class="meet-mushrooms-new-accordion">
+                {% for block in section.blocks %}
+                    {% if block.type == 'first_mushroom_question' %}
+                        <button class="accordion">
+                            <span>{{ block.settings.question }}</span>
+                            <span class="plusButton" style="width: 30px;"><img style="min-width: 30px;" src="{{ 'plus-accordion-button-two.png' | asset_img_url }}"/></span>
+                            <span class="minusButton hidden-button" style="width: 30px"><img img style="min-width: 30px;" src="{{ 'minus-accordion.png' | asset_img_url }}"/></span> 
+                        </button>
+                        <div class="panel">
+                            {{ block.settings.answer }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="meet-mushrooms-new-cta" onclick="addTremella()">BUY NOW</div>
+        </div>
+        <div class="meet-mushrooms-new-card">
+            <div class="meet-mushrooms-new-image">
+                <img src="{{ section.settings.second_mushroom_image | image_url: width: '320x320' }}"/>
+            </div>
+            <div class="meet-mushrooms-new-title">
+                {{ section.settings.second_mushroom_title }}
+            </div>
+            <div class="meet-mushrooms-new-subtitle">
+                {{ section.settings.second_mushroom_subtitle }}
+            </div>
+            <div class="meet-mushrooms-new-body">
+                {{ section.settings.second_mushroom_body }}
+            </div>
+            <div class="meet-mushrooms-new-accordion">
+                {% for block in section.blocks %}
+                    {% if block.type == 'second_mushroom_question' %}
+                        <button class="accordion">
+                            <span>{{ block.settings.question }}</span>
+                            <span class="plusButton" style="width: 30px;"><img src="{{ 'plus-accordion-button-two.png' | asset_img_url }}"/></span>
+                            <span class="minusButton hidden-button" style="width: 30px"><img src="{{ 'minus-accordion.png' | asset_img_url }}"/></span> 
+                        </button>
+                        <div class="panel">
+                            {{ block.settings.answer }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="meet-mushrooms-new-cta" style="background-color: #A9D3DD;" onclick="addTurkey()">BUY NOW</div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let accordionButtons = document.querySelectorAll('.accordion')
+    let accordionPanels = document.querySelectorAll('.panel')
+    
+    let allPluses = document.querySelectorAll('.plusButton')
+    let allMinuses = document.querySelectorAll('.minusButton')
+    
+    for (let i = 0; i < accordionButtons.length; i++) {
+      accordionButtons[i].addEventListener('click', () => {
+        accordionPanels[i].classList.toggle('visible')
+        allPluses[i].classList.toggle('hidden-button')
+        allMinuses[i].classList.toggle('hidden-button')
+      })
+    }
+
+    function addTremella() {
+        document.querySelector('.tremella-cta').click()
+    }
+
+    function addTurkey() {
+        document.querySelector('.turkey-cta').click()
+    }
+</script>
+
+
+{% style %}
+
+.meet-mushrooms-new-container {
+    background-color: #FFFEF2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+@media (min-width: 769px) {
+    ..meet-mushrooms-new-container {
+        padding: 80px;
+    }
+}
+
+.meet-mushrooms-new-title {
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 34px;
+    letter-spacing: 1.06px;
+    line-height: 49px;
+}
+
+.meet-mushrooms-new-subtitle {
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px
+}
+
+.meet-mushrooms-new-body {
+    margin-top: 15px;
+    color: #252525;
+    font-family: "Roc Grotesk Light";
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 1.14px;
+    line-height: 26px;
+    height: 80px;
+}
+
+.meet-mushrooms-new-card-container {
+    display: grid;
+    grid-template-columns: repeat(1,1fr)
+}
+
+@media (min-width: 769px) {
+    .meet-mushrooms-new-card-container {
+        display: grid;
+        grid-template-columns: repeat(2,1fr)
+    }
+}
+
+.meet-mushrooms-new-image img {
+    width: 160px;
+    height: auto;
+}
+
+.hidden-button {
+    display: none;
+  }
+
+  .meet-mushrooms-new-accordion {
+    margin-top: 40px;
+  }
+  
+  .accordion {
+    margin: auto;
+    background-color: transparent;
+    color: #252525;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    color: #252525;
+    font-family: "Roc Grotesk Light";
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 1.14px;
+    line-height: 26px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    width: 90%;
+  }
+  
+  .panel {
+    margin: auto;
+    opacity: 0;
+    background-color: transparent;
+    overflow: hidden;
+    color: #252525;
+    font-family: "Manifold Regular";
+    font-size: 16px;
+    letter-spacing: 1.14px;
+    line-height: 22px;
+    text-align: left;
+    width: 100%;
+    height: 0px;
+    width: 90%;
+  }
+
+  .panel.visible {
+    transition: all 1s;  
+    opacity: 1;
+    height: auto;
+  }
+
+  .meet-mushrooms-new-cta {
+    margin-top: 30px;
+    background-color: #E3B6C1;
+    color: #ffffff;
+    padding: 17px;
+    width: 280px;
+    border-radius: 25px;
+    font-family: "Manifold";
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 17px;
+    text-align: center;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+
+
+{% endstyle %}
+
+{% schema %}
+{
+    "name": "Meet The Mushrooms New",
+    "settings": [
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Title",
+            "default": "Meet the mushrooms"
+        },
+        {
+            "type": "image_picker",
+            "id": "first_mushroom_image",
+            "label": "First Mushroom Image"
+        },
+        {
+            "type": "text",
+            "id": "first_mushroom_title",
+            "label": "First Mushroom Title/Name",
+            "default": "Tremella"
+        },
+        {
+            "type": "text",
+            "id": "first_mushroom_subtitle",
+            "label": "First Mushroom Subtitle",
+            "default": "The beauty mushroom"
+        },
+        {
+            "type": "textarea",
+            "id": "first_mushroom_body",
+            "label": "First Mushroom Body",
+            "default": "<p>Known as the “king of medicinal mushrooms”, Chaga is a potent antioxidant used for immune support, digestive health, and getting your body back in balance*.</p>"
+        },
+        {
+            "type": "image_picker",
+            "id": "second_mushroom_image",
+            "label": "Second Mushroom Image"
+        },
+        {
+            "type": "text",
+            "id": "second_mushroom_title",
+            "label": "Second Mushroom Title/Name",
+            "default": "Turkey Tail"
+        },
+        {
+            "type": "text",
+            "id": "second_mushroom_subtitle",
+            "label": "Second Mushroom Subtitle",
+            "default": "The immunity mushroom"
+        },
+        {
+            "type": "textarea",
+            "id": "second_mushroom_body",
+            "label": "Second Mushroom Body",
+            "default": "<p>Known as the “king of medicinal mushrooms”, Chaga is a potent antioxidant used for immune support, digestive health, and getting your body back in balance*.</p>"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "first_mushroom_question",
+            "name": "First Mushroom Question",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "question",
+                    "label": "Question",
+                    "default": "Question?"
+                },
+                {
+                    "type": "text",
+                    "id": "answer",
+                    "label": "Answer",
+                    "default": "Answer"
+                }
+            ]
+        },
+        {
+            "type": "second_mushroom_question",
+            "name": "Second Mushroom Question",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "question",
+                    "label": "Question",
+                    "default": "Question?"
+                },
+                {
+                    "type": "text",
+                    "id": "answer",
+                    "label": "Answer",
+                    "default": "Answer"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Meet The Mushrooms New",
+            "category": "Black Friday"
+        }
+    ]
+}
+{% endschema %}

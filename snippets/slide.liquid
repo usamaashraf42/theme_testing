@@ -1,0 +1,49 @@
+<div id="slideDesktopOnly" class="slideDesktopOnly hero hero--{{ block.id }} hero--medium {% if section.settings.show_overlay %} hero__overlay{% endif %} lazyload"
+     data-bgset="{% include 'bgset', image: block.settings.image %}"
+     data-section-id="{{ block.id }}" data-section-type="hero">
+  <div class="hero__inner" style="opacity:0">
+    <div class="page-width text-center">
+      <div class="page-width page-width-small inner-container-{{ block.settings.position }}">
+        {% if block.settings.smalltitle != blank %}
+        <div class="hero__overlay-title subtitle separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %}" data-animate>{{ block.settings.smalltitle | escape }}</div>
+        {% endif %}
+        {% if block.settings.title != blank %}
+        <h2 class=" hero__overlay-title separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %} slideTitle" data-animate>{{ block.settings.title | escape }}</h2>
+        {% endif %}
+        {% if block.settings.text != blank %}
+        <div class="rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %}">{{ block.settings.text }}</div>
+        {% endif %}
+        {% if block.settings.button_label != blank %}
+        <a href="{{ block.settings.button_link }}" class="btn{% if block.settings.use_second_button %} btn--secondary{% endif %} hero__btn">
+          {{ block.settings.button_label }}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="slideMobileOnly" class="slideMobileOnly hero hero--{{ block.id }} hero--medium {% if section.settings.show_overlay %} hero__overlay{% endif %} lazyload"
+     data-bgset="{% include 'bgset', image: block.settings.image_mobile %}"
+     data-section-id="{{ block.id }}" data-section-type="hero">
+  <div class="hero__inner" style="opacity:0">
+    <div class="page-width text-center">
+      <div class="page-width page-width-small inner-container-{{ block.settings.position }}">
+        {% if block.settings.smalltitle != blank %}
+        <div class="hero__overlay-title subtitle separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %}" data-animate>{{ block.settings.smalltitle | escape }}</div>
+        {% endif %}
+        {% if block.settings.title != blank %}
+        <h2 class=" hero__overlay-title separator{% if section.settings.show_overlay %} hero__overlay-title--overlay{% endif %} slideTitle" data-animate>{{ block.settings.title | escape }}</h2>
+        {% endif %}
+        {% if block.settings.text != blank %}
+        <div class="rte-setting mega-subtitle{% if section.settings.text_size == 'large' %} mega-subtitle--large{% endif %}">{{ block.settings.text }}</div>
+        {% endif %}
+        {% if block.settings.button_label != blank %}
+        <a href="{{ block.settings.button_link }}" class="btn{% if block.settings.use_second_button %} btn--secondary{% endif %} hero__btn">
+          {{ block.settings.button_label }}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

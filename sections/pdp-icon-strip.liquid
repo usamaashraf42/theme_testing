@@ -1,0 +1,106 @@
+{% if product.metafields.custom.short_name %}
+    {% assign mushroom_type = product.metafields.custom.short_name %}
+{% endif %}
+
+<div class="pdp-icon-strip-container">
+    <div class="pdp-icon-strip-title dirtea-section-title">Our <span style="text-transform: capitalize;">{{ mushroom_type }}</span> is...</div>
+    <div class="pdp-icon-strip-row">
+        {% for block in section.blocks %}
+            <div class="pdp-icon-strip-icon">
+                <div>{{ block.settings.icon_svg }}</div>
+                <div>{{ block.settings.icon_text }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<style>
+   .pdp-icon-strip-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #F2F3F2;
+        color: #252525;
+        font-family: "Manifold";
+        text-align: center;
+    }
+    
+    .pdp-icon-strip-row {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        background-color: #F2F3F2;
+        width: 100%;
+        margin: auto;
+        padding-bottom: 80px;
+    }
+
+    @media (min-width: 769px) {
+        .pdp-icon-strip-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 60%;
+            margin: auto;
+        }
+    }
+
+    .pdp-icon-strip-title {
+        letter-spacing: 0;
+        line-height: 41px;
+        margin-top: 80px;
+        margin-bottom: 30px;
+    }
+
+    .pdp-icon-strip-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 22px;
+        padding: 5px 20px;
+    }
+</style>
+
+{% schema %}  
+{
+    "name": "PDP Icon Strip",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Section Title",
+            "default": "Our Chaga is..."
+        }
+    ],
+    "blocks": [
+        {
+            "type": "icon",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "icon_svg",
+                    "label": "Icon SVG"
+                },
+                {
+                    "type": "text",
+                    "id": "icon_text",
+                    "label": "Icon Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "PDP Icon Strip",
+            "category": "Jan"
+        }
+    ]
+}
+{% endschema %}

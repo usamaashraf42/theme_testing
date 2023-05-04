@@ -1,0 +1,245 @@
+<div id="{{section.settings.da-featured-video | handleize | downcase}}">
+  <div class="da_featured_video">
+    <div class="da_featured_video_bb">
+      {% if section.settings.da_fd_vo_heading != blank %}
+      <div class="da_fd_vo_heading">
+        <h2>{{section.settings.da_fd_vo_heading}}</h2>
+      </div>
+      {% endif %}
+      <div class="da_fd_vo_video">
+        {% if section.settings.da_fd_vo_video contains "youtube" %}
+        <iframe src="{{section.settings.da_fd_vo_video}}" class="youtube-video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% else %}
+        <video class="da_fd_vo_video_dis" src="{{section.settings.da_fd_vo_video}}" muted playsinline nocontrols></video>
+        {% endif %}
+        {% if section.settings.da_fv_video_image != blank %}
+        <div class="da_fv_video_image">
+          <img src="{{section.settings.da_fv_video_image | img_url: "master"}}">
+        </div>
+        {% endif %}
+        <div class="da_fv_video_icon da_fv_video_play">
+          {% if section.settings.da_fv_video_play_icon != blank and section.settings.da_fv_video_play_img != blank %}
+          {{section.settings.da_fv_video_play_icon}}
+          {% elsif section.settings.da_fv_video_play_icon != blank and section.settings.da_fv_video_play_img == blank %}
+          {{section.settings.da_fv_video_play_icon}}
+          {% elsif section.settings.da_fv_video_play_icon == blank and section.settings.da_fv_video_play_img == blank %}
+          {{section.settings.da_fv_video_play_icon}}
+          {% else section.settings.da_fv_video_play_icon == blank and section.settings.da_fv_video_play_img != blank %}
+          <img src="{{section.settings.da_fv_video_play_img | img_url: "master"}}">
+          {% endif %}
+        </div>
+        <div class="da_fv_video_overlay"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .da_featured_video {
+    width: 100%;
+    padding: 0px 70px;
+  }
+
+  .da_featured_video_bb {
+    width: 100%;
+    border-bottom: 1px solid rgba(18, 18, 18, 0.1);
+    padding: 30px 0px 20px;
+  }
+
+  .da_fd_vo_heading {
+    width: 100%;
+    padding: 0px 0px 20px;
+  }
+
+  .da_fd_vo_heading h2 {
+    margin: 0px;
+    color: rgb(37, 37, 37);
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 30px;
+  }
+
+  .da_fd_vo_video {
+    width: 100%;
+    height: 400px;
+    position: relative;
+  }
+
+  .da_fd_vo_video iframe {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+
+  .da_fd_vo_video_dis {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+
+  .da_fv_video_image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .da_fv_video_image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .da_fv_video_icon {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+
+  .da_fv_video_icon svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .da_fv_video_icon img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .da_fv_video_overlay {
+position: absolute;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0px;
+    width: 100%;
+    height: 72%;
+    background-color: transparent;
+    opacity: 0;
+    cursor: pointer;
+    display: none;
+  }
+
+  @media (max-width: 768px){
+    .da_featured_video {
+      padding: 0px 50px;
+    }
+
+    .da_fd_vo_heading h2 {
+      font-size: 27px;
+      line-height: 27px;
+    }
+
+    .da_fd_vo_video {
+      height: 370px;
+    }
+  }
+
+  @media (max-width: 490px){
+    .da_featured_video {
+      padding: 0px 20px;
+    }
+
+    .da_fd_vo_heading h2 {
+      font-size: 25px;
+      line-height: 25px;
+    }
+
+    .da_fd_vo_video {
+      height: 340px;
+    }
+
+    .da_fv_video_icon svg {
+      width: 60px;
+      height: 60px;
+    }
+
+    .da_fv_video_icon img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  
+</style>
+
+<script>
+  $(document).ready(function(){
+    $(".da_fv_video_play").click(function(){
+      $(".da_fv_video_play, .da_fv_video_image").hide();
+      $(".da_fv_video_overlay").show();
+      $(".youtube-video")[0].src += "?autoplay=1";
+      if ($(this).closest(".da_fd_vo_video").get(0).paused){
+        $(this).closest(".da_fd_vo_video").trigger("play");
+      }
+    });
+  });
+
+  $(".da_fv_video_overlay").click(function(){
+    $(".da_fv_video_play, .da_fv_video_image").show();
+    $(".da_fv_video_overlay").hide();
+    // var videoURL = $('.youtube-video').prop('src');
+      // videoURL = videoURL.replace("?autoplay=1", "");
+      // $('.youtube-video').prop('src','');
+      // $('.youtube-video').prop('src',videoURL);
+  });
+  
+</script>
+
+{% schema %}
+  {
+    "name": "DA Featured Video",
+    "settings": [
+    {
+    "type": "text",
+    "id": "da-featured-video",
+    "label": "Section ID"
+    },
+    {
+    "type": "text",
+    "id": "da_fd_vo_heading",
+    "label": "da_fd_vo_heading",
+    "default": "Featured Video"
+    },
+    {
+    "type": "url",
+    "id": "da_fd_vo_video",
+    "label": "Video"
+    },
+    {
+    "type": "image_picker",
+    "id": "da_fv_video_image",
+    "label": "Video Image"
+    },
+    {
+    "type": "textarea",
+    "id": "da_fv_video_play_icon",
+    "label": "Play Icon"
+    },
+    {
+    "type": "image_picker",
+    "id": "da_fv_video_play_img",
+    "label": "Play Image"
+    }
+    ],
+    "presets": [
+    {
+    "name": "DA Featured Video",
+    "category": "Office Work"
+    }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
